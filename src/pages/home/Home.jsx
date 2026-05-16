@@ -15,14 +15,22 @@
 
 import Hero from "./Hero";
 import ServicesSection from "./Services";
+import AboutSection from "./AboutSection";
+import PortfolioSection from "./CaseStudies";
+import ProcessSection from "./ProcessSection";
+import TestimonialsTeamSection from "./TestimonialsTeamSection";
 
 export default function Home({ setOpenCalendly }) {
   return (
     <main>
       {/* Hero */}
       <Hero />
-      <ServicesSection />
 
+      <AboutSection />
+      <ServicesSection />
+      <PortfolioSection />
+      <ProcessSection />
+      <TestimonialsTeamSection />
       {/* <TrustedBy /> */}
       {/* <WhyChooseUs />
       <ServicesOverview />

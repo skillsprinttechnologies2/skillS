@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 // import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import Header from "./pages/components/Header";
+import Footer from "./pages/components/Footer";
 import Home from "./pages/home/Home";
 // import Footer from "./pages/components/Footer";
 // import ScrollToTop from "./pages/components/ScrollToTop";
@@ -46,6 +47,7 @@ function App() {
       {/* Header */}
       <Header />
       <Home />
+      <Footer />
 
       {/* <Route path="/" element={<Home />} /> */}
 

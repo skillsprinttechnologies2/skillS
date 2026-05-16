@@ -1,155 +1,204 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import {
-  Briefcase,
-  BarChart2,
-  DollarSign,
-  Cpu,
+  TrendingUp,
+  Layout,
+  BookOpen,
+  MessageSquare,
   PenTool,
   Code,
-  ArrowUpRight,
+  ArrowRight,
 } from "react-feather";
 
-export default function ServicesSection() {
-  const services = [
-    {
-      title: "Digital Marketing",
-      description:
-        "We craft data-driven marketing strategies to boost your brand visibility and engagement.",
-      icon: Briefcase,
-    },
-    {
-      title: "Web Development",
-      description:
-        "Responsive, high-performance websites designed for modern user experiences and scalability.",
-      icon: BarChart2,
-    },
-    {
-      title: "Software Training & Placement",
-      description:
-        "Hands-on training programs with placement support to prepare candidates for real-world roles.",
-      icon: DollarSign,
-    },
-    {
-      title: "Chatbot & Automation",
-      description:
-        "Smart chatbot systems and automated workflows that improve efficiency and customer interaction.",
-      icon: Cpu,
-    },
-    {
-      title: "Graphic Design Services",
-      description:
-        "Creative brand visuals, UI designs, presentations, and marketing assets tailored to your identity.",
-      icon: PenTool,
-    },
-    {
-      title: "Software Development",
-      description:
-        "Custom software solutions built with scalable architecture and agile development practices.",
-      icon: Code,
-    },
-  ];
+const services = [
+  {
+    id: "01",
+    title: "Digital Marketing",
+    description:
+      "We craft data-driven marketing strategies to boost your brand visibility and engagement across all digital channels.",
+    icon: <TrendingUp size={24} />,
+    tags: ["SEO", "PPC", "Social Media"],
+    featured: false,
+  },
+  {
+    id: "02",
+    title: "Web Development",
+    description:
+      "Responsive, high-performance websites designed for modern user experiences, extreme speed, and effortless scalability.",
+    icon: <Layout size={24} />,
+    tags: ["React", "Next.js", "Responsive"],
+    featured: true,
+  },
+  {
+    id: "03",
+    title: "Software Training & Placement",
+    description:
+      "Hands-on training programs with placement support to prepare candidates for real-world enterprise roles.",
+    icon: <BookOpen size={24} />,
+    tags: ["Certification", "Mentorship", "Jobs"],
+    featured: false,
+  },
+  {
+    id: "04",
+    title: "Chatbot & Automation",
+    description:
+      "Smart chatbot systems and automated workflows that improve operational efficiency and customer interaction.",
+    icon: <MessageSquare size={24} />,
+    tags: ["AI", "Workflows", "24/7 Support"],
+    featured: false,
+  },
+  {
+    id: "05",
+    title: "Graphic Design Services",
+    description:
+      "Creative brand visuals, UI designs, presentations, and marketing assets tailored specifically to your identity.",
+    icon: <PenTool size={24} />,
+    tags: ["UI/UX", "Branding", "Assets"],
+    featured: false,
+  },
+  {
+    id: "06",
+    title: "Software Development",
+    description:
+      "Custom software solutions built with scalable architecture and agile development practices for enterprise needs.",
+    icon: <Code size={24} />,
+    tags: ["Custom SaaS", "API", "Scalable"],
+    featured: false,
+  },
+];
 
+const ServicesSection = () => {
   return (
-    <section className="relative bg-[#050816] py-24 overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#374b82]/20 blur-[140px] rounded-full" />
+    <section
+      className="relative w-full py-24 lg:py-32 overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
+      }}
+    >
+      {/* --- PREMIUM BACKGROUND VISUALS --- */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Soft Blue Radial Glows */}
+        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/5 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#374b82]/10 blur-[150px]" />
 
+        {/* Subtle Dotted Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.15]"
+          style={{
+            backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
+            backgroundSize: "32px 32px",
+          }}
+        />
+
+        {/* Floating Glass Shapes */}
+        <div
+          className="absolute top-1/4 right-10 w-64 h-64 bg-white/30 backdrop-blur-3xl rounded-full border border-white/50 shadow-xl animate-pulse"
+          style={{ animationDuration: "8s" }}
+        />
+        <div
+          className="absolute bottom-1/4 left-10 w-40 h-40 bg-white/20 backdrop-blur-2xl rounded-full border border-white/40 shadow-lg animate-bounce"
+          style={{ animationDuration: "12s" }}
+        />
+      </div>
+
+      {/* --- MAIN CONTENT --- */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        {/* Heading */}
-        <div className="text-center mb-20">
-          <p className="text-[#8ea3ff] uppercase tracking-[0.25em] text-sm font-semibold">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest">
             Our Expertise
-          </p>
-
-          <h2 className="mt-4 text-4xl md:text-5xl font-bold text-white">
-            Services We Provide
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#111827] tracking-tight">
+            Services Built For{" "}
+            <span className="text-[#374b82]">Business Growth</span>
           </h2>
-
-          <p className="mt-6 text-white/70 max-w-2xl mx-auto text-lg leading-relaxed">
-            We help businesses and individuals accelerate growth through
-            technology, creativity, and modern digital solutions.
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Explore digital solutions designed to improve visibility, automate
+            workflows, build scalable platforms, and accelerate growth.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const Icon = service.icon;
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className={`
+                group relative p-8 rounded-3xl transition-all duration-500 ease-out
+                backdrop-blur-xl border
+                ${
+                  service.featured
+                    ? "bg-white/80 border-[#374b82]/40 shadow-[0_20px_60px_rgba(55,75,130,0.15)] ring-1 ring-[#374b82]/20"
+                    : "bg-white/65 border-[#374b82]/10 shadow-[0_20px_60px_rgba(55,75,130,0.08)] hover:border-[#374b82]/30"
+                }
+                hover:-translate-y-3 hover:shadow-[0_30px_80px_rgba(55,75,130,0.15)]
+              `}
+            >
+              {/* Decorative Number */}
+              <div className="absolute top-6 right-8 text-4xl font-bold text-[#374b82]/10 group-hover:text-[#374b82]/20 transition-colors">
+                {service.id}
+              </div>
 
-            return (
+              {/* Icon Container */}
               <div
-                key={index}
-                className="
-                  group
-                  relative
-                  bg-white/5
-                  border border-white/10
-                  backdrop-blur-xl
-                  rounded-3xl
-                  p-8
-                  transition-all duration-500
-                  hover:-translate-y-2
-                  hover:border-[#374b82]/50
-                  hover:shadow-[0_20px_60px_rgba(55,75,130,0.25)]
-                "
+                className="relative z-10 w-14 h-14 mb-6 flex items-center justify-center rounded-2xl 
+                              bg-[#374b82]/10 text-[#374b82] transition-all duration-300 
+                              group-hover:bg-[#374b82] group-hover:text-white group-hover:shadow-lg group-hover:shadow-[#374b82]/30"
               >
-                {/* Glow */}
-                <div
-                  className="
-                    absolute inset-0
-                    rounded-3xl
-                    bg-gradient-to-br
-                    from-[#374b82]/10
-                    to-transparent
-                    opacity-0
-                    group-hover:opacity-100
-                    transition duration-500
-                  "
-                />
+                {service.icon}
+              </div>
 
-                {/* Icon */}
-                <div
-                  className="
-                    relative
-                    w-16 h-16
-                    rounded-2xl
-                    bg-[#374b82]/15
-                    border border-[#374b82]/20
-                    flex items-center justify-center
-                    mb-8
-                  "
-                >
-                  <Icon className="w-8 h-8 text-[#8ea3ff]" />
-                </div>
-
-                {/* Title */}
-                <h3 className="text-2xl font-bold text-white mb-5">
+              {/* Content */}
+              <div className="relative z-10 space-y-3">
+                <h3 className="text-xl font-bold text-[#172033] group-hover:text-[#374b82] transition-colors">
                   {service.title}
                 </h3>
-
-                {/* Description */}
-                <p className="text-white/70 leading-relaxed text-[16px]">
+                <p className="text-gray-600 text-sm leading-relaxed">
                   {service.description}
                 </p>
+              </div>
 
-                {/* CTA */}
-                <button
-                  className="
-                    mt-8
-                    flex items-center gap-2
-                    text-[#8ea3ff]
-                    font-semibold
-                    transition-all duration-300
-                    group-hover:translate-x-1
-                  "
+              {/* Visual Tags */}
+              <div className="relative z-10 mt-6 flex flex-wrap gap-2">
+                {service.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] font-semibold px-2 py-1 rounded-md bg-white border border-gray-200 text-gray-500 group-hover:border-[#374b82]/20 group-hover:text-[#374b82] transition-all"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* Enquiry CTA */}
+              <div className="relative z-10 mt-8 flex items-center justify-between">
+                <Link
+                  to="/contact"
+                  className="flex items-center gap-2 text-sm font-bold text-[#374b82] group/link transition-all"
                 >
                   Enquiry
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform duration-300 group-hover/link:translate-x-1"
+                  />
+                </Link>
+
+                {service.featured && (
+                  <span className="text-[10px] font-bold uppercase tracking-tighter px-2 py-1 rounded bg-[#374b82] text-white">
+                    Featured
+                  </span>
+                )}
               </div>
-            );
-          })}
+
+              {/* Hover Gradient Background Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl bg-gradient-to-br from-transparent via-transparent to-[#374b82]/5" />
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default ServicesSection;
