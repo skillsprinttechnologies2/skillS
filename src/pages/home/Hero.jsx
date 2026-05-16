@@ -1,21 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
-/**
- * SkillSprint Technologies - Premium Corporate Hero
- * Fixed:
- * - Full hero content visible on smaller screens
- * - Globe no longer gets clipped
- * - Background decorations separated from content
- * - Removed fixed globe height
- */
-
-// --- 3D Network Globe Component ---
+// --- Lightweight Interactive Network Globe ---
 function NetworkGlobe({ active }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     const ctx = canvas.getContext("2d", { alpha: true });
     const BRAND = "#374b82";
@@ -25,6 +20,9 @@ function NetworkGlobe({ active }) {
     let dpr = 1;
     let raf = null;
 
+    const isSmallDevice = window.innerWidth < 768;
+    const POINTS = isSmallDevice ? 70 : 100;
+
     const state = {
       rx: -0.25,
       ry: 0.65,
@@ -32,7 +30,6 @@ function NetworkGlobe({ active }) {
       ty: 0.65,
     };
 
-    const POINTS = 110;
     const points = [];
 
     for (let i = 0; i < POINTS; i++) {
@@ -62,7 +59,7 @@ function NetworkGlobe({ active }) {
         })
         .sort((a, b) => a[1] - b[1]);
 
-      return dists.slice(0, 3).map((x) => x[0]);
+      return dists.slice(0, isSmallDevice ? 2 : 3).map((x) => x[0]);
     });
 
     const resize = () => {
@@ -70,10 +67,10 @@ function NetworkGlobe({ active }) {
 
       w = rect.width;
       h = rect.height;
-      dpr = Math.min(2, window.devicePixelRatio || 1);
+      dpr = Math.min(1.75, window.devicePixelRatio || 1);
 
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
@@ -110,11 +107,14 @@ function NetworkGlobe({ active }) {
 
       state.rx += (state.tx - state.rx) * 0.08;
       state.ry += (state.ty - state.ry) * 0.08;
-      state.ty += 0.001;
+
+      if (!prefersReducedMotion) {
+        state.ty += isSmallDevice ? 0.0007 : 0.001;
+      }
 
       const cx = w * 0.5;
       const cy = h * 0.5;
-      const scale = Math.min(w, h) * 0.32;
+      const scale = Math.min(w, h) * 0.34;
       const fov = 2.5;
 
       const projected = points.map((p, i) => {
@@ -136,7 +136,7 @@ function NetworkGlobe({ active }) {
           const n = projected[nIdx];
           if (n.i < p.i) continue;
 
-          const alpha = 0.1 + 0.28 * (1 - Math.abs((p.z + n.z) * 0.5));
+          const alpha = 0.08 + 0.25 * (1 - Math.abs((p.z + n.z) * 0.5));
 
           ctx.strokeStyle = `rgba(55, 75, 130, ${alpha})`;
           ctx.beginPath();
@@ -150,10 +150,10 @@ function NetworkGlobe({ active }) {
 
       for (const p of projected) {
         const depth = (p.z + 1) / 2;
-        const size = 1.5 + (1 - depth) * 2.4;
+        const size = 1.4 + (1 - depth) * 2.3;
 
         ctx.fillStyle = BRAND;
-        ctx.globalAlpha = 0.32 + (1 - depth) * 0.65;
+        ctx.globalAlpha = 0.28 + (1 - depth) * 0.62;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
@@ -161,10 +161,15 @@ function NetworkGlobe({ active }) {
       }
 
       ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(draw);
+
+      if (!prefersReducedMotion) {
+        raf = requestAnimationFrame(draw);
+      }
     };
 
     const handleMove = (e) => {
+      if (prefersReducedMotion) return;
+
       const rect = canvas.getBoundingClientRect();
 
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -192,7 +197,13 @@ function NetworkGlobe({ active }) {
     };
   }, [active]);
 
-  return <canvas ref={canvasRef} className="block w-full h-full" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="block w-full h-full"
+      aria-hidden="true"
+    />
+  );
 }
 
 // --- Main Hero Section ---
@@ -203,7 +214,10 @@ export default function HeroSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.1 },
+      {
+        threshold: 0.15,
+        rootMargin: "80px",
+      },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -212,9 +226,10 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="w-full overflow-x-hidden font-sans selection:bg-[#374b82]/20">
+    <main className="w-full overflow-x-hidden font-sans selection:bg-[#374b82]/20">
       <section
         ref={sectionRef}
+        aria-labelledby="hero-heading"
         className="
           relative
           w-full
@@ -223,7 +238,11 @@ export default function HeroSection() {
           items-center
           justify-center
           pt-28
+          sm:pt-32
+          lg:pt-24
           pb-16
+          sm:pb-20
+          lg:pb-10
           overflow-hidden
         "
         style={{
@@ -231,11 +250,11 @@ export default function HeroSection() {
             "linear-gradient(135deg, #f6f8ff 0%, #eef3ff 45%, #ffffff 100%)",
         }}
       >
-        {/* Background Only */}
+        {/* Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/5 blur-[120px]" />
+          <div className="absolute top-[-12%] left-[-8%] w-[420px] sm:w-[520px] h-[420px] sm:h-[520px] rounded-full bg-[#374b82]/5 blur-[110px]" />
 
-          <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#374b82]/10 blur-[150px]" />
+          <div className="absolute bottom-[-14%] right-[-10%] w-[500px] sm:w-[680px] h-[500px] sm:h-[680px] rounded-full bg-[#374b82]/10 blur-[150px]" />
 
           <div
             className="absolute inset-0 opacity-[0.12]"
@@ -246,72 +265,102 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* Actual Content */}
+        {/* Content */}
         <div
           className="
             relative
             z-10
             w-full
-            max-w-7xl
+            max-w-none
             mx-auto
-            px-6
-            sm:px-10
-            lg:px-16
+            px-5
+            sm:px-8
+            lg:px-10
+            xl:px-14
+            2xl:px-16
             grid
             grid-cols-1
             lg:grid-cols-12
-            gap-10
-            lg:gap-14
+            gap-14
+            lg:gap-20
+xl:gap-28
+2xl:gap-36
             items-center
           "
         >
           {/* Left Content */}
-          <div className="lg:col-span-6 text-center lg:text-left space-y-7">
+          <div className="lg:col-span-5 xl:col-span-5 text-center lg:text-left space-y-7 lg:space-y-8">
             <div
               className="
                 inline-flex
                 items-center
                 gap-2
-                px-3
-                py-1
+                px-4
+                py-1.5
                 rounded-full
                 bg-[#374b82]/10
                 border
                 border-[#374b82]/20
                 text-[#374b82]
                 text-xs
+                sm:text-sm
                 font-semibold
                 uppercase
-                tracking-wider
+                tracking-[0.16em]
               "
             >
               <span className="w-2 h-2 rounded-full bg-[#374b82] animate-pulse" />
               Next-Gen IT Solutions
             </div>
 
-            <h1
-              className="
-                text-4xl
-                md:text-5xl
-                xl:text-6xl
-                font-bold
-                text-[#111827]
-                leading-[1.1]
-                tracking-tight
-              "
-            >
-              Smart IT Solutions For <br />
-              <span className="text-[#374b82]">Growing Businesses</span>
-            </h1>
+            <div className="space-y-4">
+              <h2
+                id="hero-heading"
+                className="
+                  text-[2.35rem]
+                  sm:text-4xl
+                  md:text-5xl
+                  lg:text-[3.8rem]
+                  xl:text-[4.35rem]
+                  2xl:text-[4.75rem]
+                  font-bold
+                  text-[#111827]
+                  leading-[1.06]
+                  tracking-tight
+                "
+              >
+                Smart IT Solutions For{" "}
+                <span className="block text-[#374b82]">Growing Businesses</span>
+              </h2>
 
-            <p className="text-lg text-[#4b5563] max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Transform your business with reliable, scalable, and modern
-              technology solutions built for speed, security, and growth.
-            </p>
+              <p
+                className="
+                  text-[15px]
+                  sm:text-base
+                  lg:text-lg
+                  text-[#4b5563]
+                  max-w-xl
+                  mx-auto
+                  lg:mx-0
+                  leading-relaxed
+                "
+              >
+                Transform your business with reliable, scalable, and modern
+                technology solutions built for{" "}
+                <strong className="text-[#374b82] font-semibold">speed</strong>,{" "}
+                <strong className="text-[#374b82] font-semibold">
+                  security
+                </strong>
+                , and{" "}
+                <strong className="text-[#374b82] font-semibold">growth</strong>
+                .
+              </p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-1">
               <a
                 href="#contact"
+                aria-label="Schedule a free consultation with SkillSprint Technologies"
                 className="
                   w-full
                   sm:w-auto
@@ -335,17 +384,18 @@ export default function HeroSection() {
 
               <a
                 href="#services"
+                aria-label="Explore SkillSprint Technologies services"
                 className="
                   w-full
                   sm:w-auto
                   px-8
                   py-4
-                  bg-white
+                  bg-white/80
                   !text-[#374b82]
                   font-semibold
                   rounded-xl
                   border
-                  border-[#374b82]/30
+                  border-[#374b82]/25
                   hover:bg-[#374b82]/5
                   hover:border-[#374b82]
                   transition-all
@@ -357,18 +407,19 @@ export default function HeroSection() {
               </a>
             </div>
 
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 pt-2">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-x-7 gap-y-3 pt-2">
               {["Fast Delivery", "Secure Solutions", "Scalable Systems"].map(
                 (text) => (
                   <div
                     key={text}
-                    className="flex items-center gap-2 text-sm font-medium text-gray-500"
+                    className="flex items-center gap-2 text-sm sm:text-base font-medium text-[#4b5563]"
                   >
                     <svg
-                      className="w-5 h-5 text-[#374b82]"
+                      className="w-5 h-5 text-[#374b82] shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -385,43 +436,49 @@ export default function HeroSection() {
           </div>
 
           {/* Right Visual */}
-          <div className="lg:col-span-6 relative group w-full flex justify-center">
+          <div className="lg:col-span-7 xl:col-span-7 relative w-full flex justify-center lg:justify-center lg:translate-x-[60px] xl:translate-x-[60px] 2xl:translate-x-[60px]">
+            {" "}
             <div
               className="
                 relative
                 w-full
-                max-w-[430px]
-                sm:max-w-[480px]
-                xl:max-w-[520px]
+                max-w-[380px]
+sm:max-w-[480px]
+md:max-w-[540px]
+lg:max-w-[570px]
+xl:max-w-[620px]
+2xl:max-w-[680px]
                 aspect-square
-                rounded-3xl
-                bg-white/40
+                rounded-[2rem]
+                bg-white/45
                 backdrop-blur-xl
                 border
                 border-[#374b82]/15
-                shadow-[0_20px_50px_rgba(55,75,130,0.12)]
+                shadow-[0_28px_80px_rgba(55,75,130,0.14)]
                 overflow-hidden
                 transition-transform
                 duration-500
-                group-hover:scale-[1.01]
+                hover:scale-[1.01]
               "
             >
               <div className="absolute inset-0 z-0">
                 <NetworkGlobe active={inView} />
               </div>
 
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/35 via-transparent to-transparent" />
+
+              <div className="absolute left-5 bottom-5 hidden sm:inline-flex items-center gap-2 rounded-full bg-white/75 backdrop-blur-md border border-[#374b82]/10 px-4 py-2 text-xs font-semibold text-[#374b82] shadow-[0_12px_35px_rgba(55,75,130,0.12)]">
+                Interactive Digital Ecosystem
+              </div>
             </div>
-
-            <div className="absolute -top-5 right-6 w-20 h-20 bg-[#374b82]/10 rounded-full blur-2xl animate-pulse pointer-events-none" />
-
+            <div className="absolute -top-5 right-8 w-20 h-20 bg-[#374b82]/10 rounded-full blur-2xl animate-pulse pointer-events-none" />
             <div
-              className="absolute -bottom-6 left-6 w-24 h-24 bg-[#374b82]/10 rounded-full blur-3xl animate-bounce pointer-events-none"
+              className="absolute -bottom-6 left-8 w-24 h-24 bg-[#374b82]/10 rounded-full blur-3xl animate-bounce pointer-events-none"
               style={{ animationDuration: "6s" }}
             />
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
