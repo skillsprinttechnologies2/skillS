@@ -252,18 +252,34 @@ export default function HeroSection() {
         }}
       >
         {/* Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-12%] left-[-8%] w-[420px] sm:w-[520px] h-[420px] sm:h-[520px] rounded-full bg-[#374b82]/5 blur-[110px]" />
+        <div
+          className="absolute inset-0 pointer-events-none overflow-hidden bg-[#edf3ff]"
+          aria-hidden="true"
+        >
+          {/* Base */}
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#eef4ff_0%,#f7faff_45%,#eaf1ff_100%)]" />
 
-          <div className="absolute bottom-[-14%] right-[-10%] w-[500px] sm:w-[680px] h-[500px] sm:h-[680px] rounded-full bg-[#374b82]/10 blur-[150px]" />
+          {/* Visible soft glow areas */}
+          <div className="absolute -top-28 -left-24 h-[520px] w-[520px] rounded-full bg-[#374b82]/16 blur-[120px]" />
 
+          <div className="absolute -bottom-36 -right-28 h-[620px] w-[620px] rounded-full bg-[#5b7cfa]/18 blur-[140px]" />
+
+          <div className="absolute left-[35%] top-[20%] h-[420px] w-[520px] rounded-full bg-[#dbe7ff]/70 blur-[90px]" />
+
+          {/* More visible grid */}
           <div
-            className="absolute inset-0 opacity-[0.12]"
+            className="absolute inset-0 opacity-[0.28]"
             style={{
-              backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-              backgroundSize: "32px 32px",
+              backgroundImage: `
+        linear-gradient(rgba(55,75,130,0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55,75,130,0.22) 1px, transparent 1px)
+      `,
+              backgroundSize: "52px 52px",
             }}
           />
+
+          {/* Light center fade for readability */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_45%_45%,rgba(255,255,255,0.55),rgba(255,255,255,0.15),transparent_72%)]" />
         </div>
 
         {/* Content Wrapper */}
