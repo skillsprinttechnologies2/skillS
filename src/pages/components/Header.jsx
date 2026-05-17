@@ -1,32 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import HamburgerToggle from "./HamburgerToggle";
+
+const navLinks = [
+  { name: "Home", target: "home", type: "section" },
+  { name: "About", target: "about", type: "section" },
+  { name: "Services", target: "/services", type: "page" },
+  { name: "Plans", target: "plans", type: "section" },
+  { name: "Contact", target: "contact", type: "section" },
+];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
+      if (location.pathname !== "/") return;
+
+      const sectionIds = ["home", "about", "services", "plans", "contact"];
+
+      for (const id of sectionIds) {
+        const section = document.getElementById(id);
+        if (!section) continue;
+
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= 120 && rect.bottom >= 120) {
+          setActiveSection(id);
+          break;
+        }
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    handleScroll();
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Plans", path: "/pricing" },
-    { name: "Contact", path: "/contact" },
-  ];
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
+  const scrollToSection = (sectionId) => {
+    setIsOpen(false);
+
+    const scroll = () => {
+      const section = document.getElementById(sectionId);
+
+      if (!section) return;
+
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    };
+
+    if (location.pathname !== "/") {
+      navigate("/");
+
+      setTimeout(scroll, 80);
+    } else {
+      scroll();
+    }
+  };
+
+  const isActiveLink = (link) => {
+    if (link.type === "page") {
+      return location.pathname === link.target;
+    }
+
+    return location.pathname === "/" && activeSection === link.target;
+  };
 
   return (
     <header
       className={`
-        fixed top-0 left-0 z-50 w-full
+        fixed top-0 left-0 right-0 z-[9999] w-full
         transition-all duration-300
         ${scrolled ? "h-[72px]" : "h-20"}
       `}
@@ -34,89 +87,120 @@ const Header = () => {
       <nav
         className="
           w-full h-full
-          bg-white/25
+          bg-white/35
           backdrop-blur-2xl
-          supports-[backdrop-filter]:bg-white/20
-          border-b border-white/30
+          supports-[backdrop-filter]:bg-white/25
+          border-b border-white/40
           shadow-[0_8px_32px_rgba(31,38,135,0.12)]
         "
+        aria-label="Main navigation"
       >
         <div
           className="
             w-full h-full
-            px-6 sm:px-10 lg:px-16
+            px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20
             flex items-center justify-between
           "
         >
           {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center shrink-0 no-underline"
-            onClick={() => setIsOpen(false)}
+          <button
+            type="button"
+            className="flex items-center shrink-0 bg-transparent border-0 p-0 cursor-pointer"
+            onClick={() => scrollToSection("home")}
+            aria-label="Go to homepage"
           >
             <img
               src="/logo.png"
-              alt="SkillSprint Technologies Logo"
+              alt="SkillSprint Technologies"
               className="h-12 sm:h-14 w-auto object-contain"
             />
-          </Link>
+          </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-10 lg:gap-14">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) =>
-                  `
-                    relative text-[15px] font-semibold tracking-wide
-                    transition-all duration-200 no-underline
-                    ${
-                      isActive
-                        ? "text-[#374b82]"
-                        : "text-[#24304a]/80 hover:text-[#374b82]"
-                    }
-                  `
-                }
-              >
-                {({ isActive }) => (
-                  <>
+          <div className="hidden md:flex items-center gap-8 lg:gap-12">
+            {navLinks.map((link) => {
+              const active = isActiveLink(link);
+
+              if (link.type === "page") {
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.target}
+                    onClick={() => setIsOpen(false)}
+                    className={`
+                      relative text-[15px] font-semibold tracking-wide
+                      transition-colors duration-200 no-underline
+                      ${
+                        active
+                          ? "text-[#374b82]"
+                          : "text-[#24304a]/80 hover:text-[#374b82]"
+                      }
+                    `}
+                  >
                     {link.name}
                     <span
                       className={`
                         absolute left-0 -bottom-2 h-[2px] rounded-full
                         bg-[#374b82] transition-all duration-300
-                        ${isActive ? "w-full opacity-100" : "w-0 opacity-0"}
+                        ${active ? "w-full opacity-100" : "w-0 opacity-0"}
                       `}
                     />
-                  </>
-                )}
-              </NavLink>
-            ))}
+                  </Link>
+                );
+              }
+
+              return (
+                <button
+                  key={link.name}
+                  type="button"
+                  onClick={() => scrollToSection(link.target)}
+                  className={`
+                    relative text-[15px] font-semibold tracking-wide
+                    transition-colors duration-200
+                    bg-transparent border-0 p-0 cursor-pointer
+                    ${
+                      active
+                        ? "text-[#374b82]"
+                        : "text-[#24304a]/80 hover:text-[#374b82]"
+                    }
+                  `}
+                >
+                  {link.name}
+                  <span
+                    className={`
+                      absolute left-0 -bottom-2 h-[2px] rounded-full
+                      bg-[#374b82] transition-all duration-300
+                      ${active ? "w-full opacity-100" : "w-0 opacity-0"}
+                    `}
+                  />
+                </button>
+              );
+            })}
           </div>
 
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-4 shrink-0">
-            <Link
-              to="/contact"
+            <button
+              type="button"
+              onClick={() => scrollToSection("contact")}
               className="
                 hidden md:inline-flex
                 items-center justify-center
                 px-7 py-3
                 rounded-xl
                 text-sm font-semibold
-                text-white no-underline
+                text-white
                 bg-[#374b82]
                 border border-[#374b82]/20
                 shadow-[0_12px_30px_rgba(55,75,130,0.25)]
                 hover:bg-[#2f3f70]
-                hover:-translate-y-0.5
                 active:scale-95
-                transition-all duration-300
+                transition-colors
+                cursor-pointer
               "
             >
               Get Started
-            </Link>
+            </button>
 
             <div className="md:hidden">
               <HamburgerToggle
@@ -145,7 +229,7 @@ const Header = () => {
             className="
               mt-3 w-full
               rounded-2xl
-              bg-white/80
+              bg-white/90
               backdrop-blur-2xl
               border border-white/40
               shadow-[0_20px_50px_rgba(55,75,130,0.18)]
@@ -153,50 +237,75 @@ const Header = () => {
               flex flex-col gap-2
             "
           >
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `
+            {navLinks.map((link) => {
+              const active = isActiveLink(link);
+
+              if (link.type === "page") {
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.target}
+                    onClick={() => setIsOpen(false)}
+                    className={`
+                      px-4 py-3 rounded-xl
+                      text-base font-semibold no-underline
+                      transition-colors duration-200
+                      ${
+                        active
+                          ? "bg-[#374b82]/10 text-[#374b82]"
+                          : "text-[#24304a]/80 hover:bg-[#374b82]/5 hover:text-[#374b82]"
+                      }
+                    `}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              }
+
+              return (
+                <button
+                  key={link.name}
+                  type="button"
+                  onClick={() => scrollToSection(link.target)}
+                  className={`
+                    w-full text-left
                     px-4 py-3 rounded-xl
-                    text-base font-semibold no-underline
-                    transition-all duration-200
+                    text-base font-semibold
+                    transition-colors duration-200
+                    bg-transparent border-0 cursor-pointer
                     ${
-                      isActive
+                      active
                         ? "bg-[#374b82]/10 text-[#374b82]"
                         : "text-[#24304a]/80 hover:bg-[#374b82]/5 hover:text-[#374b82]"
                     }
-                  `
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
+                  `}
+                >
+                  {link.name}
+                </button>
+              );
+            })}
 
-            <Link
-              to="/contact"
-              onClick={() => setIsOpen(false)}
+            <button
+              type="button"
+              onClick={() => scrollToSection("contact")}
               className="
-    mt-2 w-full
-    text-center
-    px-6 py-3
-    bg-[#374b82]
-    !text-white
-    font-semibold
-    no-underline
-    rounded-xl
-    shadow-[0_12px_30px_rgba(55,75,130,0.25)]
-    hover:bg-[#2f3f70]
-    hover:!text-white
-    active:scale-95
-    transition-all
-  "
-              style={{ color: "#ffffff" }}
+                mt-2 w-full
+                text-center
+                px-6 py-3
+                bg-[#374b82]
+                text-white
+                font-semibold
+                rounded-xl
+                shadow-[0_12px_30px_rgba(55,75,130,0.25)]
+                hover:bg-[#2f3f70]
+                active:scale-95
+                transition-colors
+                cursor-pointer
+                border-0
+              "
             >
               Get Started
-            </Link>
+            </button>
           </div>
         </div>
       </nav>

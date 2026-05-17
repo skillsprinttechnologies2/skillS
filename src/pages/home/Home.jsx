@@ -14,7 +14,7 @@
 // import FinalCTA from "./home/FinalCTA";
 
 import Hero from "./Hero";
-import ServicesSection from "./Services";
+import ServicesSection from "./ServicesOverview";
 import AboutSection from "./AboutSection";
 import PortfolioSection from "./CaseStudies";
 import ProcessSection from "./ProcessSection";

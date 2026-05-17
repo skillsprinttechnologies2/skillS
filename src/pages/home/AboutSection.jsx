@@ -53,6 +53,7 @@ const AboutSection = () => {
     py-10
     sm:py-12
     lg:py-8
+    -scroll-mt-6
   "
       style={{
         background:

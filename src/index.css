@@ -57,3 +57,7 @@ a.bg-\[\#374b82\] {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 86px;
+}
