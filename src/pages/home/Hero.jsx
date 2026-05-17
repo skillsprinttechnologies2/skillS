@@ -229,22 +229,23 @@ export default function HeroSection() {
     <main className="w-full overflow-x-hidden font-sans selection:bg-[#374b82]/20">
       <section
         ref={sectionRef}
+        id="home"
         aria-labelledby="hero-heading"
         className="
-          relative
-          w-full
-          min-h-screen
-          flex
-          items-center
-          justify-center
-          pt-28
-          sm:pt-32
-          lg:pt-24
-          pb-16
-          sm:pb-20
-          lg:pb-10
-          overflow-hidden
-        "
+    relative
+    w-full
+    min-h-screen
+    flex
+    items-center
+    justify-center
+    pt-28
+    sm:pt-32
+    lg:pt-24
+    pb-16
+    sm:pb-20
+    lg:pb-20
+    overflow-hidden
+  "
         style={{
           background:
             "linear-gradient(135deg, #f6f8ff 0%, #eef3ff 45%, #ffffff 100%)",
@@ -252,230 +253,275 @@ export default function HeroSection() {
       >
         {/* Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-12%] left-[-8%] w-[420px] sm:w-[520px] h-[420px] sm:h-[520px] rounded-full bg-[#374b82]/5 blur-[110px]" />
+          {/* Base gradient wash */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#f6f8ff] via-[#eef3ff] to-white" />
 
-          <div className="absolute bottom-[-14%] right-[-10%] w-[500px] sm:w-[680px] h-[500px] sm:h-[680px] rounded-full bg-[#374b82]/10 blur-[150px]" />
-
+          {/* Stronger dotted pattern */}
           <div
-            className="absolute inset-0 opacity-[0.12]"
+            className="absolute inset-0 opacity-[0.28]"
             style={{
-              backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-              backgroundSize: "32px 32px",
+              backgroundImage: `radial-gradient(#374b82 1.15px, transparent 1.15px)`,
+              backgroundSize: "28px 28px",
             }}
           />
+
+          {/* Soft blue glows */}
+          <div className="absolute top-[-8%] left-[-6%] w-[520px] h-[520px] rounded-full bg-[#374b82]/12 blur-[120px]" />
+
+          <div className="absolute bottom-[-10%] right-[-6%] w-[700px] h-[700px] rounded-full bg-[#374b82]/16 blur-[150px]" />
+
+          {/* Extra center depth */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(55,75,130,0.08),transparent_55%)]" />
         </div>
 
-        {/* Content */}
+        {/* Content Wrapper */}
         <div
           className="
-            relative
-            z-10
-            w-full
-            max-w-none
-            mx-auto
-            px-5
-            sm:px-8
-            lg:px-10
-            xl:px-14
-            2xl:px-16
-            grid
-            grid-cols-1
-            lg:grid-cols-12
-            gap-14
-            lg:gap-20
-xl:gap-28
-2xl:gap-36
-            items-center
-          "
+        relative
+        z-10
+        w-full
+        max-w-[1600px]
+        mx-auto
+        px-5
+        sm:px-8
+        lg:px-10
+        xl:px-16
+        2xl:px-20
+      "
         >
-          {/* Left Content */}
-          <div className="lg:col-span-5 xl:col-span-5 text-center lg:text-left space-y-7 lg:space-y-8">
+          <div
+            className="
+          w-full
+          flex
+          flex-col
+          lg:flex-row
+          items-center
+          justify-between
+          gap-12
+          lg:gap-8
+          xl:gap-12
+          2xl:gap-14
+        "
+          >
+            {/* Left Content */}
             <div
               className="
-                inline-flex
-                items-center
-                gap-2
-                px-4
-                py-1.5
-                rounded-full
-                bg-[#374b82]/10
-                border
-                border-[#374b82]/20
-                text-[#374b82]
-                text-xs
-                sm:text-sm
-                font-semibold
-                uppercase
-                tracking-[0.16em]
-              "
+            w-full
+            lg:w-[46%]
+            xl:w-[42%]
+            2xl:w-[40%]
+            text-center
+            lg:text-left
+            space-y-6
+            shrink-0
+          "
             >
-              <span className="w-2 h-2 rounded-full bg-[#374b82] animate-pulse" />
-              Next-Gen IT Solutions
-            </div>
-
-            <div className="space-y-4">
-              <h2
-                id="hero-heading"
+              <div
                 className="
-                  text-[2.35rem]
-                  sm:text-4xl
-                  md:text-5xl
-                  lg:text-[3.8rem]
-                  xl:text-[4.35rem]
-                  2xl:text-[4.75rem]
-                  font-bold
-                  text-[#111827]
-                  leading-[1.06]
-                  tracking-tight
-                "
+              inline-flex
+              items-center
+              gap-2
+              px-4
+              py-1.5
+              rounded-full
+              bg-[#374b82]/10
+              border
+              border-[#374b82]/20
+              text-[#374b82]
+              text-xs
+              sm:text-sm
+              font-semibold
+              uppercase
+              tracking-[0.16em]
+            "
               >
-                Smart IT Solutions For{" "}
-                <span className="block text-[#374b82]">Growing Businesses</span>
-              </h2>
+                <span className="w-2 h-2 rounded-full bg-[#374b82] animate-pulse" />
+                Next-Gen IT Solutions
+              </div>
 
-              <p
-                className="
-                  text-[15px]
-                  sm:text-base
-                  lg:text-lg
-                  text-[#4b5563]
-                  max-w-xl
-                  mx-auto
-                  lg:mx-0
-                  leading-relaxed
-                "
-              >
-                Transform your business with reliable, scalable, and modern
-                technology solutions built for{" "}
-                <strong className="text-[#374b82] font-semibold">speed</strong>,{" "}
-                <strong className="text-[#374b82] font-semibold">
-                  security
-                </strong>
-                , and{" "}
-                <strong className="text-[#374b82] font-semibold">growth</strong>
-                .
-              </p>
-            </div>
+              <div className="space-y-4">
+                <h1
+                  id="hero-heading"
+                  className="
+                text-[2.2rem]
+                sm:text-[2.8rem]
+                md:text-[3.25rem]
+                lg:text-[2.85rem]
+                xl:text-[3.35rem]
+                2xl:text-[3.7rem]
+                font-bold
+                text-[#111827]
+                leading-[1.05]
+                tracking-tight
+              "
+                >
+                  <span className="block xl:whitespace-nowrap">
+                    Smart IT Solutions For
+                  </span>
+                  <span className="block text-[#374b82] xl:whitespace-nowrap">
+                    Growing Businesses
+                  </span>
+                </h1>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-1">
-              <a
-                href="#contact"
-                aria-label="Schedule a free consultation with SkillSprint Technologies"
-                className="
-                  w-full
-                  sm:w-auto
-                  px-8
-                  py-4
-                  bg-[#374b82]
-                  !text-white
-                  font-semibold
-                  rounded-xl
-                  shadow-lg
-                  shadow-[#374b82]/30
-                  hover:bg-[#2f3f70]
-                  hover:-translate-y-0.5
-                  transition-all
-                  text-center
-                  no-underline
-                "
-              >
-                Schedule a Free Consultation
-              </a>
+                <p
+                  className="
+                text-[15px]
+                sm:text-base
+                lg:text-[17px]
+                text-[#4b5563]
+                max-w-xl
+                mx-auto
+                lg:mx-0
+                leading-relaxed
+              "
+                >
+                  Transform your business with reliable, scalable, and modern
+                  technology solutions built for{" "}
+                  <strong className="text-[#374b82] font-semibold">
+                    speed
+                  </strong>
+                  ,{" "}
+                  <strong className="text-[#374b82] font-semibold">
+                    security
+                  </strong>
+                  , and{" "}
+                  <strong className="text-[#374b82] font-semibold">
+                    growth
+                  </strong>
+                  .
+                </p>
+              </div>
 
-              <a
-                href="#services"
-                aria-label="Explore SkillSprint Technologies services"
-                className="
-                  w-full
-                  sm:w-auto
-                  px-8
-                  py-4
-                  bg-white/80
-                  !text-[#374b82]
-                  font-semibold
-                  rounded-xl
-                  border
-                  border-[#374b82]/25
-                  hover:bg-[#374b82]/5
-                  hover:border-[#374b82]
-                  transition-all
-                  text-center
-                  no-underline
-                "
-              >
-                Explore Services
-              </a>
-            </div>
-
-            <div className="flex flex-wrap justify-center lg:justify-start gap-x-7 gap-y-3 pt-2">
-              {["Fast Delivery", "Secure Solutions", "Scalable Systems"].map(
-                (text) => (
-                  <div
-                    key={text}
-                    className="flex items-center gap-2 text-sm sm:text-base font-medium text-[#4b5563]"
-                  >
-                    <svg
-                      className="w-5 h-5 text-[#374b82] shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2.5"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    {text}
-                  </div>
-                ),
-              )}
-            </div>
-          </div>
-
-          {/* Right Visual */}
-          <div className="lg:col-span-7 xl:col-span-7 relative w-full flex justify-center lg:justify-center lg:translate-x-[60px] xl:translate-x-[60px] 2xl:translate-x-[60px]">
-            {" "}
-            <div
-              className="
-                relative
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-1">
+                <a
+                  href="#contact"
+                  aria-label="Schedule a free consultation with SkillSprint Technologies"
+                  className="
                 w-full
-                max-w-[380px]
-sm:max-w-[480px]
-md:max-w-[540px]
-lg:max-w-[570px]
-xl:max-w-[620px]
-2xl:max-w-[680px]
-                aspect-square
-                rounded-[2rem]
-                bg-white/45
-                backdrop-blur-xl
-                border
-                border-[#374b82]/15
-                shadow-[0_28px_80px_rgba(55,75,130,0.14)]
-                overflow-hidden
-                transition-transform
-                duration-500
-                hover:scale-[1.01]
+                sm:w-auto
+                min-w-[240px]
+                px-7
+                py-4
+                bg-[#374b82]
+                !text-white
+                font-semibold
+                rounded-xl
+                shadow-lg
+                shadow-[#374b82]/30
+                hover:bg-[#2f3f70]
+                transition-colors
+                text-center
+                no-underline
               "
-            >
-              <div className="absolute inset-0 z-0">
-                <NetworkGlobe active={inView} />
+                >
+                  Schedule a Free Consultation
+                </a>
+
+                <a
+                  href="#services"
+                  aria-label="Explore SkillSprint Technologies services"
+                  className="
+                w-full
+                sm:w-auto
+                min-w-[180px]
+                px-7
+                py-4
+                bg-white/80
+                !text-[#374b82]
+                font-semibold
+                rounded-xl
+                border
+                border-[#374b82]/25
+                hover:bg-[#374b82]/5
+                hover:border-[#374b82]
+                transition-colors
+                text-center
+                no-underline
+              "
+                >
+                  Explore Services
+                </a>
               </div>
 
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/35 via-transparent to-transparent" />
-
-              <div className="absolute left-5 bottom-5 hidden sm:inline-flex items-center gap-2 rounded-full bg-white/75 backdrop-blur-md border border-[#374b82]/10 px-4 py-2 text-xs font-semibold text-[#374b82] shadow-[0_12px_35px_rgba(55,75,130,0.12)]">
-                Interactive Digital Ecosystem
+              <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 pt-2">
+                {["Fast Delivery", "Secure Solutions", "Scalable Systems"].map(
+                  (text) => (
+                    <div
+                      key={text}
+                      className="flex items-center gap-2 text-sm sm:text-base font-medium text-[#4b5563]"
+                    >
+                      <svg
+                        className="w-5 h-5 text-[#374b82] shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2.5"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      {text}
+                    </div>
+                  ),
+                )}
               </div>
             </div>
-            <div className="absolute -top-5 right-8 w-20 h-20 bg-[#374b82]/10 rounded-full blur-2xl animate-pulse pointer-events-none" />
+
+            {/* Right Visual */}
             <div
-              className="absolute -bottom-6 left-8 w-24 h-24 bg-[#374b82]/10 rounded-full blur-3xl animate-bounce pointer-events-none"
-              style={{ animationDuration: "6s" }}
-            />
+              className="
+            relative
+            w-full
+            lg:w-[50%]
+            xl:w-[55%]
+            2xl:w-[57%]
+            flex
+            justify-center
+            lg:justify-end
+            overflow-visible
+          "
+            >
+              <div
+                className="
+              relative
+              w-full
+              max-w-[340px]
+              sm:max-w-[430px]
+              md:max-w-[500px]
+              lg:max-w-[480px]
+              xl:max-w-[560px]
+              2xl:max-w-[590px]
+              aspect-square
+              rounded-[2rem]
+              bg-white/45
+              backdrop-blur-xl
+              border
+              border-[#374b82]/15
+              shadow-[0_28px_80px_rgba(55,75,130,0.14)]
+              overflow-hidden
+              transition-transform
+              duration-500
+              hover:scale-[1.01]
+            "
+              >
+                <div className="absolute inset-0 z-0 scale-[0.84] sm:scale-[0.88] lg:scale-[0.82] xl:scale-[0.88] 2xl:scale-[0.88] origin-center">
+                  <NetworkGlobe active={inView} />
+                </div>
+
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/35 via-transparent to-transparent" />
+              </div>
+
+              <div className="absolute -top-5 right-8 w-20 h-20 bg-[#374b82]/10 rounded-full blur-2xl animate-pulse pointer-events-none" />
+
+              <div
+                className="absolute -bottom-6 left-8 w-24 h-24 bg-[#374b82]/10 rounded-full blur-3xl animate-bounce pointer-events-none"
+                style={{ animationDuration: "6s" }}
+              />
+            </div>
           </div>
         </div>
       </section>
