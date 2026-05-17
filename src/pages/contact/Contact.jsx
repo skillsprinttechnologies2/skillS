@@ -327,7 +327,7 @@ const Contact = () => {
                     {status !== "loading" && <Send size={18} />}
                   </button>
                   <p className="text-center text-xs text-gray-500 mt-3">
-                    We usually respond within 24 hours.
+                    We’ll get back to you shortly.{" "}
                   </p>
                 </div>
               </form>
@@ -339,7 +339,7 @@ const Contact = () => {
             {/* Map Card */}
             <section className="relative w-full h-64 sm:h-80 rounded-3xl overflow-hidden border border-[#374b82]/10 shadow-[0_20px_60px_rgba(55,75,130,0.10)] bg-white/65 backdrop-blur-xl">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.886539092!2d77.49085405820312!3d12.95395999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                src="https://www.google.com/maps?q=Tumakuru,Karnataka&z=15&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

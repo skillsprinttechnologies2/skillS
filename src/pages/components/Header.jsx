@@ -43,10 +43,8 @@ const Header = () => {
 
       const section = document.getElementById(sectionId);
       if (!section) return;
-
-      const yOffset = -90;
+      const yOffset = sectionId === "about" ? -60 : -90;
       const y = section.getBoundingClientRect().top + window.scrollY + yOffset;
-
       window.scrollTo({
         top: y,
         left: 0,

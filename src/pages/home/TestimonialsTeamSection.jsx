@@ -187,8 +187,8 @@ const TestimonialsTeamSection = () => {
 
               <div className="flex flex-col sm:flex-row items-start gap-4 pt-2">
                 <Link
-                  to="/"
-                  state={{ scrollTo: "about" }}
+                  to="/ourteam"
+                  onClick={() => window.scrollTo(0, 0)}
                   className="inline-flex items-center gap-2 px-8 py-4 bg-[#374b82] !text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all active:scale-95"
                 >
                   Meet Our Team

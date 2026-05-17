@@ -205,6 +205,7 @@ const Services = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link
               to="/contact"
+              onClick={() => window.scrollTo(0, 0)}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#374b82] !text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all active:scale-95"
               aria-label="Get a free consultation"
             >
@@ -212,11 +213,12 @@ const Services = () => {
               <ArrowRight size={18} />
             </Link>
             <Link
-              to="/plans"
+              to="/ourteam"
+              onClick={() => window.scrollTo(0, 0)}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/80 !text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 hover:bg-white hover:border-[#374b82]/40 transition-all"
               aria-label="View our service plans"
             >
-              View Plans
+              Meet Our Team
             </Link>
           </div>
         </section>

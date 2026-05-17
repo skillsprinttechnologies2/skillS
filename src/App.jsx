@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from "./pages/components/Header";
 import Footer from "./pages/components/Footer";
-
+import OurTeam from "./pages/Team/ourTeam";
 const Home = lazy(() => import("./pages/home/Home"));
 const Services = lazy(() => import("./pages/Services/Services"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
@@ -34,6 +34,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/ourteam" element={<OurTeam />} />
           <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
