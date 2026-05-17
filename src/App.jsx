@@ -7,6 +7,7 @@ import Home from "./pages/home/Home";
 import ScrollToTop from "./pages/components/ScrollToTop";
 
 const Services = lazy(() => import("./pages/Services/Services"));
+const Contact = lazy(() => import("./pages/contact/Contact"));
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Suspense>
 
