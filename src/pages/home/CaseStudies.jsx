@@ -14,62 +14,68 @@ import {
 const projects = [
   {
     id: 1,
+    slug: "business-website-redesign",
     title: "Business Website Redesign",
     category: "Web Development",
     desc: "A modern responsive website built to improve brand trust, speed, and customer enquiries.",
     tags: ["React", "Responsive", "SEO"],
     metric: "40% faster page load",
-    icon: <Code size={28} />,
+    icon: <Code size={28} aria-hidden="true" />,
     gradient: "from-[#374b82]/20 to-[#4f68b3]/10",
   },
   {
     id: 2,
+    slug: "lead-generation-campaign",
     title: "Lead Generation Campaign",
     category: "Digital Marketing",
     desc: "A targeted digital campaign designed to improve online visibility and qualified customer leads.",
     tags: ["SEO", "Ads", "Analytics"],
     metric: "2.5x enquiry growth",
-    icon: <BarChart2 size={28} />,
+    icon: <BarChart2 size={28} aria-hidden="true" />,
     gradient: "from-[#374b82]/15 to-[#5c7ac8]/10",
   },
   {
     id: 3,
+    slug: "customer-support-chatbot",
     title: "Customer Support Chatbot",
     category: "Automation",
     desc: "An automated chatbot flow that helps customers get quick answers and reduces manual support effort.",
     tags: ["Chatbot", "Automation", "CRM"],
     metric: "24/7 response system",
-    icon: <MessageSquare size={28} />,
+    icon: <MessageSquare size={28} aria-hidden="true" />,
     gradient: "from-[#2f3f70]/20 to-[#374b82]/10",
   },
   {
     id: 4,
+    slug: "training-placement-portal",
     title: "Training & Placement Portal",
     category: "Training",
     desc: "A structured learning and placement support platform for managing students, batches, and progress.",
     tags: ["Dashboard", "Students", "Placement"],
     metric: "Simplified tracking",
-    icon: <BookOpen size={28} />,
+    icon: <BookOpen size={28} aria-hidden="true" />,
     gradient: "from-[#4f68b3]/20 to-[#374b82]/10",
   },
   {
     id: 5,
+    slug: "brand-identity-system",
     title: "Brand Identity System",
     category: "Design",
     desc: "A clean visual identity package with brand assets, presentation templates, and digital creatives.",
     tags: ["Branding", "UI", "Creative"],
     metric: "Consistent brand presence",
-    icon: <PenTool size={28} />,
+    icon: <PenTool size={28} aria-hidden="true" />,
     gradient: "from-[#374b82]/20 to-[#6b7db3]/10",
   },
   {
     id: 6,
+    slug: "custom-business-dashboard",
     title: "Custom Business Dashboard",
     category: "Web Development",
     desc: "A scalable dashboard for tracking operations, customers, reports, and business performance.",
     tags: ["Dashboard", "API", "Reports"],
     metric: "Centralized insights",
-    icon: <Layers size={28} />,
+    icon: <Layers size={28} aria-hidden="true" />,
     gradient: "from-[#2f3f70]/15 to-[#4f68b3]/10",
   },
 ];
@@ -92,9 +98,9 @@ const PortfolioSection = () => {
   const targetScrollRef = useRef(0);
 
   const filteredProjects = useMemo(() => {
-    return activeFilter === "All Projects"
-      ? projects
-      : projects.filter((project) => project.category === activeFilter);
+    if (activeFilter === "All Projects") return projects;
+
+    return projects.filter((project) => project.category === activeFilter);
   }, [activeFilter]);
 
   const isSingle = filteredProjects.length === 1;
@@ -159,11 +165,8 @@ const PortfolioSection = () => {
         Math.min(maxScrollLeft, currentBase + delta * 3.5),
       );
 
-      const canMove = nextTarget !== currentBase;
-
-      if (canMove) {
+      if (nextTarget !== currentBase) {
         event.preventDefault();
-
         targetScrollRef.current = nextTarget;
 
         if (!scrollFrameRef.current) {
@@ -186,20 +189,25 @@ const PortfolioSection = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden"
+      id="case-studies"
+      className="relative w-full overflow-hidden scroll-mt-24"
+      aria-labelledby="case-studies-heading"
       style={{
         background:
           "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
       }}
     >
       {/* Background Visuals */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
         <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/5 blur-[120px]" />
 
         <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#374b82]/10 blur-[150px]" />
 
         <div
-          className="absolute inset-0 opacity-[0.12]"
+          className="absolute inset-0 opacity-[0.14]"
           style={{
             backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
             backgroundSize: "32px 32px",
@@ -207,27 +215,33 @@ const PortfolioSection = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24 lg:py-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-24 lg:py-28">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest">
-            <Filter size={14} />
+            <Filter size={14} aria-hidden="true" />
             Case Studies
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-[#111827] tracking-tight">
+          <h2
+            id="case-studies-heading"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#111827] tracking-tight"
+          >
             Real Solutions,{" "}
             <span className="text-[#374b82]">Proven Results</span>
           </h2>
 
-          <p className="text-lg text-[#4b5563] leading-relaxed">
+          <p className="text-base sm:text-lg text-[#4b5563] leading-relaxed">
             Explore selected projects that show how SkillSprint Technologies
             helps businesses build, automate, market, and scale with confidence.
           </p>
         </div>
 
         {/* Filters */}
-        <div className="flex justify-start sm:justify-center gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+        <div
+          className="flex justify-start sm:justify-center gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide"
+          aria-label="Case study filters"
+        >
           {filters.map((filter) => (
             <button
               key={filter}
@@ -262,7 +276,7 @@ const PortfolioSection = () => {
                 scrollbar-hide
                 ${isSingle ? "justify-center" : ""}
               `}
-              aria-label="Portfolio case studies horizontal scroll"
+              aria-label="Case studies horizontal scroll"
             >
               {filteredProjects.map((project) => (
                 <article
@@ -280,7 +294,7 @@ const PortfolioSection = () => {
                     border border-[#374b82]/10
                     shadow-[0_20px_60px_rgba(55,75,130,0.10)]
                     overflow-hidden
-                    transition-all duration-500
+                    transition-all duration-300
                     hover:-translate-y-2
                     hover:border-[#374b82]/30
                     hover:shadow-[0_30px_80px_rgba(55,75,130,0.16)]
@@ -305,7 +319,7 @@ const PortfolioSection = () => {
 
                     <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-[#374b82]/10 border border-[#374b82]/20" />
 
-                    <div className="absolute inset-0 flex items-center justify-center text-[#374b82]/80 group-hover:text-[#374b82] group-hover:scale-110 transition-all duration-500">
+                    <div className="absolute inset-0 flex items-center justify-center text-[#374b82]/80 group-hover:text-[#374b82] group-hover:scale-110 transition-all duration-300">
                       {project.icon}
                     </div>
 
@@ -338,7 +352,7 @@ const PortfolioSection = () => {
                     </div>
 
                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#374b82]/10 border border-[#374b82]/20 w-fit">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#374b82] animate-pulse" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#374b82]" />
 
                       <span className="text-xs font-semibold text-[#374b82]">
                         {project.metric}
@@ -347,13 +361,18 @@ const PortfolioSection = () => {
 
                     <div className="pt-2">
                       <Link
-                        to="/contact"
+                        to={`/case-studies/${project.slug}`}
+                        onClick={() => {
+                          window.scrollTo({ top: 0, left: 0 });
+                        }}
                         className="inline-flex items-center gap-2 text-sm font-bold !text-[#374b82] no-underline hover:gap-3 transition-all group/link"
+                        aria-label={`View case study: ${project.title}`}
                       >
                         View Case Study
                         <ArrowUpRight
                           size={16}
                           className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                          aria-hidden="true"
                         />
                       </Link>
                     </div>

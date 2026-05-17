@@ -12,7 +12,8 @@
 // import FreeAudit from "./home/FreeAudit";
 // import FAQ from "./home/FAQ";
 // import FinalCTA from "./home/FinalCTA";
-
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Hero from "./Hero";
 import ServicesSection from "./ServicesOverview";
 import AboutSection from "./AboutSection";
@@ -21,6 +22,25 @@ import ProcessSection from "./ProcessSection";
 import TestimonialsTeamSection from "./TestimonialsTeamSection";
 
 export default function Home({ setOpenCalendly }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo === "case-studies") {
+      setTimeout(() => {
+        const section = document.getElementById("case-studies");
+        if (!section) return;
+
+        const yOffset = 200; // increase = go more down
+        const y =
+          section.getBoundingClientRect().top + window.scrollY + yOffset;
+
+        window.scrollTo({
+          top: y,
+          behavior: "smooth",
+        });
+      }, 100);
+    }
+  }, [location]);
   return (
     <main>
       {/* Hero */}

@@ -6,8 +6,8 @@ const navLinks = [
   { name: "Home", target: "home", type: "section" },
   { name: "About", target: "about", type: "section" },
   { name: "Services", target: "/services", type: "page" },
-  { name: "Plans", target: "plans", type: "section" },
-  { name: "Contact", target: "contact", type: "section" },
+  { name: "Case Studies", target: "case-studies", type: "section" },
+  { name: "Contact", target: "/contact", type: "page" },
 ];
 
 const Header = () => {
@@ -18,13 +18,78 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 80);
+  };
+
+  const scrollToSection = (sectionId) => {
+    setIsOpen(false);
+
+    const scroll = () => {
+      if (sectionId === "home") {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+        return;
+      }
+
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      const yOffset = -90;
+      const y = section.getBoundingClientRect().top + window.scrollY + yOffset;
+
+      window.scrollTo({
+        top: y,
+        left: 0,
+        behavior: "smooth",
+      });
+    };
+
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: sectionId } });
+
+      setTimeout(scroll, 150);
+      return;
+    }
+
+    scroll();
+  };
+
+  const goToPageTop = (path) => {
+    setIsOpen(false);
+
+    if (location.pathname === path) {
+      scrollToTop();
+      return;
+    }
+
+    navigate(path);
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 100);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
       if (location.pathname !== "/") return;
 
-      const sectionIds = ["home", "about", "services", "plans", "contact"];
+      const sectionIds = ["home", "about", "case-studies"];
 
       for (const id of sectionIds) {
         const section = document.getElementById(id);
@@ -42,31 +107,9 @@ const Header = () => {
     handleScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
-
-  const scrollToSection = (sectionId) => {
-    setIsOpen(false);
-
-    const scroll = () => {
-      const section = document.getElementById(sectionId);
-
-      if (!section) return;
-
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    };
-
-    if (location.pathname !== "/") {
-      navigate("/");
-
-      setTimeout(scroll, 80);
-    } else {
-      scroll();
-    }
-  };
 
   const isActiveLink = (link) => {
     if (link.type === "page") {
@@ -123,13 +166,14 @@ const Header = () => {
 
               if (link.type === "page") {
                 return (
-                  <Link
+                  <button
                     key={link.name}
-                    to={link.target}
-                    onClick={() => setIsOpen(false)}
+                    type="button"
+                    onClick={() => goToPageTop(link.target)}
                     className={`
                       relative text-[15px] font-semibold tracking-wide
-                      transition-colors duration-200 no-underline
+                      transition-colors duration-200
+                      bg-transparent border-0 p-0 cursor-pointer
                       ${
                         active
                           ? "text-[#374b82]"
@@ -145,7 +189,7 @@ const Header = () => {
                         ${active ? "w-full opacity-100" : "w-0 opacity-0"}
                       `}
                     />
-                  </Link>
+                  </button>
                 );
               }
 
@@ -182,7 +226,7 @@ const Header = () => {
           <div className="flex items-center gap-4 shrink-0">
             <button
               type="button"
-              onClick={() => scrollToSection("contact")}
+              onClick={() => goToPageTop("/contact")}
               className="
                 hidden md:inline-flex
                 items-center justify-center
@@ -242,14 +286,16 @@ const Header = () => {
 
               if (link.type === "page") {
                 return (
-                  <Link
+                  <button
                     key={link.name}
-                    to={link.target}
-                    onClick={() => setIsOpen(false)}
+                    type="button"
+                    onClick={() => goToPageTop(link.target)}
                     className={`
+                      w-full text-left
                       px-4 py-3 rounded-xl
-                      text-base font-semibold no-underline
+                      text-base font-semibold
                       transition-colors duration-200
+                      bg-transparent border-0 cursor-pointer
                       ${
                         active
                           ? "bg-[#374b82]/10 text-[#374b82]"
@@ -258,7 +304,7 @@ const Header = () => {
                     `}
                   >
                     {link.name}
-                  </Link>
+                  </button>
                 );
               }
 
@@ -287,7 +333,7 @@ const Header = () => {
 
             <button
               type="button"
-              onClick={() => scrollToSection("contact")}
+              onClick={() => goToPageTop("/contact")}
               className="
                 mt-2 w-full
                 text-center

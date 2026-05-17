@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Linkedin,
   Instagram,
@@ -16,7 +16,7 @@ const quickLinks = [
   { label: "Home", path: "/#home" },
   { label: "About", path: "/#about" },
   { label: "Services", path: "/services" },
-  { label: "Plans", path: "/#plans" },
+  { label: "Careers", path: "/careers" },
   { label: "Contact", path: "/contact" },
 ];
 
@@ -48,12 +48,69 @@ const contactInfo = [
 ];
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }, 80);
+  };
+
+  const scrollToSection = (sectionId) => {
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+
+      if (!section) {
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        return;
+      }
+
+      const yOffset = -90;
+      const y = section.getBoundingClientRect().top + window.scrollY + yOffset;
+
+      window.scrollTo({
+        top: y,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 120);
+  };
+
+  const handleFooterNav = (event, path) => {
+    event.preventDefault();
+
+    if (path.includes("#")) {
+      const [route, sectionId] = path.split("#");
+
+      if (location.pathname !== route) {
+        navigate(route, { state: { scrollTo: sectionId } });
+        return;
+      }
+
+      if (sectionId === "home") {
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        return;
+      }
+
+      scrollToSection(sectionId);
+      return;
+    }
+
+    if (location.pathname === path) {
+      scrollToTop();
+      return;
+    }
+
+    navigate(path);
+    scrollToTop();
+  };
+
   return (
     <footer
       aria-label="Site footer"
       className="relative w-full border-t border-[#374b82]/10 bg-gradient-to-br from-white via-[#f6f8ff] to-[#eef3ff] overflow-hidden"
     >
-      {/* Subtle Dotted Background Pattern */}
       <div
         className="absolute inset-0 opacity-[0.10] pointer-events-none"
         aria-hidden="true"
@@ -65,42 +122,50 @@ const Footer = () => {
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 py-10 sm:py-12 lg:py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          {/* Column 1: Brand */}
           <div className="space-y-6">
-            <Link to="/" aria-label="Go to homepage">
+            <Link
+              to="/"
+              onClick={(event) => handleFooterNav(event, "/#home")}
+              aria-label="Go to homepage"
+            >
               <img
                 src="/logo.png"
                 alt="SkillSprint Technologies"
                 className="h-10 w-auto object-contain"
+                loading="lazy"
               />
             </Link>
+
             <p className="text-sm text-[#4b5563] leading-relaxed">
               SkillSprint Technologies builds digital solutions that help
               businesses grow with speed, security, and scalability.
             </p>
 
-            {/* Social Buttons */}
             <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-white border border-[#374b82]/10 flex items-center justify-center text-[#374b82] hover:bg-[#374b82] hover:text-white hover:-translate-y-1 transition-all duration-300 shadow-sm"
-                >
-                  <social.icon size={18} aria-hidden="true" />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-full bg-white border border-[#374b82]/10 flex items-center justify-center text-[#374b82] hover:bg-[#374b82] hover:text-white hover:-translate-y-1 transition-all duration-300 shadow-sm"
+                  >
+                    <Icon size={18} aria-hidden="true" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
             <h3 className="text-base font-bold text-[#111827] mb-6">
               Quick Links
             </h3>
+
             <nav
               aria-label="Footer quick links"
               className="flex flex-col space-y-4"
@@ -109,20 +174,21 @@ const Footer = () => {
                 <Link
                   key={item.label}
                   to={item.path}
+                  onClick={(event) => handleFooterNav(event, item.path)}
                   className="relative w-fit text-sm text-[#4b5563] hover:text-[#374b82] transition-colors duration-300 group"
                 >
                   {item.label}
-                  <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-[#374b82] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-[#374b82] transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Column 3: Services */}
           <div>
             <h3 className="text-base font-bold text-[#111827] mb-6">
               Services
             </h3>
+
             <nav
               aria-label="Footer services links"
               className="flex flex-col space-y-4"
@@ -131,59 +197,66 @@ const Footer = () => {
                 <Link
                   key={item.label}
                   to={item.path}
+                  onClick={(event) => handleFooterNav(event, item.path)}
                   className="relative w-fit text-sm text-[#4b5563] hover:text-[#374b82] transition-colors duration-300 group"
                 >
                   {item.label}
-                  <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-[#374b82] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-[#374b82] transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Column 4: Contact & CTA */}
           <div className="space-y-6">
             <h3 className="text-base font-bold text-[#111827] mb-2">
               Contact Us
             </h3>
+
             <div className="flex flex-col space-y-4">
-              {contactInfo.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-start gap-3 text-sm"
-                >
-                  <div className="mt-0.5 text-[#374b82]" aria-hidden="true">
-                    <item.icon size={16} />
+              {contactInfo.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div
+                    key={item.label}
+                    className="flex items-start gap-3 text-sm"
+                  >
+                    <div className="mt-0.5 text-[#374b82]" aria-hidden="true">
+                      <Icon size={16} />
+                    </div>
+
+                    <div className="flex flex-col">
+                      <span className="text-xs text-gray-400 font-medium uppercase tracking-wide mb-0.5">
+                        {item.label}
+                      </span>
+
+                      {item.label === "Email" ? (
+                        <a
+                          href={`mailto:${item.value}`}
+                          className="text-[#4b5563] hover:text-[#374b82] transition-colors"
+                        >
+                          {item.value}
+                        </a>
+                      ) : item.label === "Phone" ? (
+                        <a
+                          href={`tel:${item.value.replace(/\s/g, "")}`}
+                          className="text-[#4b5563] hover:text-[#374b82] transition-colors"
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        <span className="text-[#4b5563]">{item.value}</span>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-xs text-gray-400 font-medium uppercase tracking-wide mb-0.5">
-                      {item.label}
-                    </span>
-                    {item.label === "Email" ? (
-                      <a
-                        href={`mailto:${item.value}`}
-                        className="text-[#4b5563] hover:text-[#374b82] transition-colors"
-                      >
-                        {item.value}
-                      </a>
-                    ) : item.label === "Phone" ? (
-                      <a
-                        href={`tel:${item.value}`}
-                        className="text-[#4b5563] hover:text-[#374b82] transition-colors"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <span className="text-[#4b5563]">{item.value}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* CTA Button */}
             <div className="pt-2">
               <Link
                 to="/contact"
+                onClick={(event) => handleFooterNav(event, "/contact")}
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#374b82] text-white text-sm font-semibold rounded-lg shadow-md shadow-[#374b82]/20 hover:bg-[#2f3f70] hover:-translate-y-0.5 transition-all duration-300"
               >
                 Get Started
@@ -193,21 +266,24 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-[#374b82]/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#4b5563]">
           <p>
             © {new Date().getFullYear()} SkillSprint Technologies. All rights
             reserved.
           </p>
+
           <div className="flex gap-6">
             <Link
               to="/privacy-policy"
+              onClick={(event) => handleFooterNav(event, "/privacy-policy")}
               className="hover:text-[#374b82] transition-colors"
             >
               Privacy Policy
             </Link>
+
             <Link
               to="/terms-conditions"
+              onClick={(event) => handleFooterNav(event, "/terms-conditions")}
               className="hover:text-[#374b82] transition-colors"
             >
               Terms & Conditions
