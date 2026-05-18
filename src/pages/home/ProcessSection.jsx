@@ -39,32 +39,10 @@ const ProcessSection = () => {
   const indicatorPositions = ["top-[0%]", "top-1/2", "top-full"];
 
   return (
-    <section
-      className="relative w-full overflow-hidden py-20 lg:py-24"
-      style={{
-        background:
-          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-      }}
-    >
+    <section className="relative bg-transperent w-full overflow-hidden py-20 lg:py-24">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         {/* Main Dark Box Container */}
         <div className="relative overflow-hidden rounded-[2rem] bg-[#374b82] px-6 sm:px-10 lg:px-16 py-14 lg:py-16 shadow-[0_30px_90px_rgba(55,75,130,0.22)]">
-          {/* Background Pattern inside the box */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full border border-white/10" />
-            <div className="absolute -right-10 -bottom-10 w-64 h-64 rounded-full border border-white/10" />
-            <div className="absolute right-[20%] top-[10%] w-2 h-2 rounded-full bg-white/30" />
-            <div className="absolute right-[30%] bottom-[20%] w-1.5 h-1.5 rounded-full bg-white/20" />
-            <div className="absolute left-[-10%] bottom-[-20%] w-[400px] h-[400px] rounded-full bg-white/5 blur-[100px]" />
-            <div
-              className="absolute inset-0 opacity-[0.08]"
-              style={{
-                backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
-                backgroundSize: "24px 24px",
-              }}
-            />
-          </div>
-
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Content */}
             <div className="lg:col-span-5 space-y-6 pt-2">

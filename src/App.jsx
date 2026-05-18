@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./pages/components/Header";
 import Footer from "./pages/components/Footer";
 import OurTeam from "./pages/Team/ourTeam";
+import Background from "./pages/components/Background/Background";
+
 const Home = lazy(() => import("./pages/home/Home"));
 const Services = lazy(() => import("./pages/Services/Services"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
@@ -16,7 +18,7 @@ const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 function PageLoader() {
   return (
     <div
-      className="min-h-[60vh] bg-[#f6f8ff]"
+      className="min-h-[60vh] bg-transparent"
       aria-label="Loading page"
       role="status"
     />
@@ -25,23 +27,29 @@ function PageLoader() {
 
 function App() {
   return (
-    <>
-      <Header />
+    <div className="relative min-h-screen overflow-x-hidden bg-[#f4f7ff]">
+      {/* fixed background */}
+      <Background />
 
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/ourteam" element={<OurTeam />} />
-          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      {/* content */}
+      <div className="relative z-10 min-h-screen">
+        <Header />
 
-      <Footer />
-    </>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/ourteam" element={<OurTeam />} />
+            <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+
+        <Footer />
+      </div>
+    </div>
   );
 }
 

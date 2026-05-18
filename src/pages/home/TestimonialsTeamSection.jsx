@@ -1,333 +1,494 @@
-import React from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import {
   Star,
   ArrowRight,
   Users,
-  Code,
-  PenTool,
-  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
 } from "react-feather";
 
-/* ───────────── DATA ───────────── */
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
 const testimonials = [
   {
     id: 1,
     name: "David L.",
     role: "CTO, TechCore Solutions",
-    quote:
-      "SkillSprint helped us modernize our operations with a clean, reliable digital solution. Their approach was structured and results-driven.",
     initials: "DL",
-    color: "bg-[#374b82]",
+    rating: 4.5,
+    quote:
+      "SkillSprint modernized our operations with a reliable digital solution that delivered real results faster than we expected.",
+    result: "Delivered in 4 weeks",
   },
   {
     id: 2,
     name: "Sarah M.",
     role: "Manager, Global Finance Corp",
-    quote:
-      "Their team delivered secure, scalable work with clear communication from start to finish. We felt confident throughout the process.",
     initials: "SM",
-    color: "bg-[#4f68b3]",
+    rating: 5,
+    quote:
+      "Secure, scalable, and delivered on time. Their communication was crystal clear from kickoff all the way to launch.",
+    result: "Zero downtime launch",
   },
   {
     id: 3,
     name: "James R.",
     role: "CEO, InnovateX",
-    quote:
-      "They understood our vision and turned it into a professional solution that improved our workflow and customer experience.",
     initials: "JR",
-    color: "bg-[#2f3f70]",
+    rating: 4,
+    quote:
+      "They understood our vision immediately and built a solution that genuinely improved our day-to-day workflow.",
+    result: "Workflow improved",
+  },
+  {
+    id: 4,
+    name: "Anita P.",
+    role: "Director, BrightEdge Retail",
+    initials: "AP",
+    rating: 4.5,
+    quote:
+      "Lead conversions improved noticeably within two months. The team was focused on outcomes, not just deliverables.",
+    result: "Conversions up 2x",
+  },
+  {
+    id: 5,
+    name: "Marcus T.",
+    role: "Founder, LaunchPad Ventures",
+    initials: "MT",
+    rating: 5,
+    quote:
+      "Collaborative, transparent, and professional. SkillSprint treated our project with full ownership and care.",
+    result: "On time and on budget",
+  },
+  {
+    id: 6,
+    name: "Priya K.",
+    role: "Head of Operations, NexaTech",
+    initials: "PK",
+    rating: 4.5,
+    quote:
+      "Their chatbot automation saved our support team hours every week. The implementation was smooth and well-documented.",
+    result: "Support hours cut by 60%",
   },
 ];
 
-const teamPills = [
-  { label: "Strategy", icon: <CheckCircle size={14} /> },
-  { label: "Design", icon: <PenTool size={14} /> },
-  { label: "Development", icon: <Code size={14} /> },
-  { label: "Support", icon: <Users size={14} /> },
-];
+const TOTAL = testimonials.length;
+const AUTO_INTERVAL = 3000;
+const FADE_OUT_TIME = 220;
+const FADE_IN_DELAY = 70;
 
-/* ───────────── STARS ───────────── */
-const StarRating = () => (
-  <div className="flex gap-1">
-    {[...Array(5)].map((_, i) => (
-      <Star key={i} size={16} className="fill-[#374b82] text-[#374b82]" />
-    ))}
-  </div>
-);
+// ─── Card Position Calculator ─────────────────────────────────────────────────
 
-/* ───────────── COMPONENT ───────────── */
-const TestimonialsTeamSection = () => {
+function getPosition(index, activeIndex, total) {
+  let diff = index - activeIndex;
+
+  if (diff > total / 2) diff -= total;
+  if (diff < -total / 2) diff += total;
+
+  return diff;
+}
+
+// ─── Dynamic Rating Stars ─────────────────────────────────────────────────────
+
+const RatingStars = ({ rating = 5 }) => {
   return (
-    <section
-      className="relative w-full overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-      }}
-    >
-      {/* ── Background Visuals ── */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/5 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#374b82]/10 blur-[150px]" />
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-            backgroundSize: "32px 32px",
-          }}
-        />
+    <div className="flex items-center gap-2" aria-label={`${rating} out of 5`}>
+      <div className="flex items-center gap-1">
+        {[...Array(5)].map((_, index) => {
+          const starNumber = index + 1;
+          const isFull = rating >= starNumber;
+          const isHalf = rating >= starNumber - 0.5 && rating < starNumber;
+
+          return (
+            <span
+              key={index}
+              className="relative inline-flex w-[17px] h-[17px]"
+            >
+              {/* Empty star */}
+              <Star
+                size={17}
+                className="absolute inset-0 text-[#374b82]/25"
+                aria-hidden="true"
+              />
+
+              {/* Full star */}
+              {isFull && (
+                <Star
+                  size={17}
+                  className="absolute inset-0 text-[#374b82] fill-[#374b82]"
+                  aria-hidden="true"
+                />
+              )}
+
+              {/* Half star */}
+              {isHalf && (
+                <span className="absolute inset-0 overflow-hidden w-1/2">
+                  <Star
+                    size={17}
+                    className="text-[#374b82] fill-[#374b82]"
+                    aria-hidden="true"
+                  />
+                </span>
+              )}
+            </span>
+          );
+        })}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20 lg:py-28">
-        {/* ════════════════════════════════════════════════
-            TESTIMONIALS
-        ════════════════════════════════════════════════ */}
-        <div className="mb-24">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest">
+      <span className="text-xs font-bold text-[#374b82]">
+        {rating.toFixed(1)}/5
+      </span>
+    </div>
+  );
+};
+
+// ─── Single Testimonial Card ──────────────────────────────────────────────────
+
+const TestimonialCard = ({ item, position, isChanging, onClick }) => {
+  const isActive = position === 0;
+  const isAdjacent = position === 1 || position === -1;
+  const isVisible = isActive || isAdjacent;
+
+  const offsetX = position * 110;
+  const baseScale = isActive ? 1 : isAdjacent ? 0.87 : 0.72;
+
+  const opacity = isActive ? (isChanging ? 0 : 1) : isAdjacent ? 0.28 : 0;
+
+  const blurPx = isActive ? 0 : isAdjacent ? 1 : 0;
+  const zIndex = isActive ? 30 : isAdjacent ? 20 : 0;
+  const finalScale = isChanging && isActive ? 0.96 : baseScale;
+
+  return (
+    <div
+      onClick={isAdjacent && !isChanging ? onClick : undefined}
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: `translate(-50%, -50%) translateX(${offsetX}px) scale(${finalScale})`,
+        opacity,
+        filter: blurPx > 0 ? `blur(${blurPx}px)` : "none",
+        zIndex,
+        pointerEvents: isVisible && !isChanging ? "auto" : "none",
+        transition:
+          "transform 650ms cubic-bezier(0.22,1,0.36,1), opacity 420ms ease, filter 650ms ease",
+        width: "min(720px, 92vw)",
+        cursor: isAdjacent && !isChanging ? "pointer" : "default",
+        willChange: "transform, opacity, filter",
+      }}
+    >
+      <div className="relative rounded-[2rem] bg-white/75 backdrop-blur-xl border border-[#374b82]/10 shadow-[0_30px_100px_rgba(55,75,130,0.14)] p-8 sm:p-10 lg:p-12 overflow-hidden">
+        <div
+          className="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-[#374b82]/6 blur-[60px] pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute -bottom-12 -left-12 w-44 h-44 rounded-full bg-[#374b82]/5 blur-[50px] pointer-events-none"
+          aria-hidden="true"
+        />
+
+        <div
+          className="absolute bottom-4 right-6 text-[100px] font-serif text-[#374b82]/7 leading-none select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          "
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <RatingStars rating={item.rating} />
+
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#374b82]/8 border border-[#374b82]/15">
+              <div
+                className="w-1.5 h-1.5 rounded-full bg-[#374b82]"
+                aria-hidden="true"
+              />
+              <span className="text-[10px] font-bold text-[#374b82] uppercase tracking-wider">
+                {item.result}
+              </span>
+            </div>
+          </div>
+
+          <blockquote className="text-xl sm:text-2xl lg:text-[1.65rem] font-semibold text-[#111827] leading-relaxed mb-8">
+            &ldquo;{item.quote}&rdquo;
+          </blockquote>
+
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 flex-shrink-0 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 flex items-center justify-center text-[#374b82] text-sm font-bold">
+              {item.initials}
+            </div>
+
+            <div>
+              <p className="text-sm font-bold text-[#111827]">{item.name}</p>
+              <p className="text-xs text-[#4b5563]">{item.role}</p>
+              <p className="text-[10px] font-semibold text-[#374b82]/60 uppercase tracking-wider mt-0.5">
+                Client Feedback
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+const TestimonialsTeamSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isChanging, setIsChanging] = useState(false);
+
+  const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  const clearCurrent = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
+
+  const changeSlide = useCallback(
+    (callback) => {
+      if (isChanging) return;
+
+      setIsChanging(true);
+
+      timeoutRef.current = setTimeout(() => {
+        callback();
+
+        timeoutRef.current = setTimeout(() => {
+          setIsChanging(false);
+        }, FADE_IN_DELAY);
+      }, FADE_OUT_TIME);
+    },
+    [isChanging],
+  );
+
+  const goNext = useCallback(() => {
+    changeSlide(() => {
+      setActiveIndex((prev) => (prev + 1) % TOTAL);
+    });
+  }, [changeSlide]);
+
+  const goPrev = useCallback(() => {
+    changeSlide(() => {
+      setActiveIndex((prev) => (prev - 1 + TOTAL) % TOTAL);
+    });
+  }, [changeSlide]);
+
+  useEffect(() => {
+    if (!isPaused && !isChanging) {
+      intervalRef.current = setInterval(goNext, AUTO_INTERVAL);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isPaused, isChanging, goNext]);
+
+  useEffect(() => {
+    return () => clearCurrent();
+  }, [clearCurrent]);
+
+  const handleDotClick = (index) => {
+    if (index === activeIndex || isChanging) return;
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    changeSlide(() => {
+      setActiveIndex(index);
+    });
+  };
+
+  return (
+    <section className="relative bg-transperent w-full overflow-hidden py-20 lg:py-28">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        {/* Testimonials */}
+        <div className="mb-20">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest mb-4">
               Testimonials
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#111827] tracking-tight">
+
+            <h2 className="text-4xl md:text-5xl font-bold text-[#111827] tracking-tight mb-4">
               What Our <span className="text-[#374b82]">Customers</span> Say
             </h2>
-            <p className="text-lg text-[#4b5563] leading-relaxed">
+
+            <p className="text-base sm:text-lg text-[#4b5563] leading-relaxed">
               Real feedback from businesses and learners who trusted SkillSprint
-              Technologies.
+              Technologies to deliver results.
             </p>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
-              <div
-                key={t.id}
-                className="
-                  group relative flex flex-col justify-between
-                  p-8 rounded-3xl
-                  bg-white/70 backdrop-blur-xl
-                  border border-[#374b82]/10
-                  shadow-[0_20px_60px_rgba(55,75,130,0.10)]
-                  transition-all duration-500
-                  hover:-translate-y-2
-                  hover:border-[#374b82]/30
-                  hover:shadow-[0_30px_80px_rgba(55,75,130,0.16)]
-                "
+          <div
+            className="relative"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full bg-[#374b82]/8 blur-[80px] pointer-events-none"
+              aria-hidden="true"
+            />
+
+            <div
+              className="relative mx-auto overflow-visible"
+              style={{ height: "340px", maxWidth: "960px" }}
+              role="region"
+              aria-label="Testimonials carousel"
+            >
+              {testimonials.map((item, index) => {
+                const position = getPosition(index, activeIndex, TOTAL);
+
+                return (
+                  <TestimonialCard
+                    key={item.id}
+                    item={item}
+                    position={position}
+                    isChanging={isChanging}
+                    onClick={() => {
+                      if (position === 1) goNext();
+                      if (position === -1) goPrev();
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            <div className="flex items-center justify-center gap-6 mt-10">
+              <button
+                type="button"
+                onClick={goPrev}
+                disabled={isChanging}
+                className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-[#374b82]/15 text-[#374b82] shadow-[0_6px_20px_rgba(55,75,130,0.12)] hover:bg-[#374b82] hover:text-white hover:border-[#374b82] transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Previous testimonial"
               >
-                {/* Stars */}
-                <div className="mb-5">
-                  <StarRating />
-                </div>
+                <ChevronLeft size={20} />
+              </button>
 
-                {/* Quote */}
-                <p className="text-[#4b5563] text-base leading-relaxed mb-8 flex-grow">
-                  "{t.quote}"
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-white font-bold text-sm shadow-md`}
-                  >
-                    {t.initials}
-                  </div>
-                  <div>
-                    <div className="font-bold text-[#172033] text-sm">
-                      {t.name}
-                    </div>
-                    <div className="text-xs text-[#4b5563]">{t.role}</div>
-                  </div>
-                </div>
-
-                {/* Decorative Quote Mark */}
-                <div className="absolute bottom-6 right-8 text-7xl font-serif leading-none text-[#374b82]/10 select-none pointer-events-none">
-                  "
-                </div>
+              <div
+                className="flex items-center gap-2"
+                role="tablist"
+                aria-label="Testimonial navigation"
+              >
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === activeIndex}
+                    aria-label={`Go to testimonial ${i + 1}`}
+                    disabled={isChanging}
+                    onClick={() => handleDotClick(i)}
+                    className={`h-2 rounded-full transition-all duration-300 disabled:pointer-events-none ${
+                      i === activeIndex
+                        ? "w-8 bg-[#374b82]"
+                        : "w-2 bg-[#374b82]/20 hover:bg-[#374b82]/45"
+                    }`}
+                  />
+                ))}
               </div>
-            ))}
+
+              <button
+                type="button"
+                onClick={goNext}
+                disabled={isChanging}
+                className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-[#374b82]/15 text-[#374b82] shadow-[0_6px_20px_rgba(55,75,130,0.12)] hover:bg-[#374b82] hover:text-white hover:border-[#374b82] transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* ════════════════════════════════════════════════
-            TEAM CTA BLOCK
-        ════════════════════════════════════════════════ */}
-        <div
-          className="
-            relative overflow-hidden
-            rounded-[2rem]
-            bg-white/60 backdrop-blur-xl
-            border border-[#374b82]/10
-            shadow-[0_30px_100px_rgba(55,75,130,0.12)]
-          "
-        >
-          {/* Subtle inner glow */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute -top-16 -left-16 w-64 h-64 rounded-full bg-[#374b82]/5 blur-[100px]" />
-            <div className="absolute -bottom-12 -right-12 w-48 h-48 rounded-full bg-[#374b82]/10 blur-[80px]" />
-          </div>
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-8 sm:p-12 lg:p-16">
-            {/* Left Content */}
+        {/* Team CTA Block */}
+        <div className="relative overflow-hidden rounded-[2rem] bg-white/60 backdrop-blur-xl border border-[#374b82]/10 shadow-[0_30px_100px_rgba(55,75,130,0.12)] px-8 py-12 lg:p-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest">
-                <Users size={14} />
                 Leadership
               </div>
 
-              <h2 className="text-3xl md:text-4xl font-bold text-[#111827] tracking-tight leading-tight">
+              <h3 className="text-3xl md:text-4xl font-bold text-[#111827] tracking-tight leading-tight">
                 Meet the Minds Behind Our{" "}
                 <span className="text-[#374b82]">Success</span>
-              </h2>
+              </h3>
 
-              <p className="text-base text-[#4b5563] leading-relaxed max-w-lg">
+              <p className="text-lg text-[#4b5563]">
                 Our team combines strategy, design, development, and support to
                 deliver solutions that create real business impact.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-start gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <Link
-                  to="/ourteam"
-                  onClick={() => window.scrollTo(0, 0)}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-[#374b82] !text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all active:scale-95"
+                  to="/about"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#374b82] !text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all active:scale-95"
                 >
                   Meet Our Team
-                  <ArrowRight size={18} />
+                  <ArrowRight size={18} aria-hidden="true" />
                 </Link>
+
                 <Link
-                  to="/careers"
-                  onClick={() => window.scrollTo(0, 0)}
-                  className="inline-flex items-center gap-2 px-8 py-4 !text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 bg-white/50 hover:bg-white hover:border-[#374b82]/40 transition-all"
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white !text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 hover:bg-white hover:border-[#374b82]/40 transition-all"
                 >
                   Apply Now
                 </Link>
               </div>
             </div>
 
-            {/* Right Visual — Lightweight CSS 3D-style Card */}
-            <div className="relative h-[320px] sm:h-[380px] lg:h-[400px] w-full">
-              {/* Main Visual Card */}
-              <div
-                className="
-                  absolute inset-4 sm:inset-6
-                  rounded-3xl
-                  bg-gradient-to-br from-[#374b82]/15 to-white/50
-                  border border-[#374b82]/10
-                  shadow-[0_20px_60px_rgba(55,75,130,0.10)]
-                  overflow-hidden
-                "
-              >
-                {/* Inner Grid Lines */}
+            <div className="relative">
+              <div className="relative h-[320px] lg:h-[360px] w-full rounded-3xl bg-gradient-to-br from-[#374b82]/15 via-white/60 to-white/40 border border-[#374b82]/10 shadow-[0_25px_80px_rgba(55,75,130,0.15)] overflow-hidden">
                 <div
                   className="absolute inset-0 opacity-[0.15]"
                   style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(55,75,130,0.12) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(55,75,130,0.12) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "32px 32px",
+                    backgroundImage: `linear-gradient(#374b82 1px, transparent 1px), linear-gradient(90deg, #374b82 1px, transparent 1px)`,
+                    backgroundSize: "40px 40px",
                   }}
+                  aria-hidden="true"
                 />
 
-                {/* Central Glow */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-40 h-40 rounded-full bg-[#374b82]/8 blur-3xl" />
-                </div>
-
-                {/* Central Icon */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-2xl bg-white/80 backdrop-blur-md border border-[#374b82]/15 shadow-xl flex items-center justify-center text-[#374b82]">
-                    <Users size={32} strokeWidth={1.5} />
+                  <div className="w-24 h-24 rounded-2xl bg-white/90 backdrop-blur-xl border border-[#374b82]/20 shadow-xl flex items-center justify-center text-[#374b82]">
+                    <Users size={42} aria-hidden="true" />
                   </div>
                 </div>
 
-                {/* Decorative Network Lines */}
-                <div className="absolute top-1/4 left-1/4 w-1/2 h-px bg-gradient-to-r from-transparent via-[#374b82]/25 to-transparent rotate-45" />
-                <div className="absolute bottom-1/4 right-1/4 w-1/2 h-px bg-gradient-to-r from-transparent via-[#374b82]/25 to-transparent -rotate-45" />
-                <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#374b82]/10 to-transparent" />
-                <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#374b82]/10 to-transparent" />
-              </div>
-
-              {/* Floating Mini Cards (Positioned around the visual) */}
-              {/* Top-left: Strategy */}
-              <div className="absolute top-2 left-0 sm:top-0 sm:left-0 z-20">
-                <div
-                  className="
-                    flex items-center gap-2
-                    px-4 py-2.5 rounded-xl
-                    bg-white/90 backdrop-blur-md
-                    border border-white/60
-                    shadow-lg
-                    text-sm font-semibold text-[#374b82]
-                    animate-pulse
-                  "
-                  style={{ animationDuration: "6s" }}
-                >
-                  <CheckCircle size={14} />
+                <div className="absolute top-8 left-8 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
                   Strategy
                 </div>
-              </div>
 
-              {/* Top-right: Design */}
-              <div className="absolute top-2 right-0 sm:top-0 sm:right-0 z-20">
-                <div
-                  className="
-                    flex items-center gap-2
-                    px-4 py-2.5 rounded-xl
-                    bg-white/90 backdrop-blur-md
-                    border border-white/60
-                    shadow-lg
-                    text-sm font-semibold text-[#374b82]
-                    animate-pulse
-                  "
-                  style={{ animationDuration: "8s" }}
-                >
-                  <PenTool size={14} />
+                <div className="absolute top-12 right-10 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
                   Design
                 </div>
-              </div>
 
-              {/* Bottom-left: Development */}
-              <div className="absolute bottom-2 left-0 sm:bottom-0 sm:left-2 z-20">
-                <div
-                  className="
-                    flex items-center gap-2
-                    px-4 py-2.5 rounded-xl
-                    bg-white/90 backdrop-blur-md
-                    border border-white/60
-                    shadow-lg
-                    text-sm font-semibold text-[#374b82]
-                    animate-pulse
-                  "
-                  style={{ animationDuration: "7s" }}
-                >
-                  <Code size={14} />
+                <div className="absolute bottom-10 left-10 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
                   Development
                 </div>
-              </div>
 
-              {/* Bottom-right: Support */}
-              <div className="absolute bottom-2 right-0 sm:bottom-0 sm:right-2 z-20">
-                <div
-                  className="
-                    flex items-center gap-2
-                    px-4 py-2.5 rounded-xl
-                    bg-white/90 backdrop-blur-md
-                    border border-white/60
-                    shadow-lg
-                    text-sm font-semibold text-[#374b82]
-                    animate-pulse
-                  "
-                  style={{ animationDuration: "9s" }}
-                >
-                  <Users size={14} />
+                <div className="absolute bottom-8 right-8 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
                   Support
                 </div>
-              </div>
 
-              {/* Decorative blobs behind visual */}
-              <div className="absolute -z-10 -top-6 -right-6 w-24 h-24 rounded-full bg-[#374b82]/10 blur-2xl" />
-              <div className="absolute -z-10 -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#374b82]/5 blur-3xl" />
+                <div
+                  className="absolute inset-0 bg-gradient-to-br from-transparent via-[#374b82]/5 to-transparent"
+                  aria-hidden="true"
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -264,25 +264,8 @@ const ServicesSection = () => {
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="relative w-full overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-      }}
+      className="relative bg-transperent w-full overflow-hidden"
     >
-      {/* Background Visuals */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/5 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#374b82]/10 blur-[150px]" />
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-            backgroundSize: "32px 32px",
-          }}
-        />
-      </div>
-
       {/* Main Content */}
       <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-20 lg:py-24">
         {/* Header */}

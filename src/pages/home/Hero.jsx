@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import BackgroundOne from "../components/Background/BackgroundOne";
+
 // --- Lightweight Interactive Network Globe ---
 function NetworkGlobe({ active }) {
   const canvasRef = useRef(null);
@@ -226,94 +226,88 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <main className="w-full overflow-x-hidden font-sans selection:bg-[#374b82]/20">
+    <main className="w-full overflow-x-hidden font-sans selection:bg-[#374b82]/20 bg-transparent">
       <section
         ref={sectionRef}
         id="home"
         aria-labelledby="hero-heading"
         className="
-    relative
-    w-full
-    min-h-screen
-    flex
-    items-center
-    justify-center
-    pt-28
-    sm:pt-32
-    lg:pt-24
-    pb-16
-    sm:pb-20
-    lg:pb-20
-    overflow-hidden
-  "
-        style={{
-          background:
-            "linear-gradient(135deg, #f6f8ff 0%, #eef3ff 45%, #ffffff 100%)",
-        }}
+          relative
+          bg-transparent
+          w-full
+          min-h-screen
+          flex
+          items-center
+          justify-center
+          pt-28
+          sm:pt-32
+          lg:pt-24
+          pb-16
+          sm:pb-20
+          lg:pb-20
+          overflow-hidden
+        "
       >
-        {/* Background */}
-        <BackgroundOne />
-
         {/* Content Wrapper */}
         <div
           className="
-        relative
-        z-10
-        w-full
-        max-w-[1600px]
-        mx-auto
-        px-5
-        sm:px-8
-        lg:px-10
-        xl:px-16
-        2xl:px-20
-      "
+            relative
+            z-10
+            w-full
+            max-w-[1600px]
+            mx-auto
+            px-5
+            sm:px-8
+            lg:px-10
+            xl:px-16
+            2xl:px-20
+          "
         >
           <div
             className="
-          w-full
-          flex
-          flex-col
-          lg:flex-row
-          items-center
-          justify-between
-          gap-12
-          lg:gap-8
-          xl:gap-12
-          2xl:gap-14
-        "
+              w-full
+              flex
+              flex-col
+              lg:flex-row
+              items-center
+              justify-between
+              gap-12
+              lg:gap-8
+              xl:gap-12
+              2xl:gap-14
+            "
           >
             {/* Left Content */}
             <div
               className="
-            w-full
-            lg:w-[46%]
-            xl:w-[42%]
-            2xl:w-[40%]
-            text-center
-            lg:text-left
-            space-y-6
-            shrink-0
-          "
+                w-full
+                lg:w-[46%]
+                xl:w-[42%]
+                2xl:w-[40%]
+                text-center
+                lg:text-left
+                space-y-6
+                shrink-0
+              "
             >
               <div
                 className="
-              inline-flex
-              items-center
-              gap-2
-              px-4
-              py-1.5
-              rounded-full
-              bg-[#374b82]/10
-              border
-              border-[#374b82]/20
-              text-[#374b82]
-              text-xs
-              sm:text-sm
-              font-semibold
-              uppercase
-              tracking-[0.16em]
-            "
+                  inline-flex
+                  items-center
+                  gap-2
+                  px-4
+                  py-1.5
+                  rounded-full
+                  bg-[#374b82]/10
+                  border
+                  border-[#374b82]/20
+                  text-[#374b82]
+                  text-xs
+                  sm:text-sm
+                  font-semibold
+                  uppercase
+                  tracking-[0.16em]
+                "
               >
                 <span className="w-2 h-2 rounded-full bg-[#374b82] animate-pulse" />
                 Next-Gen IT Solutions
@@ -323,17 +317,17 @@ export default function HeroSection() {
                 <h1
                   id="hero-heading"
                   className="
-                text-[2.2rem]
-                sm:text-[2.8rem]
-                md:text-[3.25rem]
-                lg:text-[2.85rem]
-                xl:text-[3.35rem]
-                2xl:text-[3.7rem]
-                font-bold
-                text-[#111827]
-                leading-[1.05]
-                tracking-tight
-              "
+                    text-[2.2rem]
+                    sm:text-[2.8rem]
+                    md:text-[3.25rem]
+                    lg:text-[2.85rem]
+                    xl:text-[3.35rem]
+                    2xl:text-[3.7rem]
+                    font-bold
+                    text-[#111827]
+                    leading-[1.05]
+                    tracking-tight
+                  "
                 >
                   <span className="block xl:whitespace-nowrap">
                     Smart IT Solutions For
@@ -345,15 +339,15 @@ export default function HeroSection() {
 
                 <p
                   className="
-                text-[15px]
-                sm:text-base
-                lg:text-[17px]
-                text-[#4b5563]
-                max-w-xl
-                mx-auto
-                lg:mx-0
-                leading-relaxed
-              "
+                    text-[15px]
+                    sm:text-base
+                    lg:text-[17px]
+                    text-[#4b5563]
+                    max-w-xl
+                    mx-auto
+                    lg:mx-0
+                    leading-relaxed
+                  "
                 >
                   Transform your business with reliable, scalable, and modern
                   technology solutions built for{" "}
@@ -377,22 +371,22 @@ export default function HeroSection() {
                   href="#contact"
                   aria-label="Schedule a free consultation with SkillSprint Technologies"
                   className="
-                w-full
-                sm:w-auto
-                min-w-[240px]
-                px-7
-                py-4
-                bg-[#374b82]
-                !text-white
-                font-semibold
-                rounded-xl
-                shadow-lg
-                shadow-[#374b82]/30
-                hover:bg-[#2f3f70]
-                transition-colors
-                text-center
-                no-underline
-              "
+                    w-full
+                    sm:w-auto
+                    min-w-[240px]
+                    px-7
+                    py-4
+                    bg-[#374b82]
+                    !text-white
+                    font-semibold
+                    rounded-xl
+                    shadow-lg
+                    shadow-[#374b82]/30
+                    hover:bg-[#2f3f70]
+                    transition-colors
+                    text-center
+                    no-underline
+                  "
                 >
                   Schedule a Free Consultation
                 </a>
@@ -401,23 +395,23 @@ export default function HeroSection() {
                   href="#services"
                   aria-label="Explore SkillSprint Technologies services"
                   className="
-                w-full
-                sm:w-auto
-                min-w-[180px]
-                px-7
-                py-4
-                bg-white/80
-                !text-[#374b82]
-                font-semibold
-                rounded-xl
-                border
-                border-[#374b82]/25
-                hover:bg-[#374b82]/5
-                hover:border-[#374b82]
-                transition-colors
-                text-center
-                no-underline
-              "
+                    w-full
+                    sm:w-auto
+                    min-w-[180px]
+                    px-7
+                    py-4
+                    bg-white/80
+                    !text-[#374b82]
+                    font-semibold
+                    rounded-xl
+                    border
+                    border-[#374b82]/25
+                    hover:bg-[#374b82]/5
+                    hover:border-[#374b82]
+                    transition-colors
+                    text-center
+                    no-underline
+                  "
                 >
                   Explore Services
                 </a>
@@ -454,39 +448,39 @@ export default function HeroSection() {
             {/* Right Visual */}
             <div
               className="
-            relative
-            w-full
-            lg:w-[50%]
-            xl:w-[55%]
-            2xl:w-[57%]
-            flex
-            justify-center
-            lg:justify-end
-            overflow-visible
-          "
+                relative
+                w-full
+                lg:w-[50%]
+                xl:w-[55%]
+                2xl:w-[57%]
+                flex
+                justify-center
+                lg:justify-end
+                overflow-visible
+              "
             >
               <div
                 className="
-              relative
-              w-full
-              max-w-[340px]
-              sm:max-w-[430px]
-              md:max-w-[500px]
-              lg:max-w-[480px]
-              xl:max-w-[560px]
-              2xl:max-w-[590px]
-              aspect-square
-              rounded-[2rem]
-              bg-white/45
-              backdrop-blur-xl
-              border
-              border-[#374b82]/15
-              shadow-[0_28px_80px_rgba(55,75,130,0.14)]
-              overflow-hidden
-              transition-transform
-              duration-500
-              hover:scale-[1.01]
-            "
+                  relative
+                  w-full
+                  max-w-[340px]
+                  sm:max-w-[430px]
+                  md:max-w-[500px]
+                  lg:max-w-[480px]
+                  xl:max-w-[560px]
+                  2xl:max-w-[590px]
+                  aspect-square
+                  rounded-[2rem]
+                  bg-white/45
+                  backdrop-blur-xl
+                  border
+                  border-[#374b82]/15
+                  shadow-[0_28px_80px_rgba(55,75,130,0.14)]
+                  overflow-hidden
+                  transition-transform
+                  duration-500
+                  hover:scale-[1.01]
+                "
               >
                 <div className="absolute inset-0 z-0 scale-[0.84] sm:scale-[0.88] lg:scale-[0.82] xl:scale-[0.88] 2xl:scale-[0.88] origin-center">
                   <NetworkGlobe active={inView} />

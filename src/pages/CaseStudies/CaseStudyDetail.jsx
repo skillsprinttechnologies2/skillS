@@ -14,54 +14,6 @@ import { caseStudies } from "../../data/caseStudies";
 
 const WHATSAPP_NUMBER = "919876543210";
 
-const FloatingBackground = () => (
-  <>
-    <style>{`
-      @keyframes float-a {
-        0%, 100% { transform: translateY(0px) rotate(8deg); }
-        50% { transform: translateY(-14px) rotate(8deg); }
-      }
-
-      @keyframes float-b {
-        0%, 100% { transform: translateY(0px) rotate(-6deg); }
-        50% { transform: translateY(-10px) rotate(-6deg); }
-      }
-
-      @keyframes float-c {
-        0%, 100% { transform: translateY(0px) rotate(12deg); }
-        50% { transform: translateY(-8px) rotate(12deg); }
-      }
-
-      .float-a { animation: float-a 9s ease-in-out infinite; }
-      .float-b { animation: float-b 11s ease-in-out infinite; }
-      .float-c { animation: float-c 13s ease-in-out infinite; }
-    `}</style>
-
-    <div
-      className="absolute inset-0 pointer-events-none overflow-hidden"
-      aria-hidden="true"
-    >
-      <div
-        className="absolute inset-0 opacity-[0.10]"
-        style={{
-          backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-          backgroundSize: "30px 30px",
-        }}
-      />
-
-      <div className="absolute -top-20 -left-20 w-[420px] h-[420px] rounded-full bg-[#374b82]/6 blur-[90px]" />
-
-      <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] rounded-full bg-[#374b82]/8 blur-[100px]" />
-
-      <div className="float-a hidden sm:block absolute top-36 right-10 xl:right-24 w-20 h-20 rounded-2xl border border-[#374b82]/15 bg-white/40 shadow-[0_8px_32px_rgba(55,75,130,0.10)]" />
-
-      <div className="float-b hidden sm:block absolute top-[55%] -left-6 w-14 h-14 rounded-xl border border-[#374b82]/12 bg-white/30 shadow-[0_6px_24px_rgba(55,75,130,0.08)]" />
-
-      <div className="float-c hidden lg:block absolute bottom-40 right-[18%] w-24 h-24 rounded-full border-2 border-[#374b82]/10 bg-transparent" />
-    </div>
-  </>
-);
-
 const CaseStudyDetail = () => {
   const { slug } = useParams();
 
@@ -84,15 +36,7 @@ const CaseStudyDetail = () => {
 
   if (!caseStudy) {
     return (
-      <main
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-        }}
-      >
-        <FloatingBackground />
-
+      <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
         <div className="relative z-10 text-center px-6 py-20">
           <div className="w-16 h-16 rounded-2xl bg-[#374b82]/10 flex items-center justify-center mx-auto mb-6">
             <Layers size={28} className="text-[#374b82]" aria-hidden="true" />
@@ -120,15 +64,9 @@ const CaseStudyDetail = () => {
 
   return (
     <main
-      className="relative w-full min-h-screen overflow-hidden"
+      className="relative w-full min-h-screen overflow-hidden bg-transparent"
       aria-labelledby="case-study-heading"
-      style={{
-        background:
-          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-      }}
     >
-      <FloatingBackground />
-
       <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 pt-32 pb-20">
         <div className="mb-10">
           <Link
@@ -150,7 +88,7 @@ const CaseStudyDetail = () => {
                   Case Study
                 </span>
 
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#374b82]/15 text-[#374b82] text-xs font-semibold">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/70 border border-[#374b82]/15 text-[#374b82] text-xs font-semibold backdrop-blur-sm">
                   {caseStudy.category}
                 </span>
               </div>
@@ -181,7 +119,7 @@ const CaseStudyDetail = () => {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 hover:border-[#374b82]/40 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/70 backdrop-blur-sm text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 hover:border-[#374b82]/40 transition-colors"
                   aria-label={`Know more about ${caseStudy.title} on WhatsApp`}
                 >
                   <MessageCircle size={17} aria-hidden="true" />
@@ -282,7 +220,7 @@ const CaseStudyDetail = () => {
             </div>
 
             <div
-              className="relative h-52 sm:h-60 rounded-3xl overflow-hidden border border-[#374b82]/10 bg-gradient-to-br from-[#374b82]/10 via-white/60 to-[#eef3ff]"
+              className="relative h-52 sm:h-60 rounded-3xl overflow-hidden border border-[#374b82]/10 bg-white/45 backdrop-blur-sm"
               aria-hidden="true"
             >
               <div
@@ -325,7 +263,7 @@ const CaseStudyDetail = () => {
             {caseStudy.keyFeatures.map((feature) => (
               <div
                 key={feature}
-                className="flex items-start gap-3 p-5 rounded-2xl bg-white/70 border border-[#374b82]/10 shadow-[0_8px_24px_rgba(55,75,130,0.08)] hover:-translate-y-1 transition-transform duration-200"
+                className="flex items-start gap-3 p-5 rounded-2xl bg-white/70 backdrop-blur-sm border border-[#374b82]/10 shadow-[0_8px_24px_rgba(55,75,130,0.08)] hover:-translate-y-1 transition-transform duration-200"
               >
                 <CheckCircle
                   size={18}
@@ -435,7 +373,7 @@ const CaseStudyDetail = () => {
             {caseStudy.techStack.map((tech) => (
               <span
                 key={tech}
-                className="px-4 py-2 text-sm font-semibold rounded-xl bg-white/70 border border-[#374b82]/15 text-[#374b82] shadow-sm hover:-translate-y-0.5 transition-transform duration-200"
+                className="px-4 py-2 text-sm font-semibold rounded-xl bg-white/70 backdrop-blur-sm border border-[#374b82]/15 text-[#374b82] shadow-sm hover:-translate-y-0.5 transition-transform duration-200"
               >
                 {tech}
               </span>

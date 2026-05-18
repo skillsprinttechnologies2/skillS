@@ -209,26 +209,9 @@ const Careers = () => {
 
   return (
     <main
-      className="relative w-full overflow-hidden"
+      className="relative bg-transperent w-full overflow-hidden"
       aria-labelledby="careers-heading"
-      style={{
-        background:
-          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-      }}
     >
-      {/* Background */}
-      <div className="fixed inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-0 left-[-5%] w-[420px] h-[420px] rounded-full bg-[#374b82]/5 blur-[90px]" />
-        <div className="absolute bottom-0 right-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/8 blur-[100px]" />
-        <div
-          className="absolute inset-0 opacity-[0.09]"
-          style={{
-            backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-            backgroundSize: "30px 30px",
-          }}
-        />
-      </div>
-
       <div className="relative z-10 max-w-[1100px] mx-auto px-5 sm:px-8 lg:px-12 pt-32 pb-20">
         {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
         <section

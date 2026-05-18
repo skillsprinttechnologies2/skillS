@@ -190,31 +190,9 @@ const PortfolioSection = () => {
   return (
     <section
       id="case-studies"
-      className="relative w-full overflow-hidden scroll-mt-24"
+      className="relative bg-transperent w-full overflow-hidden scroll-mt-24"
       aria-labelledby="case-studies-heading"
-      style={{
-        background:
-          "linear-gradient(135deg, #ffffff 0%, #f6f8ff 45%, #eef3ff 100%)",
-      }}
     >
-      {/* Background Visuals */}
-      <div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        aria-hidden="true"
-      >
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#374b82]/5 blur-[120px]" />
-
-        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#374b82]/10 blur-[150px]" />
-
-        <div
-          className="absolute inset-0 opacity-[0.14]"
-          style={{
-            backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-            backgroundSize: "32px 32px",
-          }}
-        />
-      </div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-24 lg:py-28">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
