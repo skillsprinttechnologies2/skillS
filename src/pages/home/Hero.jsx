@@ -268,16 +268,15 @@ export default function HeroSection() {
 
           {/* More visible grid */}
           <div
-            className="absolute inset-0 opacity-[0.28]"
+            className="absolute inset-0 opacity-[0.45]"
             style={{
               backgroundImage: `
-        linear-gradient(rgba(55,75,130,0.22) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(55,75,130,0.22) 1px, transparent 1px)
-      `,
-              backgroundSize: "52px 52px",
+      linear-gradient(rgba(55,75,130,0.28) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(55,75,130,0.28) 1px, transparent 1px)
+    `,
+              backgroundSize: "42px 42px",
             }}
           />
-
           {/* Light center fade for readability */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_45%_45%,rgba(255,255,255,0.55),rgba(255,255,255,0.15),transparent_72%)]" />
         </div>
