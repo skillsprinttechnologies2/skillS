@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import BackgroundOne from "../components/Background/BackgroundOne";
 // --- Lightweight Interactive Network Globe ---
 function NetworkGlobe({ active }) {
   const canvasRef = useRef(null);
@@ -252,34 +252,7 @@ export default function HeroSection() {
         }}
       >
         {/* Background */}
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden bg-[#edf3ff]"
-          aria-hidden="true"
-        >
-          {/* Base */}
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#eef4ff_0%,#f7faff_45%,#eaf1ff_100%)]" />
-
-          {/* Visible soft glow areas */}
-          <div className="absolute -top-28 -left-24 h-[520px] w-[520px] rounded-full bg-[#374b82]/16 blur-[120px]" />
-
-          <div className="absolute -bottom-36 -right-28 h-[620px] w-[620px] rounded-full bg-[#5b7cfa]/18 blur-[140px]" />
-
-          <div className="absolute left-[35%] top-[20%] h-[420px] w-[520px] rounded-full bg-[#dbe7ff]/70 blur-[90px]" />
-
-          {/* More visible grid */}
-          <div
-            className="absolute inset-0 opacity-[0.45]"
-            style={{
-              backgroundImage: `
-      linear-gradient(rgba(55,75,130,0.28) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(55,75,130,0.28) 1px, transparent 1px)
-    `,
-              backgroundSize: "42px 42px",
-            }}
-          />
-          {/* Light center fade for readability */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_45%_45%,rgba(255,255,255,0.55),rgba(255,255,255,0.15),transparent_72%)]" />
-        </div>
+        <BackgroundOne />
 
         {/* Content Wrapper */}
         <div

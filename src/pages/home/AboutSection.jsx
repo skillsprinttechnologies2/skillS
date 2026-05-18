@@ -9,6 +9,7 @@ import {
   Award,
   Globe,
 } from "react-feather";
+import BackgroundOne from "../components/Background/BackgroundOne";
 
 const AboutSection = () => {
   const features = [
@@ -61,20 +62,7 @@ const AboutSection = () => {
       }}
     >
       {/* Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-5%] w-[360px] sm:w-[500px] h-[360px] sm:h-[500px] rounded-full bg-[#374b82]/5 blur-[110px]" />
-
-        <div className="absolute bottom-[-10%] right-[-5%] w-[420px] sm:w-[620px] h-[420px] sm:h-[620px] rounded-full bg-[#374b82]/10 blur-[140px]" />
-
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage: `radial-gradient(#374b82 1px, transparent 1px)`,
-            backgroundSize: "32px 32px",
-          }}
-        />
-      </div>
-
+      <BackgroundOne />
       {/* Content Wrapper */}
       <div
         className="
