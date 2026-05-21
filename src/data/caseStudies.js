@@ -1,248 +1,343 @@
 import {
-  Code,
-  BarChart2,
-  MessageSquare,
   Monitor,
-  Search,
+  Database,
   Zap,
 } from "react-feather";
 
 export const caseStudies = [
   {
     id: 1,
-    slug: "business-website-redesign",
-    title: "Business Website Redesign",
-    category: "Web Development",
+    slug: "mechxdata-industry-awareness-session",
+    title: "MechXData Industry Awareness Session",
+    category: "Training",
     shortDescription:
-      "A modern responsive website built to improve brand trust, speed, and customer enquiries.",
+      "An interactive Excel and Power BI awareness session conducted at Siddaganga Institute of Technology.",
     heroSummary:
-      "SkillSprint Technologies redesigned a business website with a faster, cleaner, mobile-friendly structure focused on trust, SEO, and customer enquiries.",
-    clientType: "Service Business",
-    timeline: "3 Weeks",
-    mainResult: "40% faster page load",
-    servicesUsed: ["Web Development", "SEO", "Responsive Design"],
+      "SkillSprint Technologies conducted a practical industry awareness session introducing students to Excel, Power BI, dashboards, reporting workflows, and analytics fundamentals used in modern industries.",
+    clientType: "Educational Institution",
+    timeline: "1 Day Session",
+    mainResult: "100+ students engaged",
+    servicesUsed: [
+      "Excel Training",
+      "Power BI Workshop",
+      "Industry Awareness Session",
+    ],
     challenge:
-      "The business had an outdated website with slow loading speed, weak mobile experience, and unclear service presentation. Visitors were not converting into enquiries because the page structure and CTAs were not strong enough.",
+      "Many students had theoretical understanding but lacked practical exposure to modern analytics tools and real-world reporting workflows used in industries.",
     solution:
-      "We rebuilt the website with a modern responsive layout, optimized page structure, stronger service sections, lightweight assets, clear call-to-action buttons, and SEO-friendly content hierarchy.",
+      "We conducted a hands-on awareness session with dashboard demonstrations, Excel workflows, Power BI reporting examples, and practical industry-oriented guidance.",
     processSteps: [
       {
-        title: "Discovery",
+        title: "Session Planning",
         description:
-          "Reviewed the old website, business goals, target audience, and conversion issues.",
+          "Prepared practical examples, datasets, dashboards, and industry-focused presentation materials.",
       },
+      {
+        title: "Industry Introduction",
+        description:
+          "Explained how analytics, dashboards, and reporting tools are used in companies and organizations.",
+      },
+      {
+        title: "Excel Demonstration",
+        description:
+          "Demonstrated formulas, reporting workflows, charts, and data organization techniques.",
+      },
+      {
+        title: "Power BI Demonstration",
+        description:
+          "Showed dashboard building, data visualization, filtering, and reporting concepts.",
+      },
+      {
+        title: "Student Interaction",
+        description:
+          "Conducted Q&A discussions and provided guidance about analytics careers and industry expectations.",
+      },
+    ],
+    keyFeatures: [
+      "Excel practical training",
+      "Power BI dashboard introduction",
+      "Industry-oriented examples",
+      "Hands-on demonstrations",
+      "Interactive student engagement",
+      "Career awareness guidance",
+    ],
+    results: [
+      {
+        metric: "100+",
+        label: "Students Reached",
+      },
+      {
+        metric: "Better",
+        label: "Industry Awareness",
+      },
+      {
+        metric: "Interactive",
+        label: "Hands-on Learning",
+      },
+      {
+        metric: "Practical",
+        label: "Analytics Exposure",
+      },
+    ],
+    techStack: ["Excel", "Power BI", "Data Visualization"],
+    tags: ["Excel", "Power BI", "Workshop"],
+    metric: "100+ students engaged",
+    icon:Monitor  ,
+    gradient: "from-[#374b82]/20 to-[#4f68b3]/10",
+    reportPdf: "/reports/mechxdata-awareness-session.pdf",
+    whatsappMessage:
+      "Hi SkillSprint Technologies, I want to know more about the MechXData Industry Awareness Session case study.",
+  },
+
+  {
+    id: 2,
+    slug: "excel-powerbi-industrial-training",
+    title: "Excel & Power BI Industrial Training",
+    category: "Training",
+    shortDescription:
+      "A practical industrial training session introducing students to dashboards, analytics workflows, and reporting practices.",
+    heroSummary:
+      "SkillSprint Technologies organized a practical analytics training session helping students understand Excel workflows, Power BI dashboards, and modern reporting systems used in industries.",
+    clientType: "Educational Institution",
+    timeline: "1 Day Workshop",
+    mainResult: "Hands-on analytics learning",
+    servicesUsed: [
+      "Industrial Training",
+      "Excel Workshop",
+      "Power BI Training",
+    ],
+    challenge:
+      "Students were familiar with basic concepts but lacked exposure to real-time dashboard creation, reporting structures, and analytics workflows.",
+    solution:
+      "We designed a practical workshop covering reporting methods, dashboards, visualization concepts, and analytics workflows using Excel and Power BI.",
+    processSteps: [
+      {
+        title: "Workshop Planning",
+        description:
+          "Prepared analytics examples, dashboards, and practical reporting datasets.",
+      },
+      {
+        title: "Excel Workflow Training",
+        description:
+          "Demonstrated formulas, data cleaning, tables, and reporting structures.",
+      },
+      {
+        title: "Dashboard Building",
+        description:
+          "Introduced students to dashboard layouts and visual reporting techniques.",
+      },
+      {
+        title: "Power BI Session",
+        description:
+          "Explained data visualization, filtering, charts, and dashboard interactions.",
+      },
+      {
+        title: "Career Guidance",
+        description:
+          "Discussed analytics opportunities, required skills, and industry expectations.",
+      },
+    ],
+    keyFeatures: [
+      "Dashboard demonstrations",
+      "Practical analytics workflows",
+      "Excel reporting methods",
+      "Visualization concepts",
+      "Interactive workshop",
+      "Career-focused learning",
+    ],
+    results: [
+      {
+        metric: "Hands-on",
+        label: "Analytics Training",
+      },
+      {
+        metric: "Improved",
+        label: "Reporting Knowledge",
+      },
+      {
+        metric: "Better",
+        label: "Dashboard Understanding",
+      },
+      {
+        metric: "Practical",
+        label: "Industry Exposure",
+      },
+    ],
+    techStack: ["Excel", "Power BI", "Dashboards"],
+    tags: ["Analytics", "Dashboard", "Training"],
+    metric: "Hands-on analytics learning",
+    icon: Monitor,
+    gradient: "from-[#2f3f70]/15 to-[#4f68b3]/10",
+    reportPdf: "/reports/excel-powerbi-industrial-training.pdf",
+    whatsappMessage:
+      "Hi SkillSprint Technologies, I want to know more about the Excel & Power BI Industrial Training case study.",
+  },
+
+  {
+    id: 3,
+    slug: "data-analytics-awareness-session",
+    title: "Data Analytics Awareness Session",
+    category: "Training",
+    shortDescription:
+      "A student-focused awareness session covering analytics tools, reporting systems, and visualization techniques.",
+    heroSummary:
+      "SkillSprint Technologies conducted an awareness session introducing students to analytics concepts, dashboards, visualization tools, and reporting practices used in modern businesses.",
+    clientType: "Educational Institution",
+    timeline: "1 Day Session",
+    mainResult: "Industry tool exposure",
+    servicesUsed: [
+      "Analytics Awareness",
+      "Visualization Workshop",
+      "Student Training",
+    ],
+    challenge:
+      "Students had limited awareness about analytics platforms, dashboard systems, and practical data reporting techniques used in organizations.",
+    solution:
+      "We organized a structured session covering analytics workflows, dashboard examples, reporting structures, and modern visualization techniques.",
+    processSteps: [
       {
         title: "Planning",
         description:
-          "Created a cleaner page structure with better content flow and CTA placement.",
+          "Prepared real-world analytics examples and visualization demonstrations.",
       },
       {
-        title: "Design",
+        title: "Analytics Introduction",
         description:
-          "Designed a modern responsive interface with brand-focused visuals.",
+          "Explained analytics workflows, reporting systems, and business intelligence concepts.",
       },
       {
-        title: "Development",
+        title: "Visualization Demonstration",
         description:
-          "Built optimized frontend sections with fast loading and clean code.",
+          "Showed charts, dashboards, reports, and filtering techniques.",
       },
       {
-        title: "Launch",
+        title: "Practical Guidance",
         description:
-          "Tested responsiveness, speed, SEO basics, and deployed the final version.",
+          "Provided examples of analytics use cases and reporting methods.",
+      },
+      {
+        title: "Interactive Session",
+        description:
+          "Answered student questions and discussed analytics career opportunities.",
       },
     ],
     keyFeatures: [
-      "Responsive website layout",
-      "SEO-friendly page structure",
-      "Fast loading sections",
-      "Clear CTA placement",
-      "Modern brand-focused UI",
-      "Mobile-first experience",
+      "Analytics awareness training",
+      "Visualization demonstrations",
+      "Dashboard examples",
+      "Industry-focused guidance",
+      "Interactive discussions",
+      "Practical reporting concepts",
     ],
     results: [
       {
-        metric: "40%",
-        label: "Faster Page Load",
+        metric: "Better",
+        label: "Analytics Awareness",
       },
       {
-        metric: "Better",
-        label: "Mobile Experience",
+        metric: "Practical",
+        label: "Tool Exposure",
       },
       {
         metric: "Improved",
-        label: "CTA Visibility",
+        label: "Reporting Knowledge",
       },
       {
-        metric: "Stronger",
-        label: "Brand Trust",
+        metric: "Interactive",
+        label: "Learning Experience",
       },
     ],
-    techStack: ["React", "Tailwind CSS", "SEO", "Responsive Design"],
-    tags: ["React", "Responsive", "SEO"],
-    metric: "40% faster page load",
-    icon: Code,
-    gradient: "from-[#374b82]/20 to-[#4f68b3]/10",
-    reportPdf: "/reports/business-website-redesign.pdf",
-    whatsappMessage:
-      "Hi SkillSprint Technologies, I want to know more about your Business Website Redesign case study.",
-  },
-  {
-    id: 2,
-    slug: "lead-generation-campaign",
-    title: "Lead Generation Campaign",
-    category: "Digital Marketing",
-    shortDescription:
-      "A targeted digital campaign designed to improve online visibility and qualified customer leads.",
-    heroSummary:
-      "SkillSprint Technologies planned and optimized a lead generation campaign to improve visibility, landing page clarity, and enquiry quality.",
-    clientType: "Local Business",
-    timeline: "4 Weeks",
-    mainResult: "2.5x enquiry growth",
-    servicesUsed: ["Digital Marketing", "SEO", "Landing Page Optimization"],
-    challenge:
-      "The business was getting online visitors but very few serious enquiries. The landing page lacked clarity, campaign targeting was broad, and the enquiry flow was not optimized.",
-    solution:
-      "We improved the campaign structure, optimized landing page content, added stronger CTAs, improved keyword targeting, and created a cleaner enquiry journey for potential customers.",
-    processSteps: [
-      {
-        title: "Research",
-        description:
-          "Studied audience intent, competitors, keywords, and existing campaign gaps.",
-      },
-      {
-        title: "Strategy",
-        description:
-          "Planned campaign structure, targeting, landing page flow, and CTA placement.",
-      },
-      {
-        title: "Optimization",
-        description:
-          "Improved page content, campaign messaging, and enquiry conversion points.",
-      },
-      {
-        title: "Tracking",
-        description:
-          "Added basic performance tracking for campaign and enquiry measurement.",
-      },
-      {
-        title: "Improvement",
-        description:
-          "Refined campaign direction based on early performance insights.",
-      },
-    ],
-    keyFeatures: [
-      "Keyword-focused campaign structure",
-      "Landing page improvement",
-      "Clear enquiry CTA flow",
-      "Performance tracking setup",
-      "Audience-focused messaging",
-      "SEO-ready content structure",
-    ],
-    results: [
-      {
-        metric: "2.5x",
-        label: "Enquiry Growth",
-      },
-      {
-        metric: "Better",
-        label: "Lead Quality",
-      },
-      {
-        metric: "Higher",
-        label: "CTA Engagement",
-      },
-      {
-        metric: "Improved",
-        label: "Online Visibility",
-      },
-    ],
-    techStack: ["SEO", "Google Ads", "Analytics", "Landing Page"],
-    tags: ["SEO", "Ads", "Analytics"],
-    metric: "2.5x enquiry growth",
-    icon: BarChart2,
+    techStack: ["Analytics", "Visualization", "Dashboards"],
+    tags: ["Data", "Visualization", "Reports"],
+    metric: "Industry tool exposure",
+    icon: Database,
     gradient: "from-[#374b82]/15 to-[#5c7ac8]/10",
-    reportPdf: "/reports/lead-generation-campaign.pdf",
+    reportPdf: "/reports/data-analytics-awareness-session.pdf",
     whatsappMessage:
-      "Hi SkillSprint Technologies, I want to know more about your Lead Generation Campaign case study.",
+      "Hi SkillSprint Technologies, I want to know more about the Data Analytics Awareness Session case study.",
   },
+
   {
-    id: 3,
-    slug: "customer-support-chatbot",
-    title: "Customer Support Chatbot",
-    category: "Automation",
+    id: 4,
+    slug: "industry-tools-productivity-workshop",
+    title: "Industry Tools Productivity Workshop",
+    category: "Training",
     shortDescription:
-      "An automated chatbot flow that helps customers get quick answers and reduces manual support effort.",
+      "A workshop focused on productivity tools, workflow systems, and practical reporting techniques.",
     heroSummary:
-      "SkillSprint Technologies created a chatbot support flow to answer repeated customer questions, collect enquiries, and reduce manual response effort.",
-    clientType: "Service Team",
-    timeline: "2 Weeks",
-    mainResult: "24/7 response system",
-    servicesUsed: ["Chatbot Automation", "Workflow Automation", "Support Flow"],
+      "SkillSprint Technologies conducted a productivity-focused workshop introducing students to workflow systems, reporting methods, and industry productivity tools.",
+    clientType: "Educational Institution",
+    timeline: "1 Day Workshop",
+    mainResult: "Practical workflow learning",
+    servicesUsed: [
+      "Workflow Training",
+      "Productivity Workshop",
+      "Industry Tools Session",
+    ],
     challenge:
-      "The team was spending too much time answering repeated questions manually. Customers also had to wait for basic information like services, availability, and contact details.",
+      "Students were unfamiliar with practical workflow systems and productivity tools commonly used in professional environments.",
     solution:
-      "We created a structured chatbot flow with FAQs, service information, enquiry collection, and automated response paths to improve customer support availability.",
+      "We organized a workshop demonstrating workflow management methods, reporting structures, collaboration tools, and productivity techniques.",
     processSteps: [
       {
-        title: "FAQ Mapping",
+        title: "Preparation",
         description:
-          "Collected repeated customer questions and grouped them into support flows.",
+          "Prepared workflow examples, productivity demonstrations, and reporting structures.",
       },
       {
-        title: "Flow Planning",
+        title: "Workflow Introduction",
         description:
-          "Designed conversation paths for services, enquiries, and support topics.",
+          "Explained workflow systems, reporting structures, and collaboration practices.",
       },
       {
-        title: "Automation",
+        title: "Tool Demonstration",
         description:
-          "Built chatbot responses and enquiry collection logic.",
+          "Showed productivity methods, reporting workflows, and task organization concepts.",
       },
       {
-        title: "Testing",
+        title: "Practical Session",
         description:
-          "Tested user flows, fallback messages, and common customer journeys.",
+          "Demonstrated real-world workflow examples and reporting approaches.",
       },
       {
-        title: "Launch",
+        title: "Discussion",
         description:
-          "Delivered a ready-to-use chatbot support system.",
+          "Interacted with students regarding productivity practices and professional expectations.",
       },
     ],
     keyFeatures: [
-      "Automated FAQ responses",
-      "Service enquiry collection",
-      "24/7 customer support flow",
-      "Simple fallback messages",
-      "Lead capture ready",
-      "Reduced manual replies",
+      "Workflow demonstrations",
+      "Productivity-focused training",
+      "Industry tool exposure",
+      "Reporting workflow examples",
+      "Interactive workshop",
+      "Practical learning approach",
     ],
     results: [
       {
-        metric: "24/7",
-        label: "Response Availability",
+        metric: "Practical",
+        label: "Workflow Understanding",
       },
       {
-        metric: "Reduced",
-        label: "Manual Support",
+        metric: "Improved",
+        label: "Productivity Awareness",
       },
       {
-        metric: "Faster",
-        label: "Customer Replies",
+        metric: "Interactive",
+        label: "Learning Session",
       },
       {
         metric: "Better",
-        label: "Enquiry Handling",
+        label: "Industry Readiness",
       },
     ],
-    techStack: ["Chatbot", "Automation", "CRM Flow", "Support System"],
-    tags: ["Chatbot", "Automation", "CRM"],
-    metric: "24/7 response system",
-    icon: MessageSquare,
+    techStack: ["Workflow Systems", "Productivity Tools", "Reporting"],
+    tags: ["Workflow", "Tools", "Industry"],
+    metric: "Practical workflow learning",
+    icon: Zap,
     gradient: "from-[#2f3f70]/20 to-[#374b82]/10",
-    reportPdf: "/reports/customer-support-chatbot.pdf",
+    reportPdf: "/reports/industry-tools-productivity-workshop.pdf",
     whatsappMessage:
-      "Hi SkillSprint Technologies, I want to know more about your Customer Support Chatbot case study.",
+      "Hi SkillSprint Technologies, I want to know more about the Industry Tools Productivity Workshop case study.",
   },
 ];

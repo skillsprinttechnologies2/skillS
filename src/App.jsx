@@ -5,6 +5,7 @@ import Header from "./pages/components/Header";
 import Footer from "./pages/components/Footer";
 import OurTeam from "./pages/Team/ourTeam";
 import Background from "./pages/components/Background/Background";
+import ScrollToTop from "./pages/components/ScrollToTop";
 
 const Home = lazy(() => import("./pages/home/Home"));
 const Services = lazy(() => import("./pages/Services/Services"));
@@ -30,6 +31,9 @@ function App() {
     <div className="relative min-h-screen overflow-x-hidden bg-[#f4f7ff]">
       {/* fixed background */}
       <Background />
+
+      {/* scroll reset */}
+      <ScrollToTop />
 
       {/* content */}
       <div className="relative z-10 min-h-screen">

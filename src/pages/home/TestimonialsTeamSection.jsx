@@ -13,63 +13,63 @@ import {
 const testimonials = [
   {
     id: 1,
-    name: "David L.",
-    role: "CTO, TechCore Solutions",
-    initials: "DL",
-    rating: 4.5,
+    name: "Dr. Ramesh K.",
+    role: "Professor, Siddaganga Institute of Technology",
+    initials: "RK",
+    rating: 5,
     quote:
-      "SkillSprint modernized our operations with a reliable digital solution that delivered real results faster than we expected.",
-    result: "Delivered in 4 weeks",
+      "The session was highly interactive and gave students practical exposure to Excel and Power BI workflows used in industries.",
+    result: "Excellent student engagement",
   },
   {
     id: 2,
-    name: "Sarah M.",
-    role: "Manager, Global Finance Corp",
-    initials: "SM",
-    rating: 5,
-    quote:
-      "Secure, scalable, and delivered on time. Their communication was crystal clear from kickoff all the way to launch.",
-    result: "Zero downtime launch",
-  },
-  {
-    id: 3,
-    name: "James R.",
-    role: "CEO, InnovateX",
-    initials: "JR",
-    rating: 4,
-    quote:
-      "They understood our vision immediately and built a solution that genuinely improved our day-to-day workflow.",
-    result: "Workflow improved",
-  },
-  {
-    id: 4,
-    name: "Anita P.",
-    role: "Director, BrightEdge Retail",
+    name: "Anjali P.",
+    role: "Training Coordinator",
     initials: "AP",
     rating: 4.5,
     quote:
-      "Lead conversions improved noticeably within two months. The team was focused on outcomes, not just deliverables.",
-    result: "Conversions up 2x",
+      "SkillSprint Technologies explained analytics concepts in a very practical and easy-to-understand manner for students.",
+    result: "Improved industry awareness",
+  },
+  {
+    id: 3,
+    name: "Kiran S.",
+    role: "Student Participant",
+    initials: "KS",
+    rating: 5,
+    quote:
+      "The Power BI dashboard demonstrations and Excel reporting examples helped us understand real-world analytics workflows.",
+    result: "Hands-on learning experience",
+  },
+  {
+    id: 4,
+    name: "Meghana R.",
+    role: "Workshop Attendee",
+    initials: "MR",
+    rating: 4.5,
+    quote:
+      "The workshop was practical, engaging, and focused on industry tools that students actually need to learn.",
+    result: "Better practical exposure",
   },
   {
     id: 5,
-    name: "Marcus T.",
-    role: "Founder, LaunchPad Ventures",
-    initials: "MT",
+    name: "Suresh V.",
+    role: "Academic Coordinator",
+    initials: "SV",
     rating: 5,
     quote:
-      "Collaborative, transparent, and professional. SkillSprint treated our project with full ownership and care.",
-    result: "On time and on budget",
+      "Students responded very positively to the training session and gained valuable insight into analytics and reporting systems.",
+    result: "Positive student feedback",
   },
   {
     id: 6,
-    name: "Priya K.",
-    role: "Head of Operations, NexaTech",
-    initials: "PK",
+    name: "Pooja N.",
+    role: "Student Volunteer",
+    initials: "PN",
     rating: 4.5,
     quote:
-      "Their chatbot automation saved our support team hours every week. The implementation was smooth and well-documented.",
-    result: "Support hours cut by 60%",
+      "The interactive examples and dashboard sessions made complex concepts much easier to understand.",
+    result: "Improved analytics understanding",
   },
 ];
 
@@ -451,43 +451,46 @@ const TestimonialsTeamSection = () => {
               </div>
             </div>
 
-            <div className="relative">
-              <div className="relative h-[320px] lg:h-[360px] w-full rounded-3xl bg-gradient-to-br from-[#374b82]/15 via-white/60 to-white/40 border border-[#374b82]/10 shadow-[0_25px_80px_rgba(55,75,130,0.15)] overflow-hidden">
+            <div className="relative w-full max-w-[340px] sm:max-w-[420px] mx-auto">
+              <div className="relative h-[260px] sm:h-[320px] lg:h-[360px] w-full rounded-[28px] bg-gradient-to-br from-[#374b82]/15 via-white/70 to-white/40 border border-[#374b82]/10 shadow-[0_20px_60px_rgba(55,75,130,0.12)] overflow-hidden">
+                {/* Grid */}
                 <div
-                  className="absolute inset-0 opacity-[0.15]"
+                  className="absolute inset-0 opacity-[0.12]"
                   style={{
-                    backgroundImage: `linear-gradient(#374b82 1px, transparent 1px), linear-gradient(90deg, #374b82 1px, transparent 1px)`,
-                    backgroundSize: "40px 40px",
+                    backgroundImage: `
+          linear-gradient(#374b82 1px, transparent 1px),
+          linear-gradient(90deg, #374b82 1px, transparent 1px)
+        `,
+                    backgroundSize: "36px 36px",
                   }}
-                  aria-hidden="true"
                 />
 
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-2xl bg-white/90 backdrop-blur-xl border border-[#374b82]/20 shadow-xl flex items-center justify-center text-[#374b82]">
-                    <Users size={42} aria-hidden="true" />
+                {/* Center Card */}
+                <div className="absolute inset-0 flex items-center justify-center px-4">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/90 backdrop-blur-xl border border-[#374b82]/15 shadow-xl flex items-center justify-center text-[#374b82]">
+                    <Users size={36} className="sm:w-[42px] sm:h-[42px]" />
                   </div>
                 </div>
 
-                <div className="absolute top-8 left-8 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
+                {/* Floating Pills */}
+                <div className="absolute top-5 left-4 sm:top-8 sm:left-8 px-4 py-2 rounded-2xl bg-white/85 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-xs sm:text-sm font-semibold text-[#374b82]">
                   Strategy
                 </div>
 
-                <div className="absolute top-12 right-10 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
+                <div className="absolute top-10 right-4 sm:top-12 sm:right-8 px-4 py-2 rounded-2xl bg-white/85 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-xs sm:text-sm font-semibold text-[#374b82]">
                   Design
                 </div>
 
-                <div className="absolute bottom-10 left-10 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
+                <div className="absolute bottom-10 left-4 sm:bottom-10 sm:left-8 px-4 py-2 rounded-2xl bg-white/85 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-xs sm:text-sm font-semibold text-[#374b82]">
                   Development
                 </div>
 
-                <div className="absolute bottom-8 right-8 px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-sm font-semibold text-[#374b82]">
+                <div className="absolute bottom-6 right-4 sm:bottom-8 sm:right-8 px-4 py-2 rounded-2xl bg-white/85 backdrop-blur-xl border border-[#374b82]/10 shadow-md text-xs sm:text-sm font-semibold text-[#374b82]">
                   Support
                 </div>
 
-                <div
-                  className="absolute inset-0 bg-gradient-to-br from-transparent via-[#374b82]/5 to-transparent"
-                  aria-hidden="true"
-                />
+                {/* Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#374b82]/5 to-transparent" />
               </div>
             </div>
           </div>

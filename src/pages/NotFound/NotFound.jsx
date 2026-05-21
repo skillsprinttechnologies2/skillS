@@ -203,53 +203,6 @@ const NotFound = () => {
         />
       </div>
 
-      {/* ── Header ───────────────────────────────────────────────────────── */}
-      <header className="relative z-10 w-full border-b border-[#374b82]/8 bg-white/60 backdrop-blur-md">
-        <div className="max-w-[1100px] mx-auto px-5 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center"
-            aria-label="SkillSprint Technologies home"
-          >
-            <img
-              src="/logo.png"
-              alt="SkillSprint Technologies"
-              className="h-10 w-auto object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                e.currentTarget.nextSibling.style.display = "flex";
-              }}
-            />
-            <div
-              className="hidden flex-col leading-none"
-              aria-label="SkillSprint Technologies"
-            >
-              <span className="text-[#374b82] font-black text-xl tracking-tight">
-                SkillSprint
-              </span>
-              <span className="text-gray-500 font-semibold text-xs tracking-widest uppercase">
-                Technologies
-              </span>
-            </div>
-          </Link>
-
-          <nav aria-label="Main navigation">
-            <ul className="hidden sm:flex items-center gap-7">
-              {navLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-sm font-medium text-gray-600 hover:text-[#374b82] transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </header>
-
       {/* ── Main ─────────────────────────────────────────────────────────── */}
       <main
         className="relative z-10 flex-1 flex items-center"

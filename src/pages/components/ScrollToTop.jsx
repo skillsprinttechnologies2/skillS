@@ -7,11 +7,19 @@ const ScrollToTop = () => {
   useEffect(() => {
     if (hash) return;
 
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
 
     const timer = setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 50);
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant",
+      });
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [pathname, hash]);

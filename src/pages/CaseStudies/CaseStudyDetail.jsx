@@ -9,7 +9,12 @@ import {
   Briefcase,
   TrendingUp,
   Layers,
+  BarChart2,
+  Monitor,
+  Database,
+  Zap,
 } from "react-feather";
+
 import { caseStudies } from "../../data/caseStudies";
 
 const WHATSAPP_NUMBER = "919876543210";
