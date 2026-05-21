@@ -7,6 +7,8 @@ import OurTeam from "./pages/Team/ourTeam";
 import Background from "./pages/components/Background/Background";
 import ScrollToTop from "./pages/components/ScrollToTop";
 
+const PrivacyPolicy = lazy(() => import("./pages/Legal/PrivacyPolicy"));
+const TermsAndConditions = lazy(() => import("./pages/Legal/TermsConditions"));
 const Home = lazy(() => import("./pages/home/Home"));
 const Services = lazy(() => import("./pages/Services/Services"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
@@ -47,6 +49,8 @@ function App() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/ourteam" element={<OurTeam />} />
             <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+            <Route path="/terms&conditions" element={<TermsAndConditions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

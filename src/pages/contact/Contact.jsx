@@ -65,17 +65,15 @@ const Contact = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Trim all values
     const name = formData.name.trim();
     const email = formData.email.trim();
     const service = formData.service.trim();
     const message = formData.message.trim();
     const phone = formData.phone.trim();
 
-    // Basic validation
     if (!name || !email || !service || !message) {
       setStatus("error");
       setErrorMessage("Please fill all required fields.");
@@ -88,27 +86,58 @@ const Contact = () => {
       return;
     }
 
-    // Frontend rate limiting (basic protection only. Use backend/API rate limiting in production.)
     const lastSubmitTime = localStorage.getItem("lastSubmitTime");
+
     const now = Date.now();
+
     if (lastSubmitTime && now - parseInt(lastSubmitTime, 10) < 60000) {
       setStatus("error");
       setErrorMessage("Please wait before sending another message.");
       return;
     }
 
-    // Simulate loading state
-    setStatus("loading");
-    setErrorMessage("");
+    try {
+      setStatus("loading");
+      setErrorMessage("");
 
-    setTimeout(() => {
-      // Save timestamp for rate limiting
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          service,
+          message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
       localStorage.setItem("lastSubmitTime", now.toString());
 
-      // Reset form and show success
-      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
+
       setStatus("success");
-    }, 800);
+    } catch (error) {
+      console.error(error);
+
+      setStatus("error");
+
+      setErrorMessage("Failed to send message. Please try again.");
+    }
   };
 
   const handleReset = () => {

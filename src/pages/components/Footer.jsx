@@ -276,16 +276,16 @@ const Footer = () => {
 
           <div className="flex gap-6">
             <Link
-              to="/privacy-policy"
-              onClick={(event) => handleFooterNav(event, "/privacy-policy")}
+              to="/privacypolicy"
+              onClick={(event) => handleFooterNav(event, "/privacypolicy")}
               className="hover:text-[#374b82] transition-colors"
             >
               Privacy Policy
             </Link>
 
             <Link
-              to="/terms-conditions"
-              onClick={(event) => handleFooterNav(event, "/terms-conditions")}
+              to="/terms&conditions"
+              onClick={(event) => handleFooterNav(event, "/terms&conditions")}
               className="hover:text-[#374b82] transition-colors"
             >
               Terms & Conditions

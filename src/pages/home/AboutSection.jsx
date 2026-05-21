@@ -13,6 +13,7 @@ import {
   Linkedin,
 } from "react-feather";
 const founderImg = "/founder.jpeg";
+const img2 = "/img2.jpeg";
 
 const features = [
   {
@@ -445,40 +446,31 @@ const AboutSection = () => {
               </div>
 
               {/* Floating Stat Card */}
-              <div
-                className="
-                  absolute top-4 right-4
-                  sm:top-5 sm:right-5
-                  p-3
-                  rounded-2xl
-                  bg-white/90
-                  backdrop-blur-md
-                  border border-white/50
-                  shadow-lg
-                "
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="
-                      w-9 h-9
-                      rounded-full
-                      bg-[#374b82]/10
-                      flex items-center justify-center
-                      text-[#374b82]
-                    "
-                    aria-hidden="true"
-                  >
-                    <CheckCircle size={19} />
-                  </div>
-                  <div>
-                    <div className="text-base font-bold text-[#111827]">
-                      25+
-                    </div>
-                    <div className="text-[11px] text-[#6b7280]">
-                      Projects Delivered
-                    </div>
-                  </div>
-                </div>
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <img
+                  src={img2}
+                  alt="SkillSprint Visual"
+                  className="
+      w-full
+      h-full
+      object-cover
+      object-center
+    "
+                />
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-white/20 backdrop-[2px]" />
+
+                {/* Grid Overlay */}
+                <div
+                  className="absolute inset-0 opacity-20"
+                  style={{
+                    backgroundImage: `linear-gradient(#374b82 1px, transparent 1px), linear-gradient(90deg, #374b82 1px, transparent 1px)`,
+                    backgroundSize: "40px 40px",
+                    backgroundPosition: "center center",
+                  }}
+                />
               </div>
 
               {/* Floating Bottom Card */}

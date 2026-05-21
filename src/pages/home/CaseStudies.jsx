@@ -14,11 +14,14 @@ import {
   Zap,
 } from "react-feather";
 
+const img3 = "/img3.jpeg";
+
 const projects = [
   {
     id: 1,
     slug: "mechxdata-industry-awareness-session",
     title: "MechXData Industry Awareness Session",
+    image: img3,
     category: "Training",
     desc: "An interactive Excel and Power BI awareness session conducted at Siddaganga Institute of Technology.",
     tags: ["Excel", "Power BI", "Workshop"],
@@ -272,14 +275,31 @@ const PortfolioSection = () => {
                         backgroundSize: "20px 20px",
                       }}
                     />
-
-                    <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/30" />
+                    {!project.image && (
+                      <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/30" />
+                    )}
 
                     <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-[#374b82]/10 border border-[#374b82]/20" />
 
-                    <div className="absolute inset-0 flex items-center justify-center text-[#374b82]/80 group-hover:text-[#374b82] group-hover:scale-110 transition-all duration-300">
-                      {project.icon}
-                    </div>
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="
+      w-full
+      h-full
+      object-cover
+      object-center
+      transition-transform
+      duration-500
+      group-hover:scale-105
+    "
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-[#374b82]/80 group-hover:text-[#374b82] group-hover:scale-110 transition-all duration-300">
+                        {project.icon}
+                      </div>
+                    )}
 
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-white/90 text-[#374b82] shadow-sm border border-[#374b82]/10">

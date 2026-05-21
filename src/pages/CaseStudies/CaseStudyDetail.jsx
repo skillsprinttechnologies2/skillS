@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -9,16 +9,409 @@ import {
   Briefcase,
   TrendingUp,
   Layers,
-  BarChart2,
-  Monitor,
-  Database,
-  Zap,
+  Image as ImageIcon,
+  X,
 } from "react-feather";
 
 import { caseStudies } from "../../data/caseStudies";
 
 const WHATSAPP_NUMBER = "919876543210";
 
+// ─── Gallery Image Card ───────────────────────────────────────────────────────
+const GalleryCard = ({ image, index, onOpen }) => {
+  const [errored, setErrored] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  const handleError = useCallback(() => setErrored(true), []);
+  const handleLoad = useCallback(() => setLoaded(true), []);
+
+  return (
+    <button
+      type="button"
+      onClick={() => !errored && onOpen(index)}
+      aria-label={`View image: ${image.alt || `Gallery image ${index + 1}`}`}
+      className="
+        group
+        relative
+        w-full
+        overflow-hidden
+        rounded-3xl
+        bg-white/60
+        backdrop-blur-sm
+        border border-[#374b82]/10
+        shadow-[0_8px_32px_rgba(55,75,130,0.09)]
+        hover:shadow-[0_16px_48px_rgba(55,75,130,0.16)]
+        hover:border-[#374b82]/22
+        transition-all duration-300
+        cursor-zoom-in
+        focus:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-[#374b82]/50
+        focus-visible:ring-offset-2
+      "
+      style={{ aspectRatio: image.aspectRatio || "4/3" }}
+    >
+      {/* Skeleton shimmer while loading */}
+      {!loaded && !errored && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-r from-[#374b82]/5 via-[#374b82]/10 to-[#374b82]/5 animate-pulse"
+        />
+      )}
+
+      {errored ? (
+        /* Fallback */
+        <div
+          className="
+            absolute inset-0
+            flex flex-col items-center justify-center gap-3
+            bg-[#374b82]/5
+          "
+          aria-label="Image unavailable"
+        >
+          <div className="w-12 h-12 rounded-2xl bg-[#374b82]/10 flex items-center justify-center text-[#374b82]/50">
+            <ImageIcon size={22} aria-hidden="true" />
+          </div>
+          <span className="text-xs text-[#374b82]/50 font-medium">
+            Image unavailable
+          </span>
+        </div>
+      ) : (
+        <>
+          <img
+            src={image.src}
+            alt={image.alt || `Gallery image ${index + 1}`}
+            loading="lazy"
+            decoding="async"
+            onError={handleError}
+            onLoad={handleLoad}
+            className={`
+              absolute inset-0 w-full h-full object-cover
+              transition-transform duration-500 ease-out
+              group-hover:scale-[1.045]
+              ${loaded ? "opacity-100" : "opacity-0"}
+            `}
+          />
+
+          {/* Hover overlay */}
+          <div
+            aria-hidden="true"
+            className="
+              absolute inset-0
+              bg-gradient-to-t from-[#1a2550]/40 via-transparent to-transparent
+              opacity-0 group-hover:opacity-100
+              transition-opacity duration-300
+            "
+          />
+
+          {/* Caption chip on hover */}
+          {image.caption && (
+            <div
+              className="
+                absolute bottom-4 left-4 right-4
+                translate-y-2 opacity-0
+                group-hover:translate-y-0 group-hover:opacity-100
+                transition-all duration-300
+              "
+            >
+              <span
+                className="
+                  inline-block
+                  px-3 py-1.5
+                  rounded-xl
+                  bg-white/85 backdrop-blur-md
+                  border border-white/60
+                  text-[11px] font-semibold text-[#172033]
+                  shadow-sm
+                  max-w-full truncate
+                "
+              >
+                {image.caption}
+              </span>
+            </div>
+          )}
+        </>
+      )}
+    </button>
+  );
+};
+
+// ─── Lightbox ─────────────────────────────────────────────────────────────────
+const Lightbox = ({ images, activeIndex, onClose, onPrev, onNext }) => {
+  const image = images[activeIndex];
+  const [errored, setErrored] = useState(false);
+
+  const handleKey = useCallback(
+    (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    },
+    [onClose, onPrev, onNext],
+  );
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [handleKey]);
+
+  React.useEffect(() => setErrored(false), [activeIndex]);
+
+  React.useEffect(() => {
+    const header = document.querySelector("header");
+
+    if (header) {
+      header.style.display = "none";
+    }
+
+    return () => {
+      if (header) {
+        header.style.display = "";
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image lightbox"
+      className="
+        fixed inset-0 z-[999]
+        flex items-center justify-center
+        bg-[#0d1424]/88 backdrop-blur-md
+        px-4 py-6
+      "
+      onClick={onClose}
+    >
+      {/* Card */}
+      <div
+        className="
+          relative
+          w-full max-w-5xl
+          rounded-3xl overflow-hidden
+          bg-white/10 backdrop-blur-xl
+          border border-white/15
+          shadow-[0_40px_120px_rgba(0,0,0,0.5)]
+        "
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          aria-label="Close lightbox"
+          className="
+            absolute top-4 right-4 z-10
+            w-9 h-9 rounded-xl
+            bg-white/15 hover:bg-white/25
+            border border-white/20
+            flex items-center justify-center
+            text-white transition-colors
+          "
+        >
+          <X size={16} aria-hidden="true" />
+        </button>
+
+        {/* Image area */}
+        <div className="relative w-full" style={{ aspectRatio: "16/10" }}>
+          {errored ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#374b82]/10">
+              <ImageIcon
+                size={28}
+                className="text-white/40"
+                aria-hidden="true"
+              />
+              <span className="text-xs text-white/40">Image unavailable</span>
+            </div>
+          ) : (
+            <img
+              src={image.src}
+              alt={image.alt || `Gallery image ${activeIndex + 1}`}
+              decoding="async"
+              onError={() => setErrored(true)}
+              className="absolute inset-0 w-full h-full object-contain"
+            />
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between gap-4 px-6 py-4 border-t border-white/10">
+          <div>
+            {image.caption && (
+              <p className="text-sm font-medium text-white/80">
+                {image.caption}
+              </p>
+            )}
+            <p className="text-xs text-white/40 mt-0.5">
+              {activeIndex + 1} / {images.length}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onPrev}
+              aria-label="Previous image"
+              disabled={activeIndex === 0}
+              className="
+                px-4 py-2 rounded-xl
+                bg-white/10 hover:bg-white/20
+                border border-white/15
+                text-white text-sm font-semibold
+                disabled:opacity-30 disabled:cursor-not-allowed
+                transition-colors
+              "
+            >
+              Prev
+            </button>
+            <button
+              onClick={onNext}
+              aria-label="Next image"
+              disabled={activeIndex === images.length - 1}
+              className="
+                px-4 py-2 rounded-xl
+                bg-white/10 hover:bg-white/20
+                border border-white/15
+                text-white text-sm font-semibold
+                disabled:opacity-30 disabled:cursor-not-allowed
+                transition-colors
+              "
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Gallery Section ──────────────────────────────────────────────────────────
+const GallerySection = ({ images = [], sectionClass, glassCard }) => {
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  const handleOpen = useCallback((i) => setLightboxIndex(i), []);
+  const handleClose = useCallback(() => setLightboxIndex(null), []);
+  const handlePrev = useCallback(
+    () => setLightboxIndex((i) => Math.max(0, i - 1)),
+    [],
+  );
+  const handleNext = useCallback(
+    () => setLightboxIndex((i) => Math.min(images.length - 1, i + 1)),
+    [images.length],
+  );
+
+  if (!images || images.length === 0) return null;
+
+  return (
+    <>
+      <section className={sectionClass} aria-labelledby="gallery-heading">
+        {/* Section header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest mb-4">
+              Project Gallery
+            </div>
+            <h2
+              id="gallery-heading"
+              className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight"
+            >
+              Work in Action
+            </h2>
+            <p className="text-sm text-[#6b7280] mt-2 max-w-md leading-relaxed">
+              A visual walkthrough of the deliverables, interfaces, and outcomes
+              from this project.
+            </p>
+          </div>
+
+          <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/70 backdrop-blur-sm border border-[#374b82]/10 shadow-sm self-start sm:self-auto">
+            <ImageIcon
+              size={14}
+              className="text-[#374b82]"
+              aria-hidden="true"
+            />
+            <span className="text-xs font-semibold text-[#374b82]">
+              {images.length} {images.length === 1 ? "Image" : "Images"}
+            </span>
+          </div>
+        </div>
+
+        {/* Subtle background accent */}
+        <div
+          aria-hidden="true"
+          className="
+            relative
+            -mx-5 sm:-mx-8 lg:-mx-12 xl:-mx-16 2xl:-mx-20
+            px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20
+            py-8
+            bg-gradient-to-br from-[#374b82]/[0.03] via-transparent to-[#374b82]/[0.02]
+            rounded-[2rem]
+          "
+        >
+          {/* Dot grid decoration */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 rounded-[2rem] overflow-hidden pointer-events-none opacity-[0.35]"
+            style={{
+              backgroundImage: `radial-gradient(rgba(55,75,130,0.18) 1px, transparent 1px)`,
+              backgroundSize: "28px 28px",
+            }}
+          />
+
+          {/*
+            Responsive masonry-style grid:
+            mobile  → 1 col
+            tablet  → 2 col
+            desktop → 3 col with first item spanning 2 rows for masonry feel
+          */}
+          <div
+            className="
+              relative z-10
+              grid
+              grid-cols-1
+              sm:grid-cols-2
+              lg:grid-cols-3
+              gap-4 sm:gap-5
+            "
+          >
+            {images.map((image, index) => (
+              <div
+                key={image.src || index}
+                className={
+                  // First image gets double height on desktop for masonry feel
+                  index === 0 ? "lg:row-span-2" : ""
+                }
+                style={index === 0 ? { aspectRatio: undefined } : {}}
+              >
+                <GalleryCard
+                  image={index === 0 ? { ...image, aspectRatio: "3/4" } : image}
+                  index={index}
+                  onOpen={handleOpen}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={images}
+          activeIndex={lightboxIndex}
+          onClose={handleClose}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+      )}
+    </>
+  );
+};
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
 const CaseStudyDetail = () => {
   const { slug } = useParams();
 
@@ -46,15 +439,12 @@ const CaseStudyDetail = () => {
           <div className="w-16 h-16 rounded-2xl bg-[#374b82]/10 flex items-center justify-center mx-auto mb-6">
             <Layers size={28} className="text-[#374b82]" aria-hidden="true" />
           </div>
-
           <h1 className="text-3xl font-bold text-[#111827] mb-3">
             Case Study Not Found
           </h1>
-
           <p className="text-[#4b5563] mb-8 max-w-md mx-auto">
             The case study you are looking for does not exist or has been moved.
           </p>
-
           <Link
             to="/"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#374b82] text-white font-semibold rounded-xl hover:bg-[#2f3f70] transition-colors"
@@ -73,6 +463,7 @@ const CaseStudyDetail = () => {
       aria-labelledby="case-study-heading"
     >
       <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 pt-32 pb-20">
+        {/* Back link */}
         <div className="mb-10">
           <Link
             to="/"
@@ -92,7 +483,6 @@ const CaseStudyDetail = () => {
                 <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest">
                   Case Study
                 </span>
-
                 <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/70 border border-[#374b82]/15 text-[#374b82] text-xs font-semibold backdrop-blur-sm">
                   {caseStudy.category}
                 </span>
@@ -168,12 +558,10 @@ const CaseStudyDetail = () => {
                     <div className="w-9 h-9 rounded-xl bg-[#374b82]/10 text-[#374b82] flex items-center justify-center flex-shrink-0">
                       {item.icon}
                     </div>
-
                     <div>
                       <p className="text-xs text-gray-400 font-medium mb-0.5">
                         {item.label}
                       </p>
-
                       <p className="text-sm font-semibold text-[#111827]">
                         {item.value}
                       </p>
@@ -185,7 +573,6 @@ const CaseStudyDetail = () => {
                   <p className="text-xs text-gray-400 font-medium mb-2.5">
                     Services Used
                   </p>
-
                   <div className="flex flex-wrap gap-2">
                     {caseStudy.servicesUsed.map((service) => (
                       <span
@@ -211,14 +598,12 @@ const CaseStudyDetail = () => {
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest mb-5">
                 The Challenge
               </div>
-
               <h2
                 id="challenge-heading"
                 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight mb-5"
               >
                 What Was the Problem?
               </h2>
-
               <p className="text-base text-[#4b5563] leading-relaxed">
                 {caseStudy.challenge}
               </p>
@@ -235,7 +620,6 @@ const CaseStudyDetail = () => {
                   backgroundSize: "24px 24px",
                 }}
               />
-
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-20 h-20 rounded-2xl bg-white/80 border border-[#374b82]/15 shadow-xl flex items-center justify-center text-[#374b82]">
                   <TrendingUp size={36} strokeWidth={1.5} aria-hidden="true" />
@@ -275,7 +659,6 @@ const CaseStudyDetail = () => {
                   className="text-[#374b82] flex-shrink-0 mt-0.5"
                   aria-hidden="true"
                 />
-
                 <span className="text-sm font-medium text-[#374b82]">
                   {feature}
                 </span>
@@ -292,7 +675,6 @@ const CaseStudyDetail = () => {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest mb-4">
               Delivery Process
             </div>
-
             <h2
               id="process-heading"
               className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight"
@@ -306,7 +688,6 @@ const CaseStudyDetail = () => {
               className="hidden lg:block absolute top-8 left-[calc(10%+28px)] right-[calc(10%+28px)] h-0.5 bg-[#374b82]/12"
               aria-hidden="true"
             />
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
               {caseStudy.processSteps.map((step, index) => (
                 <div
@@ -316,11 +697,9 @@ const CaseStudyDetail = () => {
                   <div className="relative z-10 w-14 h-14 rounded-full bg-[#374b82] text-white flex items-center justify-center font-bold text-lg shadow-[0_8px_24px_rgba(55,75,130,0.30)] mb-4 flex-shrink-0">
                     {String(index + 1).padStart(2, "0")}
                   </div>
-
                   <h3 className="text-base font-bold text-[#172033] mb-2">
                     {step.title}
                   </h3>
-
                   <p className="text-xs text-[#4b5563] leading-relaxed">
                     {step.description}
                   </p>
@@ -337,14 +716,12 @@ const CaseStudyDetail = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#374b82]/10 border border-[#374b82]/20 text-[#374b82] text-xs font-bold uppercase tracking-widest mb-5">
             Results
           </div>
-
           <h2
             id="results-heading"
             className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight mb-10"
           >
             What We Achieved
           </h2>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {caseStudy.results.map((result) => (
               <div
@@ -354,7 +731,6 @@ const CaseStudyDetail = () => {
                 <div className="text-3xl sm:text-4xl font-bold text-[#374b82] mb-2">
                   {result.metric}
                 </div>
-
                 <div className="text-sm text-[#4b5563] font-medium">
                   {result.label}
                 </div>
@@ -365,6 +741,18 @@ const CaseStudyDetail = () => {
 
         <hr className="border-[#374b82]/10" />
 
+        {/* ── Gallery Section (dynamic from data) ── */}
+        {caseStudy.gallery && caseStudy.gallery.length > 0 && (
+          <>
+            <GallerySection
+              images={caseStudy.gallery}
+              sectionClass={sectionClass}
+              glassCard={glassCard}
+            />
+            <hr className="border-[#374b82]/10" />
+          </>
+        )}
+
         {/* Tech Stack */}
         <section className={sectionClass} aria-labelledby="tech-heading">
           <h2
@@ -373,7 +761,6 @@ const CaseStudyDetail = () => {
           >
             Tech Stack & Services Used
           </h2>
-
           <div className="flex flex-wrap gap-3">
             {caseStudy.techStack.map((tech) => (
               <span
@@ -398,7 +785,6 @@ const CaseStudyDetail = () => {
               <div className="absolute -right-16 -top-16 w-72 h-72 rounded-full border border-white/10" />
               <div className="absolute -right-8 -bottom-8 w-48 h-48 rounded-full border border-white/10" />
               <div className="absolute left-[-5%] bottom-[-30%] w-72 h-72 rounded-full bg-white/5 blur-[60px]" />
-
               <div
                 className="absolute inset-0 opacity-[0.07]"
                 style={{
@@ -415,12 +801,10 @@ const CaseStudyDetail = () => {
               >
                 Want a Similar Result for Your Business?
               </h2>
-
               <p className="text-base text-white/80 leading-relaxed mb-8">
                 Talk to SkillSprint Technologies and explore how we can build a
                 digital solution tailored to your business goals.
               </p>
-
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/contact"
@@ -429,7 +813,6 @@ const CaseStudyDetail = () => {
                 >
                   Contact Us
                 </Link>
-
                 <a
                   href={whatsappUrl}
                   target="_blank"
@@ -454,7 +837,6 @@ const CaseStudyDetail = () => {
             >
               Related Case Studies
             </h2>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {relatedStudies.map((related) => (
                 <Link
@@ -468,15 +850,12 @@ const CaseStudyDetail = () => {
                       {related.category}
                     </span>
                   </div>
-
                   <h3 className="text-xl font-bold text-[#172033] group-hover:text-[#374b82] transition-colors mb-3">
                     {related.title}
                   </h3>
-
                   <p className="text-sm text-[#4b5563] leading-relaxed mb-4">
                     {related.shortDescription}
                   </p>
-
                   <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#374b82] group-hover:gap-3 transition-all">
                     Read Case Study
                     <TrendingUp size={15} aria-hidden="true" />

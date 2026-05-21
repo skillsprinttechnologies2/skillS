@@ -8,6 +8,8 @@ import {
   ChevronRight,
 } from "react-feather";
 
+const teamImg1 = "/teamImg1.jpeg";
+
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const testimonials = [
@@ -70,6 +72,46 @@ const testimonials = [
     quote:
       "The interactive examples and dashboard sessions made complex concepts much easier to understand.",
     result: "Improved analytics understanding",
+  },
+  {
+    id: 7,
+    name: "Rahul M.",
+    role: "Student Participant",
+    initials: "RM",
+    rating: 5,
+    quote:
+      "The session gave us a clear understanding of how Excel and Power BI are used in real industry environments.",
+    result: "Better industry understanding",
+  },
+  {
+    id: 8,
+    name: "Sneha K.",
+    role: "Workshop Attendee",
+    initials: "SK",
+    rating: 4.5,
+    quote:
+      "The dashboard demonstrations and practical examples made the workshop very engaging and easy to follow.",
+    result: "Improved practical learning",
+  },
+  {
+    id: 9,
+    name: "Arjun P.",
+    role: "Student Volunteer",
+    initials: "AP",
+    rating: 5,
+    quote:
+      "The training session helped us understand analytics workflows and reporting concepts beyond classroom theory.",
+    result: "Enhanced analytics exposure",
+  },
+  {
+    id: 10,
+    name: "Divya R.",
+    role: "Student Participant",
+    initials: "DR",
+    rating: 4.5,
+    quote:
+      "The interactive approach and real-time demonstrations made the concepts much easier to understand.",
+    result: "Interactive learning experience",
   },
 ];
 
@@ -466,9 +508,23 @@ const TestimonialsTeamSection = () => {
                 />
 
                 {/* Center Card */}
-                <div className="absolute inset-0 flex items-center justify-center px-4">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/90 backdrop-blur-xl border border-[#374b82]/15 shadow-xl flex items-center justify-center text-[#374b82]">
-                    <Users size={36} className="sm:w-[42px] sm:h-[42px]" />
+                {/* Team Image */}
+                <div className="absolute inset-0 p-4 sm:p-5">
+                  <div className="relative w-full h-full rounded-[24px] overflow-hidden border border-white/30 shadow-xl">
+                    <img
+                      src={teamImg1}
+                      alt="Team"
+                      loading="lazy"
+                      className="
+        w-full
+        h-full
+        object-cover
+        object-center
+      "
+                    />
+
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/20 via-transparent to-transparent" />
                   </div>
                 </div>
 
