@@ -12,7 +12,7 @@ const PrivacyPolicy = lazy(() => import("./pages/Legal/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/Legal/TermsConditions"));
 const Home = lazy(() => import("./pages/home/Home"));
 const Services = lazy(() => import("./pages/Services/Services"));
-const Contact = lazy(() => import("./pages/Contact/Contact"));
+const Contact = lazy(() => import("./pages/contact/Contact"));
 const Careers = lazy(() => import("./pages/Careers/Careers"));
 const CaseStudyDetail = lazy(
   () => import("./pages/CaseStudies/CaseStudyDetail"),
