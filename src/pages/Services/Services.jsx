@@ -21,18 +21,19 @@ import {
 // Data arrays defined outside component for performance and cleanliness
 const servicesData = [
   {
-    title: "Digital Marketing",
+    title: "Internships & Industry Exposure",
     description:
-      "Boost your brand visibility and drive qualified leads with data-driven marketing strategies.",
-    icon: <TrendingUp size={28} />,
+      "Practical internship programs designed to help students gain real-world experience and industry-ready skills.",
+    icon: <Briefcase size={28} />,
     features: [
-      "SEO & Content Strategy",
-      "Social Media Management",
-      "PPC Campaigns",
-      "Analytics & Reporting",
+      "Live Project Experience",
+      "Industry Mentorship",
+      "Practical Skill Development",
+      "Internship Certification",
     ],
-    tags: ["SEO", "Ads", "Growth"],
+    tags: ["Internships", "Industry Experience", "Mentorship"],
   },
+
   {
     title: "Web Development",
     description:
@@ -47,17 +48,30 @@ const servicesData = [
     tags: ["React", "Next.js", "Responsive"],
   },
   {
-    title: "Software Training & Placement",
+    title: "Digital Marketing",
     description:
-      "Hands-on learning programs designed to prepare candidates for real-world enterprise roles.",
+      "Boost your brand visibility and drive qualified leads with data-driven marketing strategies.",
+    icon: <TrendingUp size={28} />,
+    features: [
+      "SEO & Content Strategy",
+      "Social Media Management",
+      "PPC Campaigns",
+      "Analytics & Reporting",
+    ],
+    tags: ["SEO", "Ads", "Growth"],
+  },
+  {
+    title: "Software Training & Career Readiness",
+    description:
+      "Hands-on learning programs focused on building practical skills, industry exposure, and confidence for real-world software careers.",
     icon: <BookOpen size={28} />,
     features: [
       "Expert Mentorship",
       "Real-world Projects",
-      "Placement Assistance",
+      "Career Guidance",
       "Industry Certification",
     ],
-    tags: ["Training", "Jobs", "Mentorship"],
+    tags: ["Training", "Career Growth", "Mentorship"],
   },
   {
     title: "Chatbot & Automation",

@@ -212,15 +212,16 @@ import {
   PenTool,
   Code,
   ArrowRight,
+  Briefcase,
 } from "react-feather";
 
 const services = [
   {
-    title: "Digital Marketing",
+    title: "Internships & Industry Exposure",
     description:
-      "Data-driven marketing strategies to boost brand visibility and engagement across digital channels.",
-    icon: <TrendingUp size={24} />,
-    tags: ["SEO", "PPC", "Social Media"],
+      "Practical internship programs designed to help students gain real-world experience, industry knowledge, and professional confidence.",
+    icon: <Briefcase size={24} />,
+    tags: ["Internships", "Industry Experience", "Mentorship"],
   },
   {
     title: "Web Development",
@@ -230,11 +231,18 @@ const services = [
     tags: ["React", "Responsive", "E-commerce"],
   },
   {
-    title: "Software Training & Placement",
+    title: "Digital Marketing",
     description:
-      "Hands-on training programs with placement support to prepare candidates for real-world roles.",
+      "Data-driven marketing strategies to boost brand visibility and engagement across digital channels.",
+    icon: <TrendingUp size={24} />,
+    tags: ["SEO", "PPC", "Social Media"],
+  },
+  {
+    title: "Software Training & Career Preparation",
+    description:
+      "Industry-focused training programs designed to build practical skills, confidence, and career readiness for real-world software roles.",
     icon: <BookOpen size={24} />,
-    tags: ["Certification", "Mentorship", "Jobs"],
+    tags: ["Certification", "Mentorship", "Career Ready"],
   },
   {
     title: "Chatbot & Automation",
