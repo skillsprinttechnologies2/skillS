@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X } from "react-feather";
-
+import HamburgerToggle from "./HamburgerToggle";
 const navLinks = [
   { name: "Home", target: "home", type: "section" },
   { name: "About", target: "about", type: "section" },
@@ -260,28 +259,12 @@ const Header = () => {
               Get Started
             </button>
 
-            <button
-              type="button"
-              onClick={() => setIsOpen((prev) => !prev)}
-              className={`
-                lg:hidden
-                w-10 h-10
-                flex items-center justify-center
-                rounded-xl
-                transition-colors duration-200
-                border-0 cursor-pointer
-                ${
-                  isOpen
-                    ? "text-[#374b82] bg-[#374b82]/10"
-                    : "text-[#24304a] hover:bg-[#374b82]/8"
-                }
-              `}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-            >
-              {isOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            <div className="lg:hidden flex items-center justify-center">
+              <HamburgerToggle
+                isOpen={isOpen}
+                toggleMenu={() => setIsOpen((prev) => !prev)}
+              />
+            </div>
           </div>
         </div>
 

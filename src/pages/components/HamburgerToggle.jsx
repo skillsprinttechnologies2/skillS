@@ -1,76 +1,70 @@
 import React from "react";
 import styled from "styled-components";
 
-const HamburgerToggle = ({ isOpen, toggleMenu, $dark }) => {
+const HamburgerToggle = ({ isOpen, toggleMenu, dark = false }) => {
   return (
-    <StyledWrapper $dark={$dark}>
-      <input
-        type="checkbox"
-        id="hamburger-checkbox"
-        checked={isOpen}
-        onChange={toggleMenu}
-        aria-label="Toggle Menu"
-      />
-      <label htmlFor="hamburger-checkbox" className="toggle">
-        <div className="bars" id="bar1" />
-        <div className="bars" id="bar2" />
-        <div className="bars" id="bar3" />
+    <StyledWrapper $dark={dark}>
+      <label className="hamburger">
+        <input
+          type="checkbox"
+          checked={isOpen}
+          onChange={toggleMenu}
+          aria-label="Toggle Menu"
+        />
+
+        <svg viewBox="0 0 32 32">
+          <path
+            className="line line-top-bottom"
+            d="M27 10 13 10C10.8 10 9 8.2 9 6C9 3.5 10.8 2 13 2C15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30C23.2 30 25 28.2 25 26C25 23.8 23.2 22 21 22L7 22"
+          />
+
+          <path className="line" d="M7 16 27 16" />
+        </svg>
       </label>
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
-  #hamburger-checkbox {
+  .hamburger {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hamburger input {
     display: none;
   }
 
-  .toggle {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition-duration: 0.5s;
+  .hamburger svg {
+    height: 2.8em;
+    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .bars {
-    width: 100%;
-    height: 3px;
-    background-color: ${({ $dark }) => ($dark ? "#ffffff" : "#1f2937")};
-    border-radius: 4px;
-    transition: all 0.5s ease;
+  .line {
+    fill: none;
+    stroke: ${({ $dark }) => ($dark ? "#ffffff" : "#24304a")};
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.6;
+    transition:
+      stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 300ms ease;
   }
 
-  #bar1,
-  #bar3 {
-    width: 70%;
+  .line-top-bottom {
+    stroke-dasharray: 12 63;
   }
 
-  #hamburger-checkbox:checked + .toggle .bars {
-    position: absolute;
-  }
-
-  #hamburger-checkbox:checked + .toggle #bar2 {
-    transform: scaleX(0);
-  }
-
-  #hamburger-checkbox:checked + .toggle #bar1 {
-    width: 100%;
-    transform: rotate(45deg);
-  }
-
-  #hamburger-checkbox:checked + .toggle #bar3 {
-    width: 100%;
+  .hamburger input:checked + svg {
     transform: rotate(-45deg);
   }
 
-  #hamburger-checkbox:checked + .toggle {
-    transform: rotate(180deg);
+  .hamburger input:checked + svg .line-top-bottom {
+    stroke-dasharray: 20 300;
+    stroke-dashoffset: -32.42;
   }
 `;
 
