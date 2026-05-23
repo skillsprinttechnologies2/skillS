@@ -113,3 +113,11 @@ body {
   backface-visibility: hidden;
   perspective: 1000px;
 }
+
+@media (max-width: 768px) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    backdrop-filter: none !important;
+  }
+}
