@@ -278,8 +278,8 @@ const sections = [
           {
             icon: <Phone size={16} />,
             label: "Phone",
-            value: "+91 98765 43210",
-            href: "tel:+919876543210",
+            value: "+91 86605 91722",
+            href: "tel:+918660591722",
           },
           {
             icon: <Globe size={16} />,

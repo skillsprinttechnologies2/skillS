@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { socialLinks } from "@/lib/constants";
+
 import {
   CheckCircle,
   Users,
@@ -878,7 +880,7 @@ const AboutSection = () => {
               </Link>
 
               <a
-                href="https://linkedin.com/in/pramodpr"
+                href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Pramod P R on LinkedIn"

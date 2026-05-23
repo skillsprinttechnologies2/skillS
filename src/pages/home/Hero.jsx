@@ -368,7 +368,7 @@ export default function HeroSection() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-1">
                 <a
-                  href="#contact"
+                  href="/contact"
                   aria-label="Schedule a free consultation with SkillSprint Technologies"
                   className="
                     w-full
@@ -392,7 +392,7 @@ export default function HeroSection() {
                 </a>
 
                 <a
-                  href="#services"
+                  href="/services"
                   aria-label="Explore SkillSprint Technologies services"
                   className="
                     w-full

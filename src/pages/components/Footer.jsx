@@ -12,12 +12,14 @@ import {
   ArrowRight,
 } from "react-feather";
 
+import { socialLinks } from "@/lib/constants";
+
 const quickLinks = [
   { label: "Home", path: "/#home" },
   { label: "About", path: "/#about" },
   { label: "Services", path: "/services" },
   { label: "Careers", path: "/careers" },
-  { label: "Our Team", path: "/ourteam" },
+  // { label: "Our Team", path: "/ourteam" },
 
   { label: "Contact", path: "/contact" },
 ];
@@ -31,16 +33,29 @@ const services = [
   { label: "Software Development", path: "/services" },
 ];
 
-const socialLinks = [
-  { label: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
-  { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
-  { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
-  { label: "YouTube", icon: Youtube, href: "https://youtube.com" },
+const socialItems = [
+  {
+    label: "LinkedIn",
+    icon: Linkedin,
+    href: socialLinks.linkedin,
+  },
+
+  {
+    label: "Instagram",
+    icon: Instagram,
+    href: socialLinks.instagram,
+  },
+
+  {
+    label: "Facebook",
+    icon: Facebook,
+    href: socialLinks.facebook,
+  },
 ];
 
 const contactInfo = [
   { label: "Email", value: "info@skillsprinttechnologies.com", icon: Mail },
-  { label: "Phone", value: "+91 98765 43210", icon: Phone },
+  { label: "Phone", value: "+91 86605 91722", icon: Phone },
   { label: "Location", value: "India", icon: MapPin },
   {
     label: "Working Hours",
@@ -144,7 +159,7 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-3">
-              {socialLinks.map((social) => {
+              {socialItems.map((social) => {
                 const Icon = social.icon;
 
                 return (

@@ -7,6 +7,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "react-feather";
+import { useLocation, useNavigate } from "react-router-dom";
+import Careers from "../Careers/Careers";
 
 const teamImg1 = "/teamImg1.jpeg";
 
@@ -296,6 +298,32 @@ const TestimonialsTeamSection = () => {
       timeoutRef.current = null;
     }
   }, []);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId) => {
+    const scroll = () => {
+      const section = document.getElementById(sectionId);
+
+      if (!section) return;
+
+      const y = section.getBoundingClientRect().top + window.scrollY - 60;
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
+    };
+
+    if (location.pathname !== "/") {
+      navigate("/");
+
+      setTimeout(scroll, 200);
+      return;
+    }
+
+    scroll();
+  };
 
   const changeSlide = useCallback(
     (callback) => {
@@ -476,16 +504,15 @@ const TestimonialsTeamSection = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                <Link
-                  to="/about"
+                <button
+                  onClick={() => scrollToSection("about")}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#374b82] !text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all active:scale-95"
                 >
-                  Meet Our Team
+                  Know us
                   <ArrowRight size={18} aria-hidden="true" />
-                </Link>
-
+                </button>
                 <Link
-                  to="/contact"
+                  to="/careers"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white !text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 hover:bg-white hover:border-[#374b82]/40 transition-all"
                 >
                   Apply Now

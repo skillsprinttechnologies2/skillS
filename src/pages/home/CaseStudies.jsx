@@ -13,8 +13,12 @@ import {
   Database,
   Zap,
 } from "react-feather";
+import { image } from "framer-motion/client";
 
 const img3 = "/img3.jpeg";
+const coachImg1 = "/coaching-img1.jpeg";
+const coachImg2 = "/coaching-img2.jpeg";
+const coachImg3 = "/coaching-img3.jpeg";
 
 const projects = [
   {
@@ -33,6 +37,7 @@ const projects = [
     id: 2,
     slug: "excel-powerbi-industrial-training",
     title: "Excel & Power BI Industrial Training",
+    image: coachImg1,
     category: "Training",
     desc: "A practical industrial training session introducing students to reporting, dashboards, and analytics workflows.",
     tags: ["Analytics", "Dashboard", "Training"],
@@ -44,6 +49,7 @@ const projects = [
     id: 3,
     slug: "data-analytics-awareness-session",
     title: "Data Analytics Awareness Session",
+    image: coachImg2,
     category: "Training",
     desc: "A student-focused awareness session covering modern analytics tools, visualization, and reporting concepts.",
     tags: ["Data", "Visualization", "Reports"],
@@ -55,6 +61,7 @@ const projects = [
     id: 4,
     slug: "industry-tools-productivity-workshop",
     title: "Industry Tools Productivity Workshop",
+    image: coachImg3,
     category: "Training",
     desc: "A workshop focused on productivity tools, workflow management, and practical business reporting techniques.",
     tags: ["Workflow", "Tools", "Industry"],

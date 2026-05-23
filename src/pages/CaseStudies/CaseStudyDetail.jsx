@@ -500,7 +500,7 @@ const CaseStudyDetail = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-                <a
+                {/* <a
                   href={caseStudy.reportPdf}
                   download
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#374b82] text-white font-semibold rounded-xl shadow-[0_12px_30px_rgba(55,75,130,0.28)] hover:bg-[#2f3f70] transition-colors active:scale-95"
@@ -508,13 +508,13 @@ const CaseStudyDetail = () => {
                 >
                   <Download size={17} aria-hidden="true" />
                   Download Report
-                </a>
+                </a> */}
 
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/70 backdrop-blur-sm text-[#374b82] font-semibold rounded-xl border border-[#374b82]/20 hover:border-[#374b82]/40 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#374b82] text-white font-semibold rounded-xl shadow-[0_12px_30px_rgba(55,75,130,0.28)] hover:bg-[#2f3f70] transition-colors active:scale-95"
                   aria-label={`Know more about ${caseStudy.title} on WhatsApp`}
                 >
                   <MessageCircle size={17} aria-hidden="true" />

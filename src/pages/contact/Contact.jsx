@@ -32,8 +32,8 @@ const contactInfo = [
   {
     icon: <Phone size={20} />,
     label: "Phone",
-    value: "+91 98765 43210",
-    href: "tel:+919876543210",
+    value: "+91 86605 91722",
+    href: "tel:+918660591722",
   },
   { icon: <MapPin size={20} />, label: "Location", value: "India", href: null },
   {
@@ -100,7 +100,7 @@ const Contact = () => {
       setStatus("loading");
       setErrorMessage("");
 
-      const response = await fetch("/api/contact", {
+      const response = await fetch("http://localhost:5000/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -279,7 +279,8 @@ const Contact = () => {
                       id="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 86605 91722
+"
                       className="w-full px-4 py-3 bg-white/80 border border-[#374b82]/15 rounded-xl text-sm focus:border-[#374b82] focus:ring-1 focus:ring-[#374b82] outline-none transition-all"
                     />
                   </div>

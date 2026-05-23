@@ -504,7 +504,8 @@ const Careers = () => {
                         name="phone"
                         type="tel"
                         autoComplete="tel"
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 86605 91722
+"
                         value={formValues.phone}
                         onChange={handleChange}
                         required
