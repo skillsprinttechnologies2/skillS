@@ -386,6 +386,8 @@ const TestimonialsTeamSection = () => {
 
   return (
     <section className="relative bg-transperent w-full overflow-hidden py-20 lg:py-28">
+      <section className="gpu"></section>
+
       <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         {/* Testimonials */}
         <div className="mb-20">

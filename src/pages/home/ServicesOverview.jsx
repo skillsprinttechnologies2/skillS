@@ -274,6 +274,8 @@ const ServicesSection = () => {
       aria-labelledby="services-heading"
       className="relative bg-transperent w-full overflow-hidden"
     >
+      <section className="gpu"></section>
+
       {/* Main Content */}
       <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-20 lg:py-24">
         {/* Header */}
