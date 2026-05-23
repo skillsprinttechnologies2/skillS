@@ -268,7 +268,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu menu */}
         <div
           id="mobile-menu"
           className={`
