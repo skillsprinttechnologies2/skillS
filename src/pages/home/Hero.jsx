@@ -248,6 +248,7 @@ export default function HeroSection() {
           overflow-hidden
         "
       >
+        <section className="gpu"></section>
         {/* Content Wrapper */}
         <div
           className="

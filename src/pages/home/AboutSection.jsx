@@ -88,6 +88,7 @@ const AboutSection = () => {
         lg:gap-20
       "
     >
+      <section className="gpu"></section>
       <div
         className="
           relative
