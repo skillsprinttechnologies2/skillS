@@ -78,6 +78,19 @@ function AppContent() {
       if (timeout) clearTimeout(timeout);
     };
   }, []);
+  // PERFORMANCE OPTIMIZATION FOR WEAK DEVICES
+  useEffect(() => {
+    const isWeakDevice =
+      navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
+
+    if (isWeakDevice) {
+      document.body.classList.add("reduce-effects");
+    }
+
+    return () => {
+      document.body.classList.remove("reduce-effects");
+    };
+  }, []);
 
   // ROUTE TRANSITION LOADER
   useEffect(() => {
