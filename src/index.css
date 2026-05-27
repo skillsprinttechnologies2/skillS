@@ -98,6 +98,14 @@ body {
   box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* GPU acceleration */
 .gpu {
   transform: translateZ(0);
@@ -107,19 +115,14 @@ body {
 }
 
 @media (max-width: 768px) {
-  *:not(.allow-animation) {
+  * {
     animation: none !important;
     transition: none !important;
-  }
-
-  html {
-    scroll-behavior: auto !important;
-  }
-
-  .reduce-blur {
     backdrop-filter: none !important;
   }
 }
+
+
 
 /* PERFORMANCE MODE FOR WEAK DEVICES */
 

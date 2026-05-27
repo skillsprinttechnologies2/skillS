@@ -4,14 +4,14 @@ import styled from "styled-components";
 const HamburgerToggle = ({ isOpen, toggleMenu, dark = false }) => {
   return (
     <StyledWrapper $dark={dark}>
-      <label className="hamburger allow-animation">
-        {" "}
+      <label className="hamburger">
         <input
           type="checkbox"
           checked={isOpen}
           onChange={toggleMenu}
           aria-label="Toggle Menu"
         />
+
         <svg viewBox="0 0 32 32">
           <path
             className="line line-top-bottom"
