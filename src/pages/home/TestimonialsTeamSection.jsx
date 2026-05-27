@@ -10,7 +10,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import Careers from "../Careers/Careers";
 
-const teamImg1 = "/teamImg1.jpeg";
+const teamImg1 = "/Team/teamImg1.webp";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 

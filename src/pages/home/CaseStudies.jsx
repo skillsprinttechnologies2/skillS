@@ -15,10 +15,10 @@ import {
 } from "react-feather";
 import { image } from "framer-motion/client";
 
-const img3 = "/img3.jpeg";
-const coachImg1 = "/coaching-img1.jpeg";
-const coachImg2 = "/coaching-img2.jpeg";
-const coachImg3 = "/coaching-img3.jpeg";
+const img3 = "/coaching/img3.webp";
+const coachImg1 = "/coaching/coaching-img1.webp";
+const coachImg2 = "/coaching/coaching-img2.webp";
+const coachImg3 = "/coaching/coaching-img3.webp";
 
 const projects = [
   {

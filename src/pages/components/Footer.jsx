@@ -14,6 +14,8 @@ import {
 
 import { socialLinks } from "@/lib/constants";
 
+const logo1 = "/logos/logo.webp";
+
 const quickLinks = [
   { label: "Home", path: "/#home" },
   { label: "About", path: "/#about" },
@@ -146,7 +148,7 @@ const Footer = () => {
               aria-label="Go to homepage"
             >
               <img
-                src="/logo.png"
+                src={logo1}
                 alt="SkillSprint Technologies"
                 className="h-10 w-auto object-contain"
                 loading="lazy"

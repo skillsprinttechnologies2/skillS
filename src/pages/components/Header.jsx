@@ -9,6 +9,8 @@ const navLinks = [
   { name: "Contact", target: "/contact", type: "page" },
 ];
 
+const logo1 = "/logos/logo.webp";
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -44,7 +46,7 @@ const Header = () => {
       const section = document.getElementById(sectionId);
       if (!section) return;
 
-      const yOffset = sectionId === "about" ? -60 : -90;
+      const yOffset = sectionId === "about" ? 15 : -90;
       const y = section.getBoundingClientRect().top + window.scrollY + yOffset;
 
       window.scrollTo({
@@ -188,7 +190,7 @@ const Header = () => {
             aria-label="Go to homepage"
           >
             <img
-              src="/logo.png"
+              src={logo1}
               alt="SkillSprint Technologies"
               className={`
                 w-auto object-contain transition-all duration-300

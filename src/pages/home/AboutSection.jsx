@@ -14,8 +14,8 @@ import {
   Star,
   Linkedin,
 } from "react-feather";
-const founderImg = "/founder.jpeg";
-const img2 = "/img2.jpeg";
+const founderImg = "/CEO/founder.webp";
+const img2 = "/coaching/img2.webp";
 
 const features = [
   {
