@@ -56,8 +56,8 @@ const socialItems = [
 ];
 
 const contactInfo = [
-  { label: "Email", value: "info@skillsprinttechnologies.com", icon: Mail },
-  { label: "Phone", value: "+91 86605 91722", icon: Phone },
+  { label: "Company Email", value: "skillsprinttechnologies@gmail.com", icon: Mail, href: "mailto:skillsprinttechnologies@gmail.com" },
+  { label: "Company Phone", value: "+91 86605 91722", icon: Phone, href: "tel:+918660591722" },
   { label: "Location", value: "India", icon: MapPin },
   {
     label: "Working Hours",
@@ -249,16 +249,9 @@ const Footer = () => {
                         {item.label}
                       </span>
 
-                      {item.label === "Email" ? (
+                      {item.href ? (
                         <a
-                          href={`mailto:${item.value}`}
-                          className="text-[#4b5563] hover:text-[#374b82] transition-colors"
-                        >
-                          {item.value}
-                        </a>
-                      ) : item.label === "Phone" ? (
-                        <a
-                          href={`tel:${item.value.replace(/\s/g, "")}`}
+                          href={item.href}
                           className="text-[#4b5563] hover:text-[#374b82] transition-colors"
                         >
                           {item.value}

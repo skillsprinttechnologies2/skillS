@@ -383,8 +383,8 @@ const sections = [
           {
             icon: <Mail size={16} />,
             label: "Legal",
-            value: "legal@skillsprinttech.com",
-            href: "mailto:legal@skillsprinttech.com",
+            value: "skillsprinttechnologies@gmail.com",
+            href: "mailto:skillsprinttechnologies@gmail.com",
           },
           {
             icon: <Phone size={16} />,
@@ -534,7 +534,6 @@ const DrawerInner = ({
   activeSection,
   onNavigate,
   onClose,
-  isDesktop = false,
 }) => (
   <div className="flex flex-col h-full">
     {/* Header */}
@@ -907,7 +906,6 @@ const TermsAndConditions = () => {
                 activeSection={activeSection}
                 onNavigate={handleDesktopNavigate}
                 onClose={() => setDesktopDrawerOpen(false)}
-                isDesktop
               />
             </motion.aside>
           </motion.div>

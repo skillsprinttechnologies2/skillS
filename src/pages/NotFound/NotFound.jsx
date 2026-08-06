@@ -4,13 +4,6 @@ import { Home, Briefcase, Users, Mail, ArrowRight } from "react-feather";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "Careers", to: "/careers" },
-  { label: "Contact", to: "/contact" },
-];
-
 const helpfulLinks = [
   { label: "Home", to: "/", icon: <Home size={15} aria-hidden="true" /> },
   {

@@ -290,7 +290,7 @@ const Lightbox = ({ images, activeIndex, onClose, onPrev, onNext }) => {
 };
 
 // ─── Gallery Section ──────────────────────────────────────────────────────────
-const GallerySection = ({ images = [], sectionClass, glassCard }) => {
+const GallerySection = ({ images = [], sectionClass }) => {
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const handleOpen = useCallback((i) => setLightboxIndex(i), []);
@@ -747,7 +747,6 @@ const CaseStudyDetail = () => {
             <GallerySection
               images={caseStudy.gallery}
               sectionClass={sectionClass}
-              glassCard={glassCard}
             />
             <hr className="border-[#374b82]/10" />
           </>

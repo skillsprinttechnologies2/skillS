@@ -21,7 +21,7 @@ import PortfolioSection from "./CaseStudies";
 import ProcessSection from "./ProcessSection";
 import TestimonialsTeamSection from "./TestimonialsTeamSection";
 
-export default function Home({ setOpenCalendly }) {
+export default function Home() {
   const location = useLocation();
 
   useEffect(() => {

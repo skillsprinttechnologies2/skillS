@@ -272,8 +272,8 @@ const sections = [
           {
             icon: <Mail size={16} />,
             label: "Email",
-            value: "privacy@skillsprinttech.com",
-            href: "mailto:privacy@skillsprinttech.com",
+            value: "skillsprinttechnologies@gmail.com",
+            href: "mailto:skillsprinttechnologies@gmail.com",
           },
           {
             icon: <Phone size={16} />,
@@ -620,7 +620,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div className="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
-          <motion.nav
+          <Motion.nav
             variants={fadeIn}
             initial="hidden"
             animate="visible"
@@ -639,10 +639,10 @@ const PrivacyPolicy = () => {
               aria-hidden="true"
             />
             <span className="text-[#374b82] font-semibold">Privacy Policy</span>
-          </motion.nav>
+          </Motion.nav>
 
           <div className="max-w-3xl">
-            <motion.div
+            <Motion.div
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -651,9 +651,9 @@ const PrivacyPolicy = () => {
             >
               <Shield size={13} aria-hidden="true" />
               Legal & Privacy
-            </motion.div>
+            </Motion.div>
 
-            <motion.h1
+            <Motion.h1
               id="privacy-heading"
               variants={fadeUp}
               initial="hidden"
@@ -662,9 +662,9 @@ const PrivacyPolicy = () => {
               className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.4rem] font-bold text-[#111827] leading-[1.05] tracking-tight mb-4"
             >
               Privacy <span className="text-[#374b82]">Policy</span>
-            </motion.h1>
+            </Motion.h1>
 
-            <motion.p
+            <Motion.p
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -674,9 +674,9 @@ const PrivacyPolicy = () => {
               At SkillSprint Technologies, your privacy is our priority. This
               policy outlines how we handle your data with transparency,
               security, and respect.
-            </motion.p>
+            </Motion.p>
 
-            <motion.div
+            <Motion.div
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -695,7 +695,7 @@ const PrivacyPolicy = () => {
                   January 2025
                 </span>
               </p>
-            </motion.div>
+            </Motion.div>
           </div>
         </div>
       </section>
@@ -743,7 +743,7 @@ const PrivacyPolicy = () => {
       {/* ── DESKTOP Drawer ────────────────────────────────────────────────── */}
       <AnimatePresence>
         {desktopDrawerOpen && (
-          <motion.div
+          <Motion.div
             className="hidden lg:block fixed inset-0 z-[80]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -755,7 +755,7 @@ const PrivacyPolicy = () => {
               onClick={() => setDesktopDrawerOpen(false)}
               className="absolute inset-0 w-full h-full bg-[#0d1424]/45 backdrop-blur-sm"
             />
-            <motion.aside
+            <Motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
@@ -775,15 +775,15 @@ const PrivacyPolicy = () => {
                 onNavigate={handleDesktopNavigate}
                 onClose={() => setDesktopDrawerOpen(false)}
               />
-            </motion.aside>
-          </motion.div>
+            </Motion.aside>
+          </Motion.div>
         )}
       </AnimatePresence>
 
       {/* ── MOBILE Drawer ─────────────────────────────────────────────────── */}
       <AnimatePresence>
         {mobileDrawerOpen && (
-          <motion.div
+          <Motion.div
             className="lg:hidden fixed inset-0 z-[80]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -795,7 +795,7 @@ const PrivacyPolicy = () => {
               onClick={() => setMobileDrawerOpen(false)}
               className="absolute inset-0 w-full h-full bg-[#0d1424]/45 backdrop-blur-sm"
             />
-            <motion.aside
+            <Motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
@@ -815,8 +815,8 @@ const PrivacyPolicy = () => {
                 onNavigate={handleMobileNavigate}
                 onClose={() => setMobileDrawerOpen(false)}
               />
-            </motion.aside>
-          </motion.div>
+            </Motion.aside>
+          </Motion.div>
         )}
       </AnimatePresence>
 
@@ -824,7 +824,7 @@ const PrivacyPolicy = () => {
       <div className="relative max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 pb-20">
         <div className="max-w-4xl mx-auto space-y-4">
           {sections.map(({ id, icon, heading, content }, idx) => (
-            <motion.section
+            <Motion.section
               key={id}
               id={id}
               variants={fadeUp}
@@ -857,11 +857,11 @@ const PrivacyPolicy = () => {
                 </h2>
               </div>
               <RenderContent content={content} />
-            </motion.section>
+            </Motion.section>
           ))}
 
           {/* ── CTA Banner ── */}
-          <motion.div
+          <Motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -927,10 +927,10 @@ const PrivacyPolicy = () => {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </Motion.div>
 
           {/* ── Related links ── */}
-          <motion.div
+          <Motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -998,7 +998,7 @@ const PrivacyPolicy = () => {
                 aria-hidden="true"
               />
             </Link>
-          </motion.div>
+          </Motion.div>
 
           {/* ── Back to top ── */}
           <div className="flex justify-center pt-2">

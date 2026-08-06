@@ -13,7 +13,6 @@ import {
   Database,
   Zap,
 } from "react-feather";
-import { image } from "framer-motion/client";
 
 const img3 = "/coaching/img3.webp";
 const coachImg1 = "/coaching/coaching-img1.webp";
