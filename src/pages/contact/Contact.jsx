@@ -67,11 +67,18 @@ export default function Contact() {
       setStatus("loading"); setErrorMessage("");
       const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const data = await response.json().catch(() => ({}));
-      if (!response.ok || !data.success) throw new Error(data.message || "Unable to send your enquiry.");
+      if (!response.ok || !data.success) {
+        const message = response.status === 429
+          ? "Too many enquiries have been submitted. Please wait a few minutes and try again."
+          : response.status === 400
+            ? "Please check the form details and try again."
+            : "We couldn't send your enquiry right now. Please try again shortly.";
+        throw new Error(message);
+      }
       localStorage.setItem("contactLastSubmit", String(Date.now()));
       setFormData(initialForm); setStatus("success");
     } catch (error) {
-      setStatus("error"); setErrorMessage(error.message || "Unable to send your enquiry. Please try again.");
+      setStatus("error"); setErrorMessage(error.message || "We couldn't send your enquiry right now. Please try again shortly.");
     }
   };
 
