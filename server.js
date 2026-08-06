@@ -15,7 +15,10 @@ app.post("/api/contact", async (req, res) => {
     res.set("Cache-Control", "no-store");
     return res.status(result.status).json(result.body);
   } catch (error) {
-    console.error("[contact] submission failed", { code: error?.code || "UNEXPECTED_CONTACT_ERROR" });
+    console.error("[contact] submission failed", {
+      code: error?.code || "UNEXPECTED_CONTACT_ERROR",
+      ...(error?.provider ? { provider: error.provider } : {}),
+    });
     return res.status(500).json({ success: false, message: "We couldn't send your enquiry right now. Please try again shortly." });
   }
 });

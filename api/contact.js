@@ -14,7 +14,10 @@ export default async function handler(req, res) {
     res.setHeader("X-Content-Type-Options", "nosniff");
     return res.status(result.status).json(result.body);
   } catch (error) {
-    console.error("[contact] submission failed", { code: error?.code || "UNEXPECTED_CONTACT_ERROR" });
+    console.error("[contact] submission failed", {
+      code: error?.code || "UNEXPECTED_CONTACT_ERROR",
+      ...(error?.provider ? { provider: error.provider } : {}),
+    });
     return res.status(500).json({ success: false, message: "We couldn't send your enquiry right now. Please try again shortly." });
   }
 }

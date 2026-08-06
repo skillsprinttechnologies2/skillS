@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, ArrowRight, MessageSquare, CheckCircle, AlertCircle } from "react-feather";
 
 const roleOptions = ["Founder / Owner", "CEO / MD", "CTO / CIO", "IT Head", "Operations Head", "Finance Head", "Other"];
@@ -24,6 +24,7 @@ export default function Contact() {
   const [formData, setFormData] = useState(initialForm);
   const [status, setStatus] = useState("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const submissionInFlight = useRef(false);
 
   const clearError = () => {
     if (status === "error") { setStatus("idle"); setErrorMessage(""); }
@@ -39,7 +40,7 @@ export default function Contact() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (status === "loading") return;
+    if (submissionInFlight.current) return;
     const payload = {
       ...formData,
       fullName: formData.fullName.trim(), companyName: formData.companyName.trim(), role: formData.role.trim(),
@@ -63,22 +64,34 @@ export default function Contact() {
     if (Date.now() - lastSubmit < 60_000) {
       setStatus("error"); setErrorMessage("Please wait before sending another enquiry."); return;
     }
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15_000);
+    submissionInFlight.current = true;
     try {
       setStatus("loading"); setErrorMessage("");
-      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: controller.signal });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.success) {
-        const message = response.status === 429
-          ? "Too many enquiries have been submitted. Please wait a few minutes and try again."
-          : response.status === 400
-            ? "Please check the form details and try again."
-            : "We couldn't send your enquiry right now. Please try again shortly.";
+        const message = response.status === 400
+          ? "Please check the form details and try again."
+          : response.status === 413
+            ? "The submitted information is too large. Please shorten your requirement and try again."
+            : response.status === 429
+              ? "Too many attempts. Please wait a few minutes and try again."
+              : "We couldn't send your enquiry right now. Please try again shortly.";
         throw new Error(message);
       }
       localStorage.setItem("contactLastSubmit", String(Date.now()));
       setFormData(initialForm); setStatus("success");
     } catch (error) {
-      setStatus("error"); setErrorMessage(error.message || "We couldn't send your enquiry right now. Please try again shortly.");
+      const isConnectionFailure = error?.name === "AbortError" || error instanceof TypeError;
+      setStatus("error");
+      setErrorMessage(isConnectionFailure
+        ? "Unable to connect. Please check your connection and try again."
+        : error.message || "We couldn't send your enquiry right now. Please try again shortly.");
+    } finally {
+      window.clearTimeout(timeout);
+      submissionInFlight.current = false;
     }
   };
 
@@ -97,7 +110,7 @@ export default function Contact() {
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center text-center py-12 space-y-6" role="status">
                 <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center text-green-600"><CheckCircle size={40} aria-hidden="true" /></div>
-                <div><h3 className="text-2xl font-bold text-[#111827]">Thank you!</h3><p className="text-[#4b5563] mt-2">Your enquiry has been sent. We’ll get back to you soon.</p></div>
+                <div><h3 className="text-2xl font-bold text-[#111827]">Thank you!</h3><p className="text-[#4b5563] mt-2">Thank you. Your enquiry has been submitted successfully. Our team will get back to you shortly.</p></div>
                 <button type="button" onClick={() => { setStatus("idle"); setErrorMessage(""); }} className="inline-flex items-center gap-2 px-6 py-3 bg-[#374b82] text-white font-semibold rounded-xl hover:bg-[#2f3f70] transition-all">Send Another Enquiry <ArrowRight size={18} /></button>
               </div>
             ) : (
@@ -117,7 +130,7 @@ export default function Contact() {
                 <div className="space-y-1.5"><label htmlFor="requirement" className={labelClass}>Tell us about your business requirement <Required /></label><textarea className={`${fieldClass} min-h-44 resize-y`} id="requirement" name="requirement" value={formData.requirement} onChange={handleChange} maxLength={3000} rows={7} placeholder="Example: We currently prepare our sales and operations reports manually in Excel and are looking for a real-time dashboard." required /></div>
 
                 <div className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" value={formData.website} onChange={handleChange} tabIndex={-1} autoComplete="off" maxLength={200} /></div>
-                <button type="submit" disabled={status === "loading"} className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#374b82] text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98]">{status === "loading" ? "Sending..." : "Send Enquiry"}{status !== "loading" && <Send size={18} aria-hidden="true" />}</button>
+                <button type="submit" disabled={status === "loading"} aria-busy={status === "loading"} className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#374b82] text-white font-semibold rounded-xl shadow-lg shadow-[#374b82]/20 hover:bg-[#2f3f70] transition-all disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98]">{status === "loading" ? <><span className="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden="true" />Sending...</> : <>Send Enquiry<Send size={18} aria-hidden="true" /></>}</button>
               </form>
             )}
           </section>
